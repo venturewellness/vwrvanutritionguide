@@ -1,0 +1,1901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Nutrition Guide — Venture Wellness</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Serif+Display&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --teal:#1D9E75;--teal-light:#E1F5EE;--teal-mid:#0F6E56;--teal-dark:#085041;
+  --coral:#D85A30;--coral-light:#FAECE7;--coral-mid:#993C1D;
+  --green:#639922;--green-light:#EAF3DE;--green-mid:#3B6D11;
+  --amber:#BA7517;--amber-light:#FAEEDA;--amber-mid:#854F0B;
+  --blue:#378ADD;--blue-light:#E6F1FB;--blue-mid:#185FA5;
+  --purple:#7F77DD;--purple-light:#EEEDFE;--purple-mid:#534AB7;
+  --border:#e4e2d8;--text:#1a1a18;--muted:#6b6960;--bg:#fafaf7;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+/* OVERLAY */
+.overlay{position:fixed;inset:0;background:rgba(8,80,65,0.94);display:flex;align-items:center;justify-content:center;z-index:200;padding:16px;overflow-y:auto}
+.ob-card{background:#fff;border-radius:20px;padding:32px 28px;max-width:440px;width:100%;margin:auto;box-shadow:0 8px 40px rgba(0,0,0,0.18)}
+.ob-logo{display:flex;justify-content:center;margin-bottom:20px}
+.ob-logo img{height:64px;width:auto;max-width:260px;mix-blend-mode:multiply}
+.ob-hr{height:1px;background:var(--border);margin:0 0 20px}
+.ob-title{font-family:'DM Serif Display',serif;font-size:22px;color:var(--text);margin-bottom:6px;text-align:center}
+.ob-sub{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:20px;text-align:center}
+.ob-label{font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);font-weight:500;display:block;margin-bottom:5px}
+.ob-input{font-family:'DM Sans',sans-serif;font-size:13px;padding:9px 12px;border:1px solid var(--border);border-radius:8px;color:var(--text);background:var(--bg);outline:none;transition:border-color .15s;width:100%}
+.ob-input:focus{border-color:var(--teal)}
+.ob-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.ob-field{margin-bottom:12px}
+.ob-plans-label{font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);font-weight:500;margin-bottom:8px}
+.ob-plans{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:18px}
+.plan-btn{border:1.5px solid var(--border);border-radius:10px;padding:10px 12px;cursor:pointer;background:var(--bg);text-align:left;transition:all .15s;width:100%}
+.plan-btn:hover{border-color:var(--teal);background:var(--teal-light)}
+.plan-btn.sel{border-color:var(--teal);background:var(--teal-light)}
+.plan-btn .pn{font-size:11px;font-weight:500;color:var(--text);margin-bottom:2px;line-height:1.3}
+.plan-btn .pd{font-size:10px;color:var(--muted);line-height:1.4}
+.plan-btn.sel .pn{color:var(--teal-mid)}
+.ob-go{width:100%;background:var(--teal);color:#fff;border:none;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;padding:12px;border-radius:9px;cursor:pointer;transition:background .15s}
+.ob-go:hover{background:var(--teal-mid)}
+.ob-go:disabled{opacity:.4;cursor:not-allowed}
+.ob-note{font-size:10px;color:var(--muted);text-align:center;margin-top:8px}
+
+/* GUIDE PAGE */
+.guide{display:none}
+.guide.on{display:block}
+
+/* STICKY TOP */
+.topbar{position:sticky;top:0;z-index:100;background:var(--teal-dark);padding:10px 20px;display:flex;justify-content:space-between;align-items:center}
+.topbar-brand{font-family:'DM Serif Display',serif;color:#fff;font-size:15px}
+.topbar-right{display:flex;gap:8px;align-items:center}
+.topbar-name{font-size:11px;color:rgba(255,255,255,.65)}
+.tb-btn{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;padding:5px 12px;border-radius:6px;border:1px solid rgba(255,255,255,.35);cursor:pointer;background:transparent;color:#fff;transition:all .15s}
+.tb-btn:hover{background:rgba(255,255,255,.12)}
+.tb-btn.solid{background:#fff;color:var(--teal-dark);border-color:#fff}
+.tb-btn.solid:hover{background:var(--teal-light)}
+
+/* HERO */
+.hero{background:linear-gradient(160deg,var(--teal-dark) 0%,var(--teal-mid) 100%);padding:28px 20px 32px}
+.hero-inner{max-width:720px;margin:0 auto}
+.hero-eyebrow{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.6);margin-bottom:5px}
+.hero-name{font-family:'DM Serif Display',serif;font-size:28px;color:#fff;margin-bottom:6px}
+.hero-sub{font-size:12px;color:rgba(255,255,255,.72);line-height:1.65;max-width:440px}
+.hero-stats{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+.hstat{background:rgba(255,255,255,.1);border-radius:10px;padding:9px 18px;text-align:center;min-width:100px}
+.hstat-val{font-family:'DM Serif Display',serif;font-size:20px;color:#fff}
+.hstat-lbl{font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:rgba(255,255,255,.6);margin-top:1px}
+
+/* TABS */
+.tab-strip-wrap{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:45px;z-index:90}
+.tab-strip{max-width:720px;margin:0 auto;padding:0 20px;display:flex;gap:0;overflow-x:auto;scrollbar-width:none}
+.tab-strip::-webkit-scrollbar{display:none}
+.tab{font-size:12px;font-weight:500;padding:13px 16px;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;white-space:nowrap;transition:all .15s;background:none;border-top:none;border-left:none;border-right:none;font-family:'DM Sans',sans-serif}
+.tab:hover{color:var(--text)}
+.tab.active{color:var(--teal-mid);border-bottom-color:var(--teal)}
+.glp-tab{color:var(--purple-mid)!important}
+.glp-tab.active{border-bottom-color:var(--purple)!important}
+
+/* CONTENT */
+.content{max-width:720px;margin:0 auto;padding:24px 20px 60px}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+
+/* SECTION HEADS */
+.sh{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:500;margin-bottom:12px;margin-top:28px}
+.sh:first-child{margin-top:0}
+
+/* MACRO CARDS */
+.macro-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media(min-width:520px){.macro-grid{grid-template-columns:repeat(4,1fr)}}
+.mc{border-radius:12px;border:1px solid var(--border);background:#fff;overflow:hidden}
+.mc-head{display:flex;align-items:center;gap:8px;padding:9px 11px}
+.mc-ico{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.mc-lbl{font-size:11px;font-weight:500}
+.mc-body{padding:9px 11px;border-top:1px solid var(--border)}
+.mc-num{font-family:'DM Serif Display',serif;font-size:28px;line-height:1}
+.mc-unit{font-size:11px;color:var(--muted);margin-bottom:4px}
+.mc-meal{font-size:10px;color:var(--muted);border-top:1px solid var(--border);padding-top:6px;margin-top:5px;line-height:1.5}
+.tags{display:flex;flex-wrap:wrap;gap:3px;margin-top:5px}
+.tag{font-size:10px;padding:2px 7px;border-radius:999px}
+.mp .mc-head{background:var(--coral-light)}.mp .mc-ico{background:#F5C4B3}.mp .mc-lbl,.mp .mc-num{color:var(--coral-mid)}.mp .tag{background:var(--coral-light);color:var(--coral-mid)}
+.mv .mc-head{background:var(--green-light)}.mv .mc-ico{background:#C0DD97}.mv .mc-lbl,.mv .mc-num{color:var(--green-mid)}.mv .tag{background:var(--green-light);color:var(--green-mid)}
+.mc2 .mc-head{background:var(--amber-light)}.mc2 .mc-ico{background:#FAC775}.mc2 .mc-lbl,.mc2 .mc-num{color:var(--amber-mid)}.mc2 .tag{background:var(--amber-light);color:var(--amber-mid)}
+.mf .mc-head{background:var(--blue-light)}.mf .mc-ico{background:#B5D4F4}.mf .mc-lbl,.mf .mc-num{color:var(--blue-mid)}.mf .tag{background:var(--blue-light);color:var(--blue-mid)}
+
+/* HAND VISUAL */
+.hand-visual{background:#fff;border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px}
+.hand-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+@media(min-width:480px){.hand-grid{grid-template-columns:repeat(4,1fr)}}
+.hand-item{text-align:center}
+.hand-item svg{width:64px;height:64px}
+.hand-item .hi-label{font-size:12px;font-weight:500;color:var(--text);margin-top:6px}
+.hand-item .hi-sub{font-size:10px;color:var(--muted);margin-top:2px}
+
+/* TRACKER */
+.tracker{background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.tracker-bar{padding:10px 14px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.tracker-bar-left{display:flex;flex-direction:column;gap:2px}
+.tracker-bar span{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.tracker-bar small{font-size:10px;color:var(--muted)}
+.tracker-actions{display:flex;gap:8px;align-items:center}
+.reset-btn,.save-btn{font-size:11px;color:var(--teal-mid);background:none;border:1px solid var(--teal-mid);padding:4px 10px;border-radius:6px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s}
+.reset-btn:hover,.save-btn:hover{background:var(--teal-light)}
+.complete-btn{font-size:11px;color:#fff;background:var(--teal);border:none;padding:5px 12px;border-radius:6px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;transition:background .15s}
+.complete-btn:hover{background:var(--teal-mid)}
+/* COMPLETE WEEK MODAL */
+.cw-overlay{position:fixed;inset:0;background:rgba(8,80,65,0.88);display:flex;align-items:center;justify-content:center;z-index:300;padding:16px}
+.cw-overlay.hidden{display:none}
+.cw-card{background:#fff;border-radius:16px;padding:28px 24px;max-width:400px;width:100%;box-shadow:0 8px 40px rgba(0,0,0,0.2)}
+.cw-title{font-family:'DM Serif Display',serif;font-size:20px;color:var(--text);margin-bottom:4px}
+.cw-sub{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:18px}
+.cw-summary{background:var(--teal-light);border-radius:10px;padding:12px 14px;margin-bottom:18px;font-size:12px;color:var(--teal-dark);line-height:1.7}
+.cw-field{margin-bottom:12px}
+.cw-label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:500;display:block;margin-bottom:5px}
+.cw-input{font-family:'DM Sans',sans-serif;font-size:13px;padding:9px 12px;border:1px solid var(--border);border-radius:8px;color:var(--text);background:var(--bg);outline:none;transition:border-color .15s;width:100%}
+.cw-input:focus{border-color:var(--teal)}
+.cw-textarea{resize:vertical;min-height:70px}
+.cw-btns{display:flex;gap:8px;margin-top:4px}
+.cw-submit{flex:1;background:var(--teal);color:#fff;border:none;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;padding:11px;border-radius:8px;cursor:pointer;transition:background .15s}
+.cw-submit:hover{background:var(--teal-mid)}
+.cw-submit:disabled{opacity:.5;cursor:not-allowed}
+.cw-cancel{background:none;border:1px solid var(--border);color:var(--muted);font-family:'DM Sans',sans-serif;font-size:12px;padding:11px 16px;border-radius:8px;cursor:pointer}
+.cw-cancel:hover{background:var(--bg)}
+.cw-success{text-align:center;padding:8px 0}
+.cw-success-icon{font-size:36px;margin-bottom:10px}
+.cw-success-title{font-family:'DM Serif Display',serif;font-size:18px;color:var(--teal-dark);margin-bottom:6px}
+.cw-success-msg{font-size:12px;color:var(--muted);line-height:1.6}
+.tracker table{width:100%;border-collapse:collapse}
+.tracker th{padding:7px 10px;text-align:center;font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid var(--border)}
+.tracker th.dc{text-align:left;width:82px}
+.tracker td{padding:6px 8px;border-bottom:1px solid var(--border);text-align:center;vertical-align:middle}
+.tracker tr:last-child td{border-bottom:none}
+.tracker td.dl{text-align:left;font-size:11px;font-weight:500;color:var(--muted)}
+.th-p{color:var(--coral-mid)}.th-v{color:var(--green-mid)}.th-c{color:var(--amber-mid)}.th-f{color:var(--blue-mid)}
+.bubbles{display:flex;gap:4px;justify-content:center;flex-wrap:wrap}
+.bubble{width:16px;height:16px;border-radius:50%;border:1.5px solid;cursor:pointer;transition:background .1s;flex-shrink:0}
+.b-p{border-color:var(--coral)}.b-p.on{background:var(--coral)}
+.b-v{border-color:var(--green)}.b-v.on{background:var(--green)}
+.b-c{border-color:var(--amber)}.b-c.on{background:var(--amber)}
+.b-f{border-color:var(--blue)}.b-f.on{background:var(--blue)}
+.bubble.extra{border-style:dashed;opacity:0.55}
+.bubble.extra.on{opacity:1}
+.add-bubble{width:16px;height:16px;border-radius:50%;border:1.5px dashed var(--muted);background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--muted);font-size:11px;line-height:1;padding:0;font-family:'DM Sans',sans-serif;transition:all .15s}
+.add-bubble:hover{border-color:var(--teal);color:var(--teal)}
+.sbb{font-family:'DM Sans',sans-serif;font-size:12px;}
+
+/* FOOD GUIDE */
+.food-cat{background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:12px}
+.food-cat-head{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--border)}
+.food-cat-icon{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.food-cat-title{font-size:13px;font-weight:500}
+.food-cat-body{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
+@media(max-width:480px){.food-cat-body{grid-template-columns:1fr}}
+.food-tier{padding:12px 14px;border-right:1px solid var(--border)}
+.food-tier:last-child{border-right:none}
+@media(max-width:480px){.food-tier{border-right:none;border-bottom:1px solid var(--border)}}
+@media(max-width:480px){.food-tier:last-child{border-bottom:none}}
+.ft-label{font-size:9px;text-transform:uppercase;letter-spacing:.08em;font-weight:500;margin-bottom:6px}
+.ft-more .ft-label{color:var(--green-mid)}.ft-some .ft-label{color:var(--amber-mid)}.ft-less .ft-label{color:var(--coral-mid)}
+.food-list{list-style:none}
+.food-list li{font-size:11px;color:var(--muted);padding:2px 0;line-height:1.45;display:flex;align-items:flex-start;gap:5px}
+.food-list li::before{content:'·';color:var(--border);flex-shrink:0;margin-top:1px}
+.food-note{font-size:10px;color:var(--muted);font-style:italic;padding:8px 14px;border-top:1px solid var(--border);line-height:1.5}
+
+/* MEAL IDEAS */
+.meal-day{background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:12px}
+.meal-day-head{padding:11px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.meal-day-title{font-size:13px;font-weight:500;color:var(--text)}
+.meal-day-sub{font-size:11px;color:var(--muted)}
+.meal-row{padding:11px 16px;border-bottom:1px solid var(--border);display:grid;grid-template-columns:90px 1fr;gap:12px;align-items:start}
+.meal-row:last-child{border-bottom:none}
+.meal-time{font-size:11px;font-weight:500;color:var(--muted);padding-top:1px}
+.meal-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:3px}
+.meal-desc{font-size:11px;color:var(--muted);line-height:1.5}
+.meal-portions{display:flex;gap:4px;flex-wrap:wrap;margin-top:5px}
+.mp-tag{font-size:9px;padding:2px 7px;border-radius:999px;font-weight:500}
+.mp-tag.p{background:var(--coral-light);color:var(--coral-mid)}
+.mp-tag.v{background:var(--green-light);color:var(--green-mid)}
+.mp-tag.c{background:var(--amber-light);color:var(--amber-mid)}
+.mp-tag.f{background:var(--blue-light);color:var(--blue-mid)}
+
+/* MEAL SUB-NAV */
+.meal-subnav{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+.msn-btn{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;padding:6px 12px;border-radius:20px;border:1px solid var(--border);background:#fff;color:var(--muted);cursor:pointer;transition:all .15s;white-space:nowrap}
+.msn-btn:hover{border-color:var(--teal);color:var(--teal-mid)}
+.msn-btn.active{background:var(--teal);border-color:var(--teal);color:#fff}
+
+/* RESOURCE CARDS */
+.resource-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px}
+@media(max-width:460px){.resource-grid{grid-template-columns:1fr}}
+.resource-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px;text-decoration:none;color:inherit;display:block;transition:border-color .15s}
+.resource-card:hover{border-color:var(--teal)}
+.rc-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px}
+.rc-tag{font-size:9px;text-transform:uppercase;letter-spacing:.07em;font-weight:500;padding:2px 8px;border-radius:999px;background:var(--teal-light);color:var(--teal-mid)}
+.rc-ext{font-size:10px;color:var(--muted)}
+.rc-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:4px}
+.rc-desc{font-size:11px;color:var(--muted);line-height:1.55}
+
+/* PREP CARDS */
+.prep-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:460px){.prep-grid{grid-template-columns:1fr}}
+.prep-card{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.prep-head{padding:10px 13px;border-bottom:1px solid var(--border);font-size:12px;font-weight:500;color:var(--text);display:flex;align-items:center;gap:7px}
+.prep-head span{font-size:15px}
+.prep-body{padding:10px 13px}
+.prep-item{font-size:11px;color:var(--muted);line-height:1.6;padding:3px 0;border-bottom:1px solid var(--border);display:flex;gap:6px}
+.prep-item:last-child{border-bottom:none}
+.prep-item::before{content:'→';color:var(--teal);flex-shrink:0;font-size:10px;margin-top:2px}
+
+/* QUICK MEAL CARDS */
+.quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:460px){.quick-grid{grid-template-columns:1fr}}
+.quick-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px}
+.qc-time{font-size:9px;text-transform:uppercase;letter-spacing:.07em;font-weight:500;color:var(--teal-mid);margin-bottom:4px}
+.qc-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:5px}
+.qc-desc{font-size:11px;color:var(--muted);line-height:1.55;margin-bottom:7px}
+.qc-badges{display:flex;gap:4px;flex-wrap:wrap}
+
+/* ON THE GO */
+.otg-card{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:10px}
+.otg-head{padding:10px 14px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.otg-place{font-size:12px;font-weight:500;color:var(--text);display:flex;align-items:center;gap:7px}
+.otg-place span{font-size:15px}
+.otg-badge{font-size:9px;padding:2px 8px;border-radius:999px;font-weight:500}
+.otg-badge.good{background:var(--green-light);color:var(--green-mid)}
+.otg-badge.ok{background:var(--amber-light);color:var(--amber-mid)}
+.otg-body{display:grid;grid-template-columns:1fr 1fr;gap:0}
+@media(max-width:460px){.otg-body{grid-template-columns:1fr}}
+.otg-col{padding:10px 14px;border-right:1px solid var(--border)}
+.otg-col:last-child{border-right:none}
+.otg-col-label{font-size:9px;text-transform:uppercase;letter-spacing:.07em;font-weight:500;margin-bottom:5px}
+.otg-col.order .otg-col-label{color:var(--green-mid)}
+.otg-col.skip .otg-col-label{color:var(--coral-mid)}
+.otg-item{font-size:11px;color:var(--muted);line-height:1.55;padding:2px 0}
+
+/* SNACK CARDS */
+.snack-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:460px){.snack-grid{grid-template-columns:1fr}}
+.snack-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px}
+.snack-icon{font-size:18px;margin-bottom:5px}
+.snack-name{font-size:12px;font-weight:500;color:var(--text);margin-bottom:4px}
+.snack-desc{font-size:11px;color:var(--muted);line-height:1.55;margin-bottom:6px}
+.snack-protein{font-size:10px;font-weight:500;color:var(--coral-mid);background:var(--coral-light);padding:2px 8px;border-radius:999px;display:inline-block}
+
+/* TIPS */
+.tips-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:460px){.tips-grid{grid-template-columns:1fr}}
+.tip{background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px}
+.tip-icon{font-size:18px;margin-bottom:6px}
+.tip-title{font-size:12px;font-weight:500;color:var(--text);margin-bottom:4px}
+.tip-body{font-size:11px;color:var(--muted);line-height:1.65}
+.tip-highlight{background:var(--teal-light);border-left:3px solid var(--teal);border-radius:0 8px 8px 0;padding:10px 14px;margin-top:8px;font-size:11px;color:var(--teal-dark);line-height:1.6}
+
+/* EATING OUT */
+.venue-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:460px){.venue-grid{grid-template-columns:1fr}}
+.venue-card{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.venue-head{padding:9px 13px;border-bottom:1px solid var(--border);font-size:12px;font-weight:500;color:var(--text);display:flex;align-items:center;gap:7px}
+.venue-head span{font-size:15px}
+.venue-body{padding:10px 13px}
+.venue-tip{font-size:11px;color:var(--muted);line-height:1.6;padding:4px 0;border-bottom:1px solid var(--border);display:flex;gap:7px}
+.venue-tip:last-child{border-bottom:none}
+.venue-tip::before{content:'✓';color:var(--teal);font-size:10px;flex-shrink:0;margin-top:2px}
+.social-block{background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px;margin-top:12px}
+.social-block h4{font-size:12px;font-weight:500;margin-bottom:10px}
+.social-rule{font-size:11px;color:var(--muted);line-height:1.65;padding:5px 0;border-bottom:1px solid var(--border);display:flex;gap:8px;align-items:flex-start}
+.social-rule:last-child{border-bottom:none}
+.social-rule .sr-head{font-weight:500;color:var(--text);min-width:110px;flex-shrink:0}
+
+/* GLP-1 */
+.glp-banner{background:var(--purple-light);border-left:3px solid var(--purple);border-radius:0 10px 10px 0;padding:12px 16px;margin-bottom:16px}
+.glp-banner p{font-size:12px;color:var(--purple-mid);line-height:1.65}
+.glp-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:460px){.glp-grid{grid-template-columns:1fr}}
+.glp-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px}
+.glp-card h4{font-size:12px;font-weight:500;color:var(--text);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.glp-card h4 span{font-size:15px}
+.glp-rule{font-size:11px;color:var(--muted);line-height:1.65;padding:4px 0;border-bottom:1px solid var(--border)}
+.glp-rule:last-child{border-bottom:none}
+.glp-rule strong{color:var(--text);font-weight:500}
+.glp-warning{background:#FFF3F3;border:1px solid #F09595;border-radius:10px;padding:12px 14px;margin-top:12px;font-size:11px;color:#791F1F;line-height:1.65}
+
+/* ADJUST */
+.adj-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:460px){.adj-grid{grid-template-columns:1fr}}
+.adj-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px}
+.adj-card h4{font-size:12px;font-weight:500;color:var(--text);margin-bottom:8px}
+.adj-rule{font-size:11px;color:var(--muted);line-height:1.6;padding:4px 0;border-bottom:1px solid var(--border)}
+.adj-rule:last-child{border-bottom:none}
+.adj-rule strong{color:var(--text);font-weight:500}
+
+/* FOOTER */
+.guide-footer{max-width:720px;margin:0 auto;padding:0 20px 36px;border-top:1px solid var(--border);padding-top:14px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px}
+.guide-footer span{font-size:10px;color:var(--muted)}
+
+@media print{
+  .overlay,.topbar,.tab-strip-wrap{display:none!important}
+  .guide{display:block!important}
+  .tab-panel{display:block!important}
+  body{background:#fff}
+  .hero{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .mc-head,.tag,.glp-banner,.food-cat-head,.mp-tag{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .bubble.on{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+
+/* ── GLP-1 DOSE TRACKER ─────────────────────────────────────────────────── */
+.trk-disclaimer{background:var(--purple-light);border-left:3px solid var(--purple);border-radius:0 10px 10px 0;padding:10px 14px;margin-bottom:16px;font-size:11px;color:var(--purple-mid);line-height:1.65}
+.trk-setup{background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:14px}
+.trk-setup-head{padding:12px 16px;border-bottom:1px solid var(--border);font-size:13px;font-weight:500;display:flex;align-items:center;gap:7px}
+.trk-setup-body{padding:14px 16px}
+.trk-field-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:12px}
+.trk-field{display:flex;flex-direction:column;gap:4px}
+.trk-field label{font-size:10px;text-transform:uppercase;letter-spacing:.07em;font-weight:500;color:var(--muted)}
+.trk-input{font-family:'DM Sans',sans-serif;font-size:13px;padding:8px 10px;border:1px solid var(--border);border-radius:8px;color:var(--text);background:var(--bg);outline:none;transition:border-color .15s;width:100%}
+.trk-input:focus{border-color:var(--teal)}
+.trk-select{font-family:'DM Sans',sans-serif;font-size:13px;padding:8px 10px;border:1px solid var(--border);border-radius:8px;color:var(--text);background:var(--bg);outline:none;width:100%}
+.trk-dose-pill{display:inline-flex;align-items:center;gap:6px;background:var(--purple-light);border:1px solid var(--purple);border-radius:20px;padding:4px 12px;font-size:12px;color:var(--purple-mid);font-weight:500;margin-top:4px}
+.trk-btn{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;padding:9px 16px;border-radius:8px;border:none;cursor:pointer;transition:all .15s}
+.trk-btn-primary{background:var(--teal);color:#fff}
+.trk-btn-primary:hover{background:var(--teal-mid)}
+.trk-btn-sm{background:var(--bg);border:1px solid var(--border);color:var(--muted);font-size:11px;padding:5px 10px}
+.trk-btn-sm:hover{border-color:var(--teal);color:var(--teal-mid)}
+.trk-btn-danger{background:#FFF3F3;border:1px solid #F09595;color:#791F1F;font-size:11px;padding:5px 10px}
+
+/* Stats row */
+.trk-stats{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.trk-stat{flex:1;min-width:90px;background:#fff;border:1px solid var(--border);border-radius:10px;padding:10px 12px;text-align:center}
+.trk-stat-label{font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:500;margin-bottom:2px}
+.trk-stat-value{font-family:'DM Serif Display',serif;font-size:20px;color:var(--teal-mid)}
+.trk-stat-value.purple{color:var(--purple-mid)}
+.trk-stat-value.coral{color:var(--coral-mid)}
+.trk-stat-sub{font-size:10px;color:var(--muted);margin-top:1px}
+
+/* Alert banners */
+.trk-alert{border-radius:8px;padding:10px 14px;font-size:12px;line-height:1.6;margin-bottom:12px}
+.trk-alert-title{font-weight:600;margin-bottom:2px}
+.trk-alert.green{background:var(--teal-light);border-left:3px solid var(--teal);color:var(--teal-dark)}
+.trk-alert.yellow{background:var(--amber-light);border-left:3px solid var(--amber);color:var(--amber-mid)}
+.trk-alert.red{background:#FFF3F3;border-left:3px solid #E08080;color:#791F1F}
+.trk-alert.purple{background:var(--purple-light);border-left:3px solid var(--purple);color:var(--purple-mid)}
+
+/* Charts */
+.trk-chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+@media(max-width:480px){.trk-chart-grid{grid-template-columns:1fr}}
+.trk-chart-wrap{background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px}
+.trk-chart-label{font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:500;margin-bottom:8px}
+.trk-chart-canvas{height:180px;position:relative}
+
+/* Log form */
+.trk-log-card{background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:14px}
+.trk-log-head{padding:12px 16px;border-bottom:1px solid var(--border);font-size:13px;font-weight:500;display:flex;align-items:center;justify-content:space-between}
+.trk-log-body{padding:14px 16px}
+.trk-symptom-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:7px;margin-bottom:12px}
+.trk-sym{display:flex;align-items:center;gap:7px;padding:7px 10px;border:1px solid var(--border);border-radius:8px;font-size:12px;cursor:pointer;transition:border-color .15s}
+.trk-sym:hover{border-color:var(--teal)}
+.trk-sym input{accent-color:var(--coral);width:13px;height:13px;flex-shrink:0}
+
+/* History table */
+.trk-history{background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:14px}
+.trk-history-head{padding:12px 16px;border-bottom:1px solid var(--border);font-size:13px;font-weight:500;display:flex;justify-content:space-between;align-items:center}
+.trk-table{width:100%;border-collapse:collapse;font-size:12px}
+.trk-table th{padding:7px 10px;text-align:left;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);border-bottom:1px solid var(--border);white-space:nowrap}
+.trk-table td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+.trk-table tr:last-child td{border-bottom:none}
+.trk-table tr:hover td{background:var(--bg)}
+.trk-badge{display:inline-block;font-size:10px;font-weight:600;padding:2px 7px;border-radius:20px}
+.trk-badge.green{background:var(--teal-light);color:var(--teal-mid)}
+.trk-badge.red{background:#FFF3F3;color:#791F1F}
+.trk-badge.yellow{background:var(--amber-light);color:var(--amber-mid)}
+.trk-empty{text-align:center;padding:24px;color:var(--muted);font-size:12px}
+.trk-warn{background:var(--amber-light);border:1px solid var(--amber);border-radius:8px;padding:9px 12px;font-size:12px;color:var(--amber-mid);margin-top:8px;display:none}
+.trk-warn.show{display:block}
+.trk-notify{background:#FFF3F3;border:1px solid #F09595;border-radius:8px;padding:10px 14px;font-size:12px;color:#791F1F;margin-bottom:12px;display:none}
+.trk-notify.show{display:block}
+
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+</head>
+<body>
+
+<!-- ONBOARDING -->
+<div class="overlay" id="overlay">
+  <div class="ob-card">
+    <div class="ob-logo"><img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAgEBLAEsAAD/7QAsUGhvdG9zaG9wIDMuMAA4QklNA+0AAAAAABABLAAAAAEAAQEsAAAAAQAB/+FCZGh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8APD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNy4yLWMwMDAgNzkuMWI2NWE3OSwgMjAyMi8wNi8xMy0xNzo0NjoxNCAgICAgICAgIj4KICAgPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICAgICAgPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIKICAgICAgICAgICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICAgICAgICAgICB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOnhtcEdJbWc9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9nL2ltZy8iCiAgICAgICAgICAgIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIgogICAgICAgICAgICB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIKICAgICAgICAgICAgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIKICAgICAgICAgICAgeG1sbnM6aWxsdXN0cmF0b3I9Imh0dHA6Ly9ucy5hZG9iZS5jb20vaWxsdXN0cmF0b3IvMS4wLyIKICAgICAgICAgICAgeG1sbnM6cGRmPSJodHRwOi8vbnMuYWRvYmUuY29tL3BkZi8xLjMvIj4KICAgICAgICAgPGRjOmZvcm1hdD5pbWFnZS9qcGVnPC9kYzpmb3JtYXQ+CiAgICAgICAgIDxkYzp0aXRsZT4KICAgICAgICAgICAgPHJkZjpBbHQ+CiAgICAgICAgICAgICAgIDxyZGY6bGkgeG1sOmxhbmc9IngtZGVmYXVsdCI+UHJpbnQ8L3JkZjpsaT4KICAgICAgICAgICAgPC9yZGY6QWx0PgogICAgICAgICA8L2RjOnRpdGxlPgogICAgICAgICA8eG1wOk1ldGFkYXRhRGF0ZT4yMDI0LTExLTEyVDAxOjE4OjI2KzA1OjAwPC94bXA6TWV0YWRhdGFEYXRlPgogICAgICAgICA8eG1wOk1vZGlmeURhdGU+MjAyNC0xMS0xMVQyMDoxODoyNlo8L3htcDpNb2RpZnlEYXRlPgogICAgICAgICA8eG1wOkNyZWF0ZURhdGU+MjAyNC0xMS0xMlQwMToxODoyNiswNTowMDwveG1wOkNyZWF0ZURhdGU+CiAgICAgICAgIDx4bXA6Q3JlYXRvclRvb2w+QWRvYmUgSWxsdXN0cmF0b3IgMjcuMCAoV2luZG93cyk8L3htcDpDcmVhdG9yVG9vbD4KICAgICAgICAgPHhtcDpUaHVtYm5haWxzPgogICAgICAgICAgICA8cmRmOkFsdD4KICAgICAgICAgICAgICAgPHJkZjpsaSByZGY6cGFyc2VUeXBlPSJSZXNvdXJjZSI+CiAgICAgICAgICAgICAgICAgIDx4bXBHSW1nOndpZHRoPjI1NjwveG1wR0ltZzp3aWR0aD4KICAgICAgICAgICAgICAgICAgPHhtcEdJbWc6aGVpZ2h0Pjk2PC94bXBHSW1nOmhlaWdodD4KICAgICAgICAgICAgICAgICAgPHhtcEdJbWc6Zm9ybWF0PkpQRUc8L3htcEdJbWc6Zm9ybWF0PgogICAgICAgICAgICAgICAgICA8eG1wR0ltZzppbWFnZT4vOWovNEFBUVNrWkpSZ0FCQWdFQkxBRXNBQUQvN1FBc1VHaHZkRzl6YUc5d0lETXVNQUE0UWtsTkErMEFBQUFBQUJBQkxBQUFBQUVBJiN4QTtBUUVzQUFBQUFRQUIvK0lNV0VsRFExOVFVazlHU1V4RkFBRUJBQUFNU0V4cGJtOENFQUFBYlc1MGNsSkhRaUJZV1ZvZ0I4NEFBZ0FKJiN4QTtBQVlBTVFBQVlXTnpjRTFUUmxRQUFBQUFTVVZESUhOU1IwSUFBQUFBQUFBQUFBQUFBQUFBQVBiV0FBRUFBQUFBMHkxSVVDQWdBQUFBJiN4QTtBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQVJZM0J5ZEFBQUFWQUFBQUF6JiN4QTtaR1Z6WXdBQUFZUUFBQUJzZDNSd2RBQUFBZkFBQUFBVVltdHdkQUFBQWdRQUFBQVVjbGhaV2dBQUFoZ0FBQUFVWjFoWldnQUFBaXdBJiN4QTtBQUFVWWxoWldnQUFBa0FBQUFBVVpHMXVaQUFBQWxRQUFBQndaRzFrWkFBQUFzUUFBQUNJZG5WbFpBQUFBMHdBQUFDR2RtbGxkd0FBJiN4QTtBOVFBQUFBa2JIVnRhUUFBQS9nQUFBQVViV1ZoY3dBQUJBd0FBQUFrZEdWamFBQUFCREFBQUFBTWNsUlNRd0FBQkR3QUFBZ01aMVJTJiN4QTtRd0FBQkR3QUFBZ01ZbFJTUXdBQUJEd0FBQWdNZEdWNGRBQUFBQUJEYjNCNWNtbG5hSFFnS0dNcElERTVPVGdnU0dWM2JHVjBkQzFRJiN4QTtZV05yWVhKa0lFTnZiWEJoYm5rQUFHUmxjMk1BQUFBQUFBQUFFbk5TUjBJZ1NVVkROakU1TmpZdE1pNHhBQUFBQUFBQUFBQUFBQUFTJiN4QTtjMUpIUWlCSlJVTTJNVGsyTmkweUxqRUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBJiN4QTtBQUFBQUFBQUFBQUFBRmhaV2lBQUFBQUFBQUR6VVFBQkFBQUFBUmJNV0ZsYUlBQUFBQUFBQUFBQUFBQUFBQUFBQUFCWVdWb2dBQUFBJiN4QTtBQUFBYjZJQUFEajFBQUFEa0ZoWldpQUFBQUFBQUFCaW1RQUF0NFVBQUJqYVdGbGFJQUFBQUFBQUFDU2dBQUFQaEFBQXRzOWtaWE5qJiN4QTtBQUFBQUFBQUFCWkpSVU1nYUhSMGNEb3ZMM2QzZHk1cFpXTXVZMmdBQUFBQUFBQUFBQUFBQUJaSlJVTWdhSFIwY0RvdkwzZDNkeTVwJiN4QTtaV011WTJnQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQVpHVnpZd0FBJiN4QTtBQUFBQUFBdVNVVkRJRFl4T1RZMkxUSXVNU0JFWldaaGRXeDBJRkpIUWlCamIyeHZkWElnYzNCaFkyVWdMU0J6VWtkQ0FBQUFBQUFBJiN4QTtBQUFBQUFBdVNVVkRJRFl4T1RZMkxUSXVNU0JFWldaaGRXeDBJRkpIUWlCamIyeHZkWElnYzNCaFkyVWdMU0J6VWtkQ0FBQUFBQUFBJiN4QTtBQUFBQUFBQUFBQUFBQUFBQUFBQUFHUmxjMk1BQUFBQUFBQUFMRkpsWm1WeVpXNWpaU0JXYVdWM2FXNW5JRU52Ym1ScGRHbHZiaUJwJiN4QTtiaUJKUlVNMk1UazJOaTB5TGpFQUFBQUFBQUFBQUFBQUFDeFNaV1psY21WdVkyVWdWbWxsZDJsdVp5QkRiMjVrYVhScGIyNGdhVzRnJiN4QTtTVVZETmpFNU5qWXRNaTR4QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUIyYVdWM0FBQUFBQUFUcFA0QUZGOHVBQkRQJiN4QTtGQUFEN2N3QUJCTUxBQU5jbmdBQUFBRllXVm9nQUFBQUFBQk1DVllBVUFBQUFGY2Y1MjFsWVhNQUFBQUFBQUFBQVFBQUFBQUFBQUFBJiN4QTtBQUFBQUFBQUFBQUFBQUtQQUFBQUFuTnBaeUFBQUFBQVExSlVJR04xY25ZQUFBQUFBQUFFQUFBQUFBVUFDZ0FQQUJRQUdRQWVBQ01BJiN4QTtLQUF0QURJQU53QTdBRUFBUlFCS0FFOEFWQUJaQUY0QVl3Qm9BRzBBY2dCM0FId0FnUUNHQUlzQWtBQ1ZBSm9BbndDa0FLa0FyZ0N5JiN4QTtBTGNBdkFEQkFNWUF5d0RRQU5VQTJ3RGdBT1VBNndEd0FQWUErd0VCQVFjQkRRRVRBUmtCSHdFbEFTc0JNZ0U0QVQ0QlJRRk1BVklCJiN4QTtXUUZnQVdjQmJnRjFBWHdCZ3dHTEFaSUJtZ0doQWFrQnNRRzVBY0VCeVFIUkFka0I0UUhwQWZJQitnSURBZ3dDRkFJZEFpWUNMd0k0JiN4QTtBa0VDU3dKVUFsMENad0p4QW5vQ2hBS09BcGdDb2dLc0FyWUN3UUxMQXRVQzRBTHJBdlVEQUFNTEF4WURJUU10QXpnRFF3TlBBMW9EJiN4QTtaZ055QTM0RGlnT1dBNklEcmdPNkE4Y0Qwd1BnQSt3RCtRUUdCQk1FSUFRdEJEc0VTQVJWQkdNRWNRUitCSXdFbWdTb0JMWUV4QVRUJiN4QTtCT0VFOEFUK0JRMEZIQVVyQlRvRlNRVllCV2NGZHdXR0JaWUZwZ1cxQmNVRjFRWGxCZllHQmdZV0JpY0dOd1pJQmxrR2FnWjdCb3dHJiN4QTtuUWF2QnNBRzBRYmpCdlVIQndjWkJ5c0hQUWRQQjJFSGRBZUdCNWtIckFlL0I5SUg1UWY0Q0FzSUh3Z3lDRVlJV2dodUNJSUlsZ2lxJiN4QTtDTDRJMGdqbkNQc0pFQWtsQ1RvSlR3bGtDWGtKandta0Nib0p6d25sQ2ZzS0VRb25DajBLVkFwcUNvRUttQXF1Q3NVSzNBcnpDd3NMJiN4QTtJZ3M1QzFFTGFRdUFDNWdMc0F2SUMrRUwrUXdTRENvTVF3eGNESFVNamd5bkRNQU0yUXp6RFEwTkpnMUFEVm9OZEEyT0Rha053dzNlJiN4QTtEZmdPRXc0dURra09aQTUvRHBzT3RnN1NEdTRQQ1E4bEQwRVBYZzk2RDVZUHN3L1BEK3dRQ1JBbUVFTVFZUkIrRUpzUXVSRFhFUFVSJiN4QTtFeEV4RVU4UmJSR01FYW9SeVJIb0VnY1NKaEpGRW1RU2hCS2pFc01TNHhNREV5TVRReE5qRTRNVHBCUEZFK1VVQmhRbkZFa1VhaFNMJiN4QTtGSzBVemhUd0ZSSVZOQlZXRlhnVm14VzlGZUFXQXhZbUZra1diQmFQRnJJVzFoYjZGeDBYUVJkbEY0a1hyaGZTRi9jWUd4aEFHR1VZJiN4QTtpaGl2R05VWStoa2dHVVVaYXhtUkdiY1ozUm9FR2lvYVVScDNHcDRheFJyc0d4UWJPeHRqRzRvYnNodmFIQUljS2h4U0hIc2NveHpNJiN4QTtIUFVkSGgxSEhYQWRtUjNESGV3ZUZoNUFIbW9lbEI2K0h1a2ZFeDgrSDJrZmxCKy9IK29nRlNCQklHd2dtQ0RFSVBBaEhDRklJWFVoJiN4QTtvU0hPSWZzaUp5SlZJb0lpcnlMZEl3b2pPQ05tSTVRandpUHdKQjhrVFNSOEpLc2syaVVKSlRnbGFDV1hKY2NsOXlZbkpsY21oeWEzJiN4QTtKdWduR0NkSkozb25xeWZjS0Ewb1B5aHhLS0lvMUNrR0tUZ3BheW1kS2RBcUFpbzFLbWdxbXlyUEt3SXJOaXRwSzUwcjBTd0ZMRGtzJiN4QTtiaXlpTE5jdERDMUJMWFl0cXkzaExoWXVUQzZDTHJjdTdpOGtMMW92a1MvSEwvNHdOVEJzTUtRdzJ6RVNNVW94Z2pHNk1mSXlLakpqJiN4QTtNcHN5MURNTk0wWXpmek80TS9FMEt6UmxOSjQwMkRVVE5VMDFoelhDTmYwMk56WnlOcTQyNlRja04yQTNuRGZYT0JRNFVEaU1PTWc1JiN4QTtCVGxDT1g4NXZEbjVPalk2ZERxeU91ODdMVHRyTzZvNzZEd25QR1U4cER6alBTSTlZVDJoUGVBK0lENWdQcUErNEQ4aFAyRS9vai9pJiN4QTtRQ05BWkVDbVFPZEJLVUZxUWF4QjdrSXdRbkpDdFVMM1F6cERmVVBBUkFORVIwU0tSTTVGRWtWVlJacEYza1lpUm1kR3EwYndSelZIJiN4QTtlMGZBU0FWSVMwaVJTTmRKSFVsalNhbEo4RW8zU24xS3hFc01TMU5MbWt2aVRDcE1ja3k2VFFKTlNrMlRUZHhPSlU1dVRyZFBBRTlKJiN4QTtUNU5QM1ZBblVIRlF1MUVHVVZCUm0xSG1VakZTZkZMSFV4TlRYMU9xVS9aVVFsU1BWTnRWS0ZWMVZjSldEMVpjVnFsVzkxZEVWNUpYJiN4QTs0Rmd2V0gxWXkxa2FXV2xadUZvSFdsWmFwbHIxVzBWYmxWdmxYRFZjaGx6V1hTZGRlRjNKWGhwZWJGNjlYdzlmWVYrellBVmdWMkNxJiN4QTtZUHhoVDJHaVlmVmlTV0tjWXZCalEyT1hZK3RrUUdTVVpPbGxQV1dTWmVkbVBXYVNadWhuUFdlVForbG9QMmlXYU94cFEybWFhZkZxJiN4QTtTR3FmYXZkclQydW5hLzlzVjJ5dmJRaHRZRzI1YmhKdWEyN0VieDV2ZUcvUmNDdHdobkRnY1RweGxYSHdja3R5cG5NQmMxMXp1SFFVJiN4QTtkSEIwekhVb2RZVjE0WFkrZHB0MitIZFdkN040RVhodWVNeDVLbm1KZWVkNlJucWxld1I3WTN2Q2ZDRjhnWHpoZlVGOW9YNEJmbUorJiN4QTt3bjhqZjRSLzVZQkhnS2lCQ29GcmdjMkNNSUtTZ3ZTRFY0TzZoQjJFZ0lUamhVZUZxNFlPaG5LRzE0YzdoNStJQklocGlNNkpNNG1aJiN4QTtpZjZLWklyS2l6Q0xsb3Y4akdPTXlvMHhqWmlOLzQ1bWpzNlBObytla0FhUWJwRFdrVCtScUpJUmtucVM0NU5OazdhVUlKU0tsUFNWJiN4QTtYNVhKbGpTV241Y0tsM1dYNEpoTW1MaVpKSm1RbWZ5YWFKclZtMEticjV3Y25JbWM5NTFrbmRLZVFKNnVueDJmaTUvNm9HbWcyS0ZIJiN4QTtvYmFpSnFLV293YWpkcVBtcEZha3g2VTRwYW1tR3FhTHB2Mm5icWZncUZLb3hLazNxYW1xSEtxUHF3S3JkYXZwckZ5czBLMUVyYml1JiN4QTtMYTZocnhhdmk3QUFzSFd3NnJGZ3NkYXlTN0xDc3ppenJyUWx0SnkxRTdXS3RnRzJlYmJ3dDJpMzRMaFp1Tkc1U3JuQ3VqdTZ0YnN1JiN4QTt1NmU4SWJ5YnZSVzlqNzRLdm9TKy83OTZ2L1hBY01Ec3dXZkI0OEpmd3R2RFdNUFV4RkhFenNWTHhjakdSc2JEeDBISHY4Zzl5THpKJiN4QTtPc201eWpqS3Q4czJ5N2JNTmN5MXpUWE50YzQyenJiUE44KzQwRG5RdXRFODBiN1NQOUxCMDBUVHh0UkoxTXZWVHRYUjFsWFcyTmRjJiN4QTsxK0RZWk5qbzJXelo4ZHAyMnZ2YmdOd0YzSXJkRU4yVzNoemVvdDhwMzYvZ051Qzk0VVRoek9KVDR0dmpZK1ByNUhQay9PV0U1ZzNtJiN4QTtsdWNmNTZub011aTg2VWJwME9wYjZ1WHJjT3Y3N0lidEVlMmM3aWp1dE85QTc4endXUERsOFhMeC8vS004eG56cC9RMDlNTDFVUFhlJiN4QTs5bTMyKy9lSytCbjRxUGs0K2NmNlYvcm4rM2Y4Qi95WS9Tbjl1djVML3R6L2JmLy8vKzRBRGtGa2IySmxBR1RBQUFBQUFmL2JBSVFBJiN4QTtCZ1FFQkFVRUJnVUZCZ2tHQlFZSkN3Z0dCZ2dMREFvS0N3b0tEQkFNREF3TURBd1FEQTRQRUE4T0RCTVRGQlFURXh3Ykd4c2NIeDhmJiN4QTtIeDhmSHg4Zkh3RUhCd2NOREEwWUVCQVlHaFVSRlJvZkh4OGZIeDhmSHg4Zkh4OGZIeDhmSHg4Zkh4OGZIeDhmSHg4Zkh4OGZIeDhmJiN4QTtIeDhmSHg4Zkh4OGZIeDhmSHg4Zi84QUFFUWdBWUFFQUF3RVJBQUlSQVFNUkFmL0VBYUlBQUFBSEFRRUJBUUVBQUFBQUFBQUFBQVFGJiN4QTtBd0lHQVFBSENBa0tDd0VBQWdJREFRRUJBUUVBQUFBQUFBQUFBUUFDQXdRRkJnY0lDUW9MRUFBQ0FRTURBZ1FDQmdjREJBSUdBbk1CJiN4QTtBZ01SQkFBRklSSXhRVkVHRTJFaWNZRVVNcEdoQnhXeFFpUEJVdEhoTXhaaThDUnlndkVsUXpSVGtxS3lZM1BDTlVRbms2T3pOaGRVJiN4QTtaSFREMHVJSUpvTUpDaGdaaEpSRlJxUzBWdE5WS0JyeTQvUEUxT1QwWlhXRmxhVzF4ZFhsOVdaMmhwYW10c2JXNXZZM1IxZG5kNGVYJiN4QTtwN2ZIMStmM09FaFlhSGlJbUtpNHlOam8rQ2s1U1ZscGVZbVpxYm5KMmVuNUtqcEtXbXA2aXBxcXVzcmE2dm9SQUFJQ0FRSURCUVVFJiN4QTtCUVlFQ0FNRGJRRUFBaEVEQkNFU01VRUZVUk5oSWdaeGdaRXlvYkh3Rk1IUjRTTkNGVkppY3ZFekpEUkRnaGFTVXlXaVk3TENCM1BTJiN4QTtOZUpFZ3hkVWt3Z0pDaGdaSmpaRkdpZGtkRlUzOHFPend5Z3AwK1B6aEpTa3RNVFU1UFJsZFlXVnBiWEYxZVgxUmxabWRvYVdwcmJHJiN4QTsxdWIyUjFkbmQ0ZVhwN2ZIMStmM09FaFlhSGlJbUtpNHlOam8rRGxKV1dsNWlabXB1Y25aNmZrcU9rcGFhbnFLbXFxNnl0cnErdi9hJiN4QTtBQXdEQVFBQ0VRTVJBRDhBOVU0cTdGWFlxN0ZYWXE3RlhZcTdGWFlxN0ZYWXE3RlhZcXB3WFZ0Y2VwNkVxUytrNWlsNE1HNHlMOXBHJiN4QTtwMFlkd2NWVk1WZGlyc1ZkaXFuUGRXMXY2ZnJ5cEY2cmlLTG13WGxJMzJVV3ZWajJBeFZVeFYyS3V4VjJLdXhWMkt1eFYyS3V4VjJLJiN4QTt1eFYyS3V4VjJLdXhWMkt1eFYyS3V4VjJLdXhWMkt1eFYyS3V4VlF2cit4c0xXUzd2cmlLMHRJZ0RMY1R1c2NhZ21nTE94Q2pjOThWJiN4QTtmS1dtNnJkK1NmOEFuSTFOV20xK0tYeW41ejFHNll5YVZkeDNGcVhsa1pZSTdzRlNvZGZValoraFVQcyt4eFY5TFA4QW1CNURSMlIvJiN4QTtNbWxxNmtobE43YmdnallnZ3ZpcWVvNlNJc2tiQjBjQmtkVFVFSGNFRVlxNTNTTkdra1lJaUFzN3NhQUFia2tuRlVpVDh3UElidXFKJiN4QTs1azB0bllnS292YmNrazdBQUI4VmZOT3BhcmQrZHY4QW5JMTlXaDErS0x5bjVNMUcxWVNhcmR4MjlxSGlrVlo0N1FCUXBkdlRrWk9wJiN4QTtZSnUrNHhWOVcyTi9ZMzlySGQyTnhGZDJrb0ppdUlIV1NOZ0RRbFhVbFR1TzJLcStLdXhWMkt1eFYyS3V4VjJLdXhWMkt1eFYyS3V4JiN4QTtWMkt1eFYyS3V4VjJLdXhWMkt1eFYyS3V4VjJLdXhWZy93Q2RQa1NUengrVytyNkRic1Z2bmpGeFlVTkExeGJuMUkwYnRSeXZBMTZWJiN4QTtyMnhWODdmbHYrVmZrL3o5K1JldFcraldrbG41NzA2UWZXNG1sa1BLOHRBN1FIMG5haWV2Rkk4ZlFVYXY4dUtwditWSDVVZmxmK2JIJiN4QTtrRzkxUzd0SkxYenpHWnJYVnJrVHpEamZGU1k3dG9PWEg5NVVPdzQwTDhoaXJQUCtjWHZPVi9jZVhiL3lEcjFZL01Ya3lack40blB4JiN4QTtOYWhpc2RQSDBtVXg3YmNlSGppcnYrY29mT1YvYitYYkR5RG9OWlBNWG5PWmJOSWtQeExhbGdzbGZEMVdZUjc3Y2VmaGlyQS96WC9LJiN4QTtqOHIvQU1wL0lObHFscGFTWFhubVF3MnVrM0pubVBLK0NneVhhd2N1UDd1aGRSeG9INGpGVW8vTWo4cS9KL2tIOGk5RnQ5WnRKTHp6JiN4QTszcU1oK3FSTExJT041ZGhHblBwSTFIOUNLTkkraHExUDVzVmZSUDVMZVJKUEkvNWI2Um9Od3hhK1NNM0YvVTFDM0Z3ZlVrUmUxRUxjJiN4QTtCVHJTdmZGV2NZcTdGWFlxN0ZYWXE3RlhZcTdGWFlxN0ZYWXE3RlhZcTdGWFlxN0ZYWXE3RlhZcTdGWFlxN0ZYWXE3RlhZcStjTmYvJiN4QTtBT1FRL3dET1ExdHJ5L3VmSjNuK3NPbzlvNGJ3c09ibnNLU3NzbFQreTcwNllxdDh3QmZ5Yy81eUJ0L01DajZ2NUo4OWd3Nm1RS1JRJiN4QTtYWmFyT2V3NHlFU1ZQN0x1QjB4VlcvT20zbi9MUDgyOUEvTnJUNDJHa2FrNDB6elRGR05tQlVEbVFPcGFKT1MvNWNZOGNWZCtTMXZQJiN4QTsrWm41dDYvK2JXb1JzZEkwMXpwbmxhS1FiS0FwSE1BOUNzVDhtL3k1RDRZcW8rWHd2NXgvODVBM0htQmg5WThrK1JBSWRNSkZZcDdzJiN4QTtOVlhIWThwQVpLajlsRUI2NHF1MEQva0wzL09RMXpyemZ2dkoza0NrT25kNDVyd01lRGpzYXlxMGxSK3lpVjY0cStqOFZkaXJzVmRpJiN4QTtyc1ZkaXJzVmRpcnNWZGlyc1ZkaXJzVmRpcnNWZGlyc1ZkaXJzVmRpcnNWZGlyc1ZkaXJzVmRpckEvenUvTHVQejkrWG1vNk1pQTZuJiN4QTtFUHJla09hZkRkd2dsRnFlZ2tVdEdUNE5pcnpEeXl5L25mOEE4NDlYWGw2K05mTjJnQVc5WmRwQmUycW42dEszTGNldkhXTnllL1BGJiN4QTtVNC9LRFZkTC9OejhuN3Z5WDV1amtPcGFQdzB2V0l5ZU53UFJOYmE0QllFcS93QzdvU2EvR2pWMk9LdS9OL1ZkTC9LUDhuN1R5WDVSJiN4QTtqa0dwYXh6MHZSNHdlVndmV05ibTRKVUFzLzd5Z0lwOGJyVFlZcWsvbVpsL0pEL25IcTE4dldKcDV1MThHM3JGdkliMjZVZldaVjQ3JiN4QTtuMEk2Um9SMzRZcTlQL0pIOHU0L0lQNWVhZG96b0JxY28rdDZ1NHA4VjNNQVhXbzZpTlFzWVBndUtzOHhWMkt1eFYyS3V4VjJLdXhWJiN4QTsyS3V4VjJLdXhWMkt1eFYyS3V4VjJLdXhWMkt1eFYyS3V4VjJLdXhWMkt1eFYyS3V4Vjg0YS84QThnaC81eUd0dGVYOXo1Tzgvd0JZJiN4QTtkUjdSdzNoWWMzUFlVbFpaS245bDNwMHhWZ0huL3dBcndlZWZ6MHZ0Ty9LZTd1UmNYamVyNW0xR0dReDJFTW9JV1dSWGlvekx5cVdxJiN4QTtUeWtKNDRxN3lCNVhnOGpmbnBZNmQrYkYzY200czI5WHl6cU0waGtzSnBTU3NValBMVmxYbFFyUWpqSUJ5eFZuK2dmOGhlLzV5R3VkJiN4QTtlYjk5NU84Z1VoMDd2SE5lQmp3Y2RqV1ZXa3FQMlVTdlhGWDBmaXJzVmRpcnNWZGlyc1ZkaXJzVmRpcnNWZGlyc1ZkaXJzVmRpcnNWJiN4QTtkaXJzVmRpcnNWZGlyc1ZkaXJzVmRpcnNWZGlyc1ZZaithSDVhNkorWW5sV1R5L3FydkF2cXBjV3QzRUZNa00wZFJ5VU5VYnF6S1I0JiN4QTtIRlYzNWEvbG41Wi9MM3k2bWphSkVTV0llOXZwS0dlNWxwVG5JdzhPaXFObEgwa3F1L01yOHMvTFA1aGVYWDBiVzRpQ3BMMlY5SFFUJiN4QTsyMHRLYzQyUGowWlRzdytnaFZiK1YvNWE2SitYZmxXUHkvcFR2T3ZxdmNYVjNLRkVrMDBsQnlZTFFiS3FxQjRERldYWXE3RlhZcTdGJiN4QTtYWXE3RlhZcTdGWFlxN0ZYWXE3RlhZcTdGWFlxN0ZYWXE3RlhZcTdGWFlxeHZWUHpBOHZhWDUxMG55ZmV0TEZxdXRReVQ2ZklVLzBkJiN4QTsvU3J5ajlTdjI2THNLZnJHS3NrSkNna21nRzVKNkFZcWxYbGZ6THBubWJRN2JXOUxMdHA5MlpQcXp5S1VMckhJMFhNQS9zdnc1SWU2JiN4QTtrSEZXR3IrZWVnM0dyNnZwZWw2RHIycnphSmR5MkdvVGFmWWlhSko0V0tNdkwxQjNVMDJ4Vk05QS9OQ0RXTmRnMFkrV1BNV21TM0FjJiN4QTtyZWFocHJ3V2c0SVpLTlB5WkFTRm9QZmJGVVgrWXY1aytXL3kvd0JHdHRZOHdtWmJHNnU0N0ZHdDQvVlpaSkVlUU15MVU4UXNUVnBVJiN4QTsrMktzaTArL3N0UnNiZS9zWjB1Yks2aldhM3VJeUdSNDNISldVanFDRGlxQzBEekhwbXZRM3N1bnM3TFlYdHpwdHh6WGlSY1djcGlsJiN4QTtBOFY1THNjVllucm41eDZmbzkvcVZ0TjVZOHlYRU9sZXA5YTFHRFRYYXo0eERrN3BPeklyS0J2WHczeFZBNlYrZm1pYXJhV2Q5cC9sJiN4QTtmek5jNmRmTlMzdjRkTGFXQWpud0xGNDNjQlEyS3M1ODFlWmROOHNlWGIvWDlUNS9VTk5oTTl4NlM4M0tyMlZhaXBKUGppcUwwclVyJiN4QTtiVk5MczlUdENUYTMwRWR6QVdIRmpITWdkYWpzYU5pcWhhNjlZWE91MytoeEZ2cjJtd1cxemNnclJQVHZHbVdMaTNjMXRucmlxUStmJiN4QTtQelAwSHlYZmFOcDkvYTMxOWY2ODgwZW0ybW5RQ2VWMmdDRnh4TEovdjFhWXFsY1g1NGVWNDlYc2RMMXZUdFg4dHk2bko2TmhjYXpaJiN4QTtOYlc4c3AyOU5aUXpxRzNIMnFZcTlEeFY1aG9uNS9hRHIxaitrTkQ4dGVZOVRzQzdScmQydW5pU0ptUTBZQmhMaXJJL0tmNWlRZVk5JiN4QTtVbjAwZVg5YzBpV0NJemV0cTFnOXBBNFYxUXJIS1N5czN4MW9PMWZERldXWXE3RlhZcTdGWFlxN0ZYWXE3RlhZcTdGWFlxN0ZYWXE3JiN4QTtGWGxmL09SZmxHKzFieVRINWgwWWNmTW5rKzRYV2RLbFVWZWtCRFRSajJLcUhwM0tBWXFoL01uNWdMNTAvTGZ5N1orWFpmUzFUOHc2JiN4QTtXRVhBL0hiUUJTZFVsLzZObzBkSy93QXhHS3ZVdEsweXgwclRMVFRMQ0lRV05qQ2x2YXdyMFNLSlFpS1BrQmlyNTcvS1BXUFBOaDV5JiN4QTsvTkJQTG5seTMxdUIvTkY2WjVaOVJGZ1kzRTh0RkNtQ2ZsVWIxcU1WZThlV2I3ekhlNmNadk1HbFJhTmZlb3lyYVFYWXZWOU1BY1hNJiN4QTtvaWczSnI4UEg2Y1ZZYitkV20yR3BueVBwMm9RSmRXTjM1bWdodWJlUWNrZU43QzlWbFllNE9Lc004bWFqcVA1TmVkMDhnYTlPODNrJiN4QTtQWFpXZnlocTh4cUxhWjJxMWxNeDZDcmZmUnYybTRxczgvSnYvam5lYWY4QXdLOWQvd0NvNThWVC93RE1QL2xBUE0zL0FHeXI3L3FHJiN4QTtmRldLL3dET04zL2trdkszL0dDYi9xSmx4VkYvbjkvNUpyelovd0F3TGY4QUVseFZQdnk2WlcvTDd5d3lrTXJhVFlsV0c0SU5zbTR4JiN4QTtWS2ZMMHNiL0FKdmVjMVZnV2owdlFsa0E3TVgxQnFINkdCeFZnSC9PUU9wcHBmNXBmbExxRDI5eGRKYlhtcE9iZXppZTR1SCtHMTJqJiN4QTtpUUZuYjJHS3BSK2JQbkNQODNvNFB5eDhxNlRmUjYzOWJodTlWbTFTM05sK2o3ZUxyTThjeFdRa2lVYkFkRHR1UmlyNkxpVDA0a1RrJiN4QTt6OEZDODJOV05CU3BQaWNWZk5mL0FEak5ydjVpMlg1V3dRYUQ1VXRkWDA4WGx5VnZKdFZXemN1V0hKZlJOdE4wOGVXK0t2b2pSTG5WJiN4QTtyblNyZWZWN0dQVGRSY0UzRmxGUDlhU004aUFCTndpNTFXaCt5UERGVWRpcnNWZGlyc1ZkaXJzVmRpcnNWZGlyc1ZkaXJzVmRpcnNWJiN4QTtjUUdCQkZRZGlEMEl4VjViK1YzNUcyZmtUek5xdXFwcURYMWpLWlU4djJEb1FOUGd1WlBVbmpVbG1ERitFWTVBRFpmYzRxOVN4VjVKJiN4QTtvZjVVL21KNVkxL3pQcUhscnpMcHNWcjVsMU9mVkpZTDNUcFozamFhUm5DQmt1WWdlUE9sYWI0cXluUU5IL05hSFc0TG5Ydk1lbTNlJiN4QTtrSXJpZXd0Tk9lQjVDVllJUks4OHBXakVFN2IwcDc0cW1YbXp5cCtuN255OU45WityalF0VmkxVXJ3NStyNlVFMFBwZFY0MTlldkxmJiN4QTtwMHhWVC9NTHlGb2Zucnl0ZCtYdFlUOXhjRGxCY0tBWklKMS91NW82L3RLZnZGUWRqaXFYL2xKNUJ2dkkzbEw5QzMrcC9wZThlNnVMJiN4QTt5ZS9LTWpPOXcvTmkzSnBHTFYzSkozeFZrbm1IU3YweG9HcDZUNnZvL3BHMG50UFdweTRldkcwZkxqVVZweXJTdUtwVCtXbmsxL0pmJiN4QTtrYlNmTEQzUXZYMDJOa2E2Q2VtSEx5TklhSVM5S2M2ZGNWVHZWdEswL1Y5THU5SzFHRmJpd3ZvWHQ3cUJxMGVPUlNyTHRRalk5UmlyJiN4QTt5clEveXQvTnZ5amJuUmZLZm5XMmJ5eWhJc0lOV3N2ckZ6WnhzMWVFY2lPbnFjZTNLaSt3eFZuSGtUeU5GNVd0YnlTNHY1dFkxN1ZwJiN4QTtSYzYxclZ5QXN0ektxOEVvaS9ESEhHbnd4eHJzb3hWQStkdnk0ZnpONTA4bWVaQmZpMVh5bmNYTTcyeGo1bWNYS3hnQU55WGh4TVBnJiN4QTtldUtvTDh3L3lrSG1MekJwWG0zUU5TUGwvd0E0Nk8xSU5UV0wxbzU0ZThGeEh5ajVyUWtmYTZFamZzcXorMVc1VzJpVzZkSkxrSW9uJiN4QTtralVvalNBZkVWVWx5b0o2QXNmbmlyeUR5QitVMzVwZVEvTHkrWDlDODFhVStueHpTVEkxMXBrenk4cFRVMUszU0R0NFlxem55cnBmJiN4QTs1ajJ1cHp6K1o5ZXNOU3NIaTR3V2xsWXRhbEplUy9INmpUVEVqaUcrSHhQWGJGV1ZZcTdGWFlxN0ZYWXE3RlhZcTdGWFlxN0ZYWXE3JiN4QTtGWFlxN0ZYWXE3RlhZcTh4L04vVWZQR2tTd1hQbDJhNWROV2cvUjFyQmJ4cklJTlZTVVQyTWpjaFFRM0pEMjg1WThRcFU3WXFubjVZJiN4QTthdHJldDZLTloxQjdwTGFhSzN0cksydllsZ25yYlJjYm00bVFLcFdTYTVhUlNQczhVVXFOOTFVaDFYVUw5dnpOdmJXOTFhYXcwcUg2JiN4QTtsOVZqVzlrdGdTNkZuNFFDMmxTZms5QTFaVnhWazM1bmFwcVdsK1VKTDdUcFhodUlyN1RBOHNZNU1JSDFLM1M0cUtOOFBvTS9MMnJpJiN4QTtxZmFYck9sNnJBMCtuWEtYTUtOd2QwclFOUUdtL3NjVllwNVE4M0tkWTh3YVpyTjlTOVhXcG9OTHQ1Z1ZiNnQ2Y1hwQ1BZVlhrV29jJiN4QTtWUkg1am56ZjlYMFZQS2x5TGJVMjFFc3l5S0dnbmppc3JxYjZ2T2FIaEhNOGFwekc2a2dqRlhmbGw1ajFYekRvOS9xT3BXMXhaVEhVJiN4QTtiaUtPeHUwRWN0dWtmRmZSWUFBSGcxUnk3OWNWWXY1TzFQVTd2enhxeWF4cTg4UWcxZTloMCt5YThrVG5GSEp4aFQ2a2JZSVkrRmFQJiN4QTs2Mi9oaXFiL0FKeTZ0cSttYUhZVDZkcWJhYi9wWU53QjZrSzNFYXh1ZlFONmtGNHRxV2FoVm1qb3hIR29yaXJKZkpHcTNXcmVVZEkxJiN4QTtLN2l1WUxxNnRZNUpvNzFVUzRERmR6SXNheEpVOWZoUlI3RHBpckFmeWk4MStZYjd6SnFPamFuZTNlc0pEYk5kTnFycjZVQWtOd1VFJiN4QTtNMXRKYTJzdGxjY0QvY2MzWGlwSThTcTlaeFYyS3V4VjJLdXhWMkt1eFYyS3V4VjJLdXhWMkt1eFYyS3V4VjJLdXhWMkt1eFYyS3V4JiN4QTtWMkt1eFYyS3V4VjJLdXhWMkt1eFYyS3V4VjJLdXhWMkt1eFYyS3V4VjJLdXhWMkt1eFYyS3Y4QS85az08L3htcEdJbWc6aW1hZ2U+CiAgICAgICAgICAgICAgIDwvcmRmOmxpPgogICAgICAgICAgICA8L3JkZjpBbHQ+CiAgICAgICAgIDwveG1wOlRodW1ibmFpbHM+CiAgICAgICAgIDx4bXBNTTpJbnN0YW5jZUlEPnhtcC5paWQ6NGQ0YjA2MDMtNTBiYi05YjRhLWFlYzctNjRlNDZjNGFmOTgxPC94bXBNTTpJbnN0YW5jZUlEPgogICAgICAgICA8eG1wTU06RG9jdW1lbnRJRD54bXAuZGlkOjRkNGIwNjAzLTUwYmItOWI0YS1hZWM3LTY0ZTQ2YzRhZjk4MTwveG1wTU06RG9jdW1lbnRJRD4KICAgICAgICAgPHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD51dWlkOjVEMjA4OTI0OTNCRkRCMTE5MTRBODU5MEQzMTUwOEM4PC94bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ+CiAgICAgICAgIDx4bXBNTTpSZW5kaXRpb25DbGFzcz5wcm9vZjpwZGY8L3htcE1NOlJlbmRpdGlvbkNsYXNzPgogICAgICAgICA8eG1wTU06RGVyaXZlZEZyb20gcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICA8c3RSZWY6aW5zdGFuY2VJRD54bXAuaWlkOjhiZjc0MzUzLTk1NzktYzQ0NC05ODY2LTFhMGNmMzQyMWZiNDwvc3RSZWY6aW5zdGFuY2VJRD4KICAgICAgICAgICAgPHN0UmVmOmRvY3VtZW50SUQ+eG1wLmRpZDo4YmY3NDM1My05NTc5LWM0NDQtOTg2Ni0xYTBjZjM0MjFmYjQ8L3N0UmVmOmRvY3VtZW50SUQ+CiAgICAgICAgICAgIDxzdFJlZjpvcmlnaW5hbERvY3VtZW50SUQ+dXVpZDo1RDIwODkyNDkzQkZEQjExOTE0QTg1OTBEMzE1MDhDODwvc3RSZWY6b3JpZ2luYWxEb2N1bWVudElEPgogICAgICAgICAgICA8c3RSZWY6cmVuZGl0aW9uQ2xhc3M+cHJvb2Y6cGRmPC9zdFJlZjpyZW5kaXRpb25DbGFzcz4KICAgICAgICAgPC94bXBNTTpEZXJpdmVkRnJvbT4KICAgICAgICAgPHhtcE1NOkhpc3Rvcnk+CiAgICAgICAgICAgIDxyZGY6U2VxPgogICAgICAgICAgICAgICA8cmRmOmxpIHJkZjpwYXJzZVR5cGU9IlJlc291cmNlIj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmFjdGlvbj5zYXZlZDwvc3RFdnQ6YWN0aW9uPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6aW5zdGFuY2VJRD54bXAuaWlkOmE3YzAxMWJlLTRkYWItMjA0YS1iNDA0LTM3OWI5NDczOTBjMzwvc3RFdnQ6aW5zdGFuY2VJRD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OndoZW4+MjAyNC0xMS0xMFQyMzo1NTowMSswNTowMDwvc3RFdnQ6d2hlbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnNvZnR3YXJlQWdlbnQ+QWRvYmUgSWxsdXN0cmF0b3IgMjcuMCAoV2luZG93cyk8L3N0RXZ0OnNvZnR3YXJlQWdlbnQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpjaGFuZ2VkPi88L3N0RXZ0OmNoYW5nZWQ+CiAgICAgICAgICAgICAgIDwvcmRmOmxpPgogICAgICAgICAgICAgICA8cmRmOmxpIHJkZjpwYXJzZVR5cGU9IlJlc291cmNlIj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmFjdGlvbj5zYXZlZDwvc3RFdnQ6YWN0aW9uPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6aW5zdGFuY2VJRD54bXAuaWlkOjRkNGIwNjAzLTUwYmItOWI0YS1hZWM3LTY0ZTQ2YzRhZjk4MTwvc3RFdnQ6aW5zdGFuY2VJRD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OndoZW4+MjAyNC0xMS0xMlQwMToxODoyNiswNTowMDwvc3RFdnQ6d2hlbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnNvZnR3YXJlQWdlbnQ+QWRvYmUgSWxsdXN0cmF0b3IgMjcuMCAoV2luZG93cyk8L3N0RXZ0OnNvZnR3YXJlQWdlbnQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpjaGFuZ2VkPi88L3N0RXZ0OmNoYW5nZWQ+CiAgICAgICAgICAgICAgIDwvcmRmOmxpPgogICAgICAgICAgICA8L3JkZjpTZXE+CiAgICAgICAgIDwveG1wTU06SGlzdG9yeT4KICAgICAgICAgPGlsbHVzdHJhdG9yOlN0YXJ0dXBQcm9maWxlPlByaW50PC9pbGx1c3RyYXRvcjpTdGFydHVwUHJvZmlsZT4KICAgICAgICAgPGlsbHVzdHJhdG9yOkNyZWF0b3JTdWJUb29sPkFkb2JlIElsbHVzdHJhdG9yPC9pbGx1c3RyYXRvcjpDcmVhdG9yU3ViVG9vbD4KICAgICAgICAgPHBkZjpQcm9kdWNlcj5BZG9iZSBQREYgbGlicmFyeSAxNS4wMDwvcGRmOlByb2R1Y2VyPgogICAgICA8L3JkZjpEZXNjcmlwdGlvbj4KICAgPC9yZGY6UkRGPgo8L3g6eG1wbWV0YT4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgIAo8P3hwYWNrZXQgZW5kPSJ3Ij8+/+IMWElDQ19QUk9GSUxFAAEBAAAMSExpbm8CEAAAbW50clJH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" alt="Venture Wellness"></div>
+    <div class="ob-hr"></div>
+    <div class="ob-title">Your Venture Wellness guide</div>
+    <div class="ob-sub">Enter your first name and select your program to get started. Your progress saves automatically on this device.</div>
+
+    <div class="ob-field" style="margin-bottom:16px">
+      <label class="ob-label">Your first name</label>
+      <input class="ob-input" id="ob-name" placeholder="e.g. Sarah" oninput="chk()" style="font-size:15px;padding:11px 13px">
+    </div>
+
+    <div class="ob-plans-label">What brings you in today?</div>
+    <div class="ob-plans">
+      <button class="plan-btn" id="pb-fwl" onclick="selPlan('fwl')">
+        <div class="pn">⚖️ Weight loss — women</div>
+        <div class="pd">Balanced deficit · fat loss · sustainable</div>
+      </button>
+      <button class="plan-btn" id="pb-mwl" onclick="selPlan('mwl')">
+        <div class="pn">⚖️ Weight loss — men</div>
+        <div class="pd">Higher protein · caloric deficit</div>
+      </button>
+      <button class="plan-btn" id="pb-glp" onclick="selPlan('glp')">
+        <div class="pn">💉 GLP program</div>
+        <div class="pd">Protein-first · smaller portions · appetite support</div>
+      </button>
+      <button class="plan-btn" id="pb-maint" onclick="selPlan('maint')">
+        <div class="pn">🔬 Hormone &amp; optimization</div>
+        <div class="pd">Body composition · balanced macros · performance</div>
+      </button>
+    </div>
+
+    <!-- Hidden weight fields still exist for Firebase compatibility but not shown -->
+    <input type="hidden" id="ob-sw" value="">
+    <input type="hidden" id="ob-gw" value="">
+
+    <button class="ob-go" id="ob-go" onclick="launch()" disabled>Open my guide →</button>
+    <div class="ob-note">💾 Your guide saves to this device automatically — bookmark this page to return anytime.</div>
+    <div style="margin-top:16px;padding:14px 16px;background:var(--teal-light);border-radius:12px">
+      <div style="font-size:11px;font-weight:500;color:var(--teal-dark);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px">Saving your progress</div>
+      <div style="display:grid;grid-template-columns:28px 1fr;gap:6px 8px;align-items:start">
+        <div style="width:22px;height:22px;border-radius:50%;background:var(--teal);color:#fff;font-size:10px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0">1</div>
+        <div style="font-size:11px;color:var(--teal-dark);line-height:1.5;padding-top:3px">Bookmark this page on your phone so you can find it easily</div>
+        <div style="width:22px;height:22px;border-radius:50%;background:var(--teal);color:#fff;font-size:10px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0">2</div>
+        <div style="font-size:11px;color:var(--teal-dark);line-height:1.5;padding-top:3px">Each visit, enter the <strong>same first name</strong> and select the <strong>same program</strong> — your progress restores automatically</div>
+        <div style="width:22px;height:22px;border-radius:50%;background:var(--teal);color:#fff;font-size:10px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0">3</div>
+        <div style="font-size:11px;color:var(--teal-dark);line-height:1.5;padding-top:3px">Log your weekly weight and body composition in the <strong>💉 Dose tracker</strong> tab if you're on GLP-1</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- no save modal needed — Firebase handles persistence -->
+
+<!-- GUIDE -->
+<div class="guide" id="guide">
+  <div class="topbar">
+    <div class="topbar-brand">Venture Wellness</div>
+    <div class="topbar-right">
+      <span class="topbar-name" id="topbar-name"></span>
+      <button class="tb-btn" onclick="clearSession()" title="Switch patient or change program" style="opacity:.7">Switch</button>
+      <button class="tb-btn" onclick="showOverlay()">Edit</button>
+      <button class="tb-btn solid" onclick="window.print()">Print</button>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-eyebrow">Personalized nutrition guide · Venture Wellness</div>
+      <div class="hero-name" id="hero-name"></div>
+      <div class="hero-sub">This plan is built around your program and goals. Use the daily tracker to build consistency — progress follows pattern, not perfection.</div>
+      <div class="hero-stats" id="hero-stats"></div>
+    </div>
+  </div>
+
+  <div class="tab-strip-wrap">
+    <div class="tab-strip" id="tabStrip"></div>
+  </div>
+
+  <div class="content">
+    <!-- TAB: YOUR PLAN -->
+    <div class="tab-panel active" id="panel-plan">
+      <div class="sh">How to measure your portions</div>
+      <div class="hand-visual">
+        <div class="hand-grid">
+          <div class="hand-item">
+            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="18" y="28" width="28" height="20" rx="4" fill="#F5C4B3"/>
+              <rect x="22" y="14" width="20" height="16" rx="4" fill="#F5C4B3"/>
+              <rect x="18" y="28" width="28" height="4" fill="#F0997B"/>
+              <text x="32" y="54" text-anchor="middle" font-family="DM Sans" font-size="7" fill="#993C1D" font-weight="500">1 PALM</text>
+            </svg>
+            <div class="hi-label" style="color:var(--coral-mid)">Protein</div>
+            <div class="hi-sub">1 palm = 1 portion</div>
+          </div>
+          <div class="hand-item">
+            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="20" y="22" width="24" height="24" rx="12" fill="#C0DD97"/>
+              <rect x="22" y="40" width="20" height="10" rx="3" fill="#C0DD97"/>
+              <rect x="20" y="38" width="24" height="4" fill="#97C459"/>
+              <text x="32" y="58" text-anchor="middle" font-family="DM Sans" font-size="7" fill="#3B6D11" font-weight="500">1 FIST</text>
+            </svg>
+            <div class="hi-label" style="color:var(--green-mid)">Vegetables</div>
+            <div class="hi-sub">1 fist = 1 portion</div>
+          </div>
+          <div class="hand-item">
+            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M16 38 Q16 24 32 22 Q48 24 48 38 L44 46 H20 Z" fill="#FAC775"/>
+              <path d="M16 38 Q16 32 32 30 Q48 32 48 38" fill="#EF9F27"/>
+              <text x="32" y="56" text-anchor="middle" font-family="DM Sans" font-size="6" fill="#854F0B" font-weight="500">CUPPED HAND</text>
+            </svg>
+            <div class="hi-label" style="color:var(--amber-mid)">Carbs</div>
+            <div class="hi-sub">1 cupped hand = 1 portion</div>
+          </div>
+          <div class="hand-item">
+            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="26" y="16" width="12" height="32" rx="6" fill="#B5D4F4"/>
+              <rect x="26" y="28" width="12" height="6" fill="#85B7EB"/>
+              <text x="32" y="56" text-anchor="middle" font-family="DM Sans" font-size="7" fill="#185FA5" font-weight="500">1 THUMB</text>
+            </svg>
+            <div class="hi-label" style="color:var(--blue-mid)">Fats</div>
+            <div class="hi-sub">1 thumb = 1 portion</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sh">Your daily targets</div>
+      <div class="macro-grid" id="macroCards"></div>
+
+      <div class="sh" style="margin-top:28px">Weekly portion tracker</div>
+      <div class="tracker">
+        <div class="tracker-bar">
+          <div class="tracker-bar-left">
+            <span>Tap each bubble as you hit your portions</span>
+            <small id="syncStatus">Connecting...</small>
+          </div>
+          <div class="tracker-actions">
+            <button class="reset-btn" onclick="resetTracker()">Reset week</button>
+            <button class="complete-btn" onclick="openCompleteWeek()">✓ Complete my week</button>
+          </div>
+        </div>
+        <table>
+          <thead><tr>
+            <th class="dc">Day</th>
+            <th class="th-p">Protein</th>
+            <th class="th-v">Vegetables</th>
+            <th class="th-c">Carbs</th>
+            <th class="th-f">Fats</th>
+          </tr></thead>
+          <tbody id="trackerBody"></tbody>
+        </table>
+      </div>
+
+      <div class="sh" style="margin-top:28px">How to adjust your plan</div>
+      <div class="adj-grid">
+        <div class="adj-card"><h4>Not losing weight?</h4>
+          <div class="adj-rule"><strong>Remove 1 handful of carbs</strong> from 1–2 meals per day</div>
+          <div class="adj-rule"><strong>Or remove 1 thumb of fat</strong> from 1–2 meals</div>
+          <div class="adj-rule">Wait 2 full weeks before adjusting again</div>
+        </div>
+        <div class="adj-card"><h4>Losing muscle / feeling weak?</h4>
+          <div class="adj-rule"><strong>Add 1 extra palm of protein</strong> per day</div>
+          <div class="adj-rule"><strong>Add 1 handful of carbs</strong> around workouts</div>
+          <div class="adj-rule">Prioritize protein at every single meal</div>
+        </div>
+        <div class="adj-card"><h4>Too hungry between meals?</h4>
+          <div class="adj-rule"><strong>Add 1 palm of protein</strong> to your largest meal</div>
+          <div class="adj-rule"><strong>Add 1–2 fists of veggies</strong> for volume</div>
+          <div class="adj-rule">Drink 8–12 oz water before eating</div>
+        </div>
+        <div class="adj-card"><h4>Feeling too full / bloated?</h4>
+          <div class="adj-rule"><strong>Spread portions across 4–5 smaller meals</strong></div>
+          <div class="adj-rule">Reduce veggie volume temporarily if needed</div>
+          <div class="adj-rule">Eat slowly — stop at 80% full</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: FOOD GUIDE -->
+    <div class="tab-panel" id="panel-food">
+      <div class="sh">Choose the right foods</div>
+      <div id="foodGuide"></div>
+    </div>
+
+    <!-- TAB: MEAL IDEAS -->
+    <div class="tab-panel" id="panel-meals">
+      <div class="meal-subnav" id="mealSubnav"></div>
+      <div id="mealIdeas"></div>
+    </div>
+
+    <!-- TAB: EATING TIPS -->
+    <div class="tab-panel" id="panel-tips">
+      <div class="sh">Hunger & fullness</div>
+      <div class="tips-grid" id="tipsGrid"></div>
+    </div>
+
+    <!-- TAB: EATING OUT -->
+    <div class="tab-panel" id="panel-out">
+      <div class="sh">Navigating restaurants</div>
+      <div class="venue-grid" id="venueGrid"></div>
+      <div class="social-block">
+        <h4>Social situations & special occasions</h4>
+        <div class="social-rule"><span class="sr-head">Before you go</span> Eat a small protein-rich snack so you're not starving when you arrive. Never show up on empty.</div>
+        <div class="social-rule"><span class="sr-head">At the table</span> Scan the whole menu first. Choose your protein anchor, then build veggies and sides around it.</div>
+        <div class="social-rule"><span class="sr-head">Alcohol</span> 1 glass of wine or light beer = 1 carb portion. Mixed drinks = 2 portions. Budget it in, don't pretend it's free.</div>
+        <div class="social-rule"><span class="sr-head">The plate rule</span> Fill half with veggies or salad first, one quarter protein, one quarter carbs. Works at any buffet or party spread.</div>
+        <div class="social-rule"><span class="sr-head">Indulge mindfully</span> Choose one thing you really want and enjoy it fully. Deprivation leads to overcorrection — one plate won't derail your progress.</div>
+        <div class="social-rule"><span class="sr-head">Next meal</span> Just return to your normal portions. No punishment, no skipping meals. Consistency over perfection.</div>
+      </div>
+    </div>
+
+    <!-- TAB: GLP-1 (conditional) -->
+    <div class="tab-panel" id="panel-glp">
+      <div class="glp-banner"><p>Your GLP-1 medication works by reducing appetite and slowing stomach emptying. These guidelines are designed to work <em>with</em> your medication — not fight it. Smaller portions and higher protein quality are the priority.</p></div>
+      <div class="sh">Managing common side effects</div>
+      <div class="glp-grid" id="glpGrid"></div>
+      <div class="sh" style="margin-top:24px">Nutrition priorities on GLP-1</div>
+      <div class="glp-grid" id="glpNutrition"></div>
+      <div class="glp-warning">⚠️ Contact your Venture Wellness provider if you are unable to tolerate adequate protein or fluids for more than 2–3 days, or if you experience severe nausea, vomiting, or abdominal pain.</div>
+    </div>
+  </div>
+
+
+    <!-- TAB: GLP-1 DOSE TRACKER -->
+    <div class="tab-panel" id="panel-tracker">
+      <div class="trk-disclaimer">
+        <strong>Personal tracking tool only.</strong> This tracker is for your own reference. It does not replace communication with your Venture Wellness provider. Always contact your provider before changing your dose. If you experience severe nausea, vomiting, or abdominal pain, contact the clinic or seek emergency care.
+      </div>
+
+      <!-- Setup -->
+      <div class="trk-setup" id="trk-setup-card">
+        <div class="trk-setup-head">⚙️ Set up your tracker</div>
+        <div class="trk-setup-body">
+          <div class="trk-field-grid">
+            <div class="trk-field">
+              <label>Pharmacy & concentration</label>
+              <select class="trk-select" id="trk-pharmacy" onchange="trkPharmacyChange()">
+                <option value="">Select pharmacy</option>
+                <option value="southend_22">Southend — 22 mg/mL</option>
+                <option value="akina_10">Akina — 10 mg/mL</option>
+                <option value="akina_25">Akina — 25 mg/mL</option>
+                <option value="striker">Striker — 5 mg/0.5 mL (microdosing + B12)</option>
+              </select>
+            </div>
+            <div class="trk-field">
+              <label>Injection frequency</label>
+              <select class="trk-select" id="trk-freq">
+                <option value="weekly">Once weekly</option>
+                <option value="split">Twice weekly (split dose)</option>
+              </select>
+            </div>
+            <div class="trk-field">
+              <label>Starting dose (units)</label>
+              <input class="trk-input" type="number" id="trk-start-units" placeholder="e.g. 10" min="1" max="100" oninput="trkUpdateDoseDisplay('trk-start-units','trk-start-dose-display')"/>
+              <div class="trk-dose-pill" id="trk-start-dose-display" style="display:none"></div>
+            </div>
+            <div class="trk-field">
+              <label>Start date</label>
+              <input class="trk-input" type="date" id="trk-start-date"/>
+            </div>
+          </div>
+          <div class="sh" style="margin-top:0;margin-bottom:8px">Starting body stats (from first body composition scan)</div>
+          <div class="trk-field-grid">
+            <div class="trk-field"><label>Weight (lbs)</label><input class="trk-input" type="number" id="trk-sw" placeholder="e.g. 195" step="0.1"/></div>
+            <div class="trk-field"><label>Fat mass (lbs)</label><input class="trk-input" type="number" id="trk-sf" placeholder="optional" step="0.1"/></div>
+            <div class="trk-field"><label>Lean mass (lbs)</label><input class="trk-input" type="number" id="trk-sl" placeholder="optional" step="0.1"/></div>
+          </div>
+          <div id="trk-striker-note" style="display:none" class="trk-alert purple" style="margin-bottom:10px">
+            <div class="trk-alert-title">Striker microdosing protocol</div>
+            Starting dose: 1 mg (20 units) once weekly × 3 weeks. Maximum dose: 2.5 mg (50 units). Increase slowly as tolerated.
+          </div>
+          <div class="trk-warn show" id="trk-setup-err" style="display:none"></div>
+          <button class="trk-btn trk-btn-primary" onclick="trkSaveSetup()">Save & start tracking</button>
+        </div>
+      </div>
+
+      <!-- Dashboard -->
+      <div id="trk-dashboard" style="display:none">
+        <div class="trk-notify" id="trk-notify-banner">
+          <strong>📣 Notify your provider.</strong> You've increased your dose by 20+ units over the past 4 weeks. Please message Venture Wellness before your next increase.
+        </div>
+
+        <!-- Summary stats -->
+        <div class="trk-setup" style="margin-bottom:14px">
+          <div class="trk-setup-head" style="justify-content:space-between">
+            <span>📊 Progress summary</span>
+            <span id="trk-summary-sub" style="font-size:11px;color:var(--muted);font-weight:400"></span>
+          </div>
+          <div class="trk-setup-body" style="padding-top:12px">
+            <div class="trk-stats" id="trk-stats-row">
+              <div class="trk-stat"><div class="trk-stat-label">Total lost</div><div class="trk-stat-value" id="trk-s-lost">—</div><div class="trk-stat-sub">lbs since start</div></div>
+              <div class="trk-stat"><div class="trk-stat-label">Fat lost</div><div class="trk-stat-value coral" id="trk-s-fat">—</div><div class="trk-stat-sub">lbs fat mass</div></div>
+              <div class="trk-stat"><div class="trk-stat-label">Muscle change</div><div class="trk-stat-value purple" id="trk-s-lean">—</div><div class="trk-stat-sub">lbs lean mass</div></div>
+              <div class="trk-stat"><div class="trk-stat-label">Current dose</div><div class="trk-stat-value" id="trk-s-dose">—</div><div class="trk-stat-sub" id="trk-s-dose-sub"></div></div>
+              <div class="trk-stat"><div class="trk-stat-label">Avg/week</div><div class="trk-stat-value" id="trk-s-rate">—</div><div class="trk-stat-sub">lbs/week</div></div>
+            </div>
+            <div class="trk-alert green" id="trk-ontrack" style="display:none">
+              <div class="trk-alert-title" id="trk-ontrack-title"></div>
+              <span id="trk-ontrack-msg"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="trk-chart-grid">
+          <div class="trk-chart-wrap">
+            <div class="trk-chart-label">Weight (lbs)</div>
+            <div class="trk-chart-canvas"><canvas id="trk-chart-weight"></canvas></div>
+          </div>
+          <div class="trk-chart-wrap">
+            <div class="trk-chart-label" id="trk-comp-label">Body composition (lbs)</div>
+            <div class="trk-chart-canvas"><canvas id="trk-chart-comp"></canvas></div>
+          </div>
+        </div>
+
+        <!-- Dose check -->
+        <div class="trk-log-card">
+          <div class="trk-log-head">⚡ Dose check</div>
+          <div class="trk-log-body">
+            <div style="font-size:12px;color:var(--muted);margin-bottom:10px">Over the past 2 weeks, check all that apply:</div>
+            <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px">
+              <label class="trk-sym"><input type="checkbox" id="trk-tit-scale"> No change on the scale or in how clothes fit</label>
+              <label class="trk-sym"><input type="checkbox" id="trk-tit-up"> My weight has gone up</label>
+              <label class="trk-sym"><input type="checkbox" id="trk-tit-nutr"> Difficulty sticking to my nutrition plan</label>
+            </div>
+            <button class="trk-btn trk-btn-sm" onclick="trkCheckTitration()">Check my dose</button>
+            <div id="trk-tit-result" style="margin-top:10px"></div>
+          </div>
+        </div>
+
+        <!-- Log entry -->
+        <div class="trk-log-card">
+          <div class="trk-log-head">📋 Log this week's check-in</div>
+          <div class="trk-log-body">
+            <div class="sh" style="margin-top:0">Dose this week</div>
+            <div class="trk-field-grid">
+              <div class="trk-field">
+                <label>Units injected</label>
+                <input class="trk-input" type="number" id="trk-log-units" placeholder="e.g. 10" min="1" max="100" oninput="trkUpdateDoseDisplay('trk-log-units','trk-log-dose-display')"/>
+                <div class="trk-dose-pill" id="trk-log-dose-display" style="display:none"></div>
+              </div>
+              <div class="trk-field">
+                <label>Injection schedule</label>
+                <select class="trk-select" id="trk-log-sched">
+                  <option value="weekly">Single weekly dose</option>
+                  <option value="split">Split — twice weekly</option>
+                </select>
+              </div>
+            </div>
+            <div class="sh">Body stats</div>
+            <div class="trk-field-grid">
+              <div class="trk-field"><label>Weight (lbs)</label><input class="trk-input" type="number" id="trk-log-wt" placeholder="e.g. 192" step="0.1"/></div>
+              <div class="trk-field"><label>Fat mass (lbs) <span style="color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0">body comp scan</span></label><input class="trk-input" type="number" id="trk-log-fat" placeholder="optional" step="0.1"/></div>
+              <div class="trk-field"><label>Lean mass (lbs) <span style="color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0">body comp scan</span></label><input class="trk-input" type="number" id="trk-log-lean" placeholder="optional" step="0.1"/></div>
+              <div class="trk-field"><label>Protein avg/day (g)</label><input class="trk-input" type="number" id="trk-log-prot" placeholder="optional" step="1"/></div>
+            </div>
+            <div class="sh">Symptoms this week</div>
+            <div class="trk-symptom-grid">
+              <label class="trk-sym"><input type="checkbox" id="trk-sym-nausea"> Nausea</label>
+              <label class="trk-sym"><input type="checkbox" id="trk-sym-fatigue"> Fatigue</label>
+              <label class="trk-sym"><input type="checkbox" id="trk-sym-constip"> Constipation</label>
+              <label class="trk-sym"><input type="checkbox" id="trk-sym-diarr"> Diarrhea</label>
+              <label class="trk-sym"><input type="checkbox" id="trk-sym-appetite"> Low appetite</label>
+              <label class="trk-sym"><input type="checkbox" id="trk-sym-head"> Headache</label>
+              <label class="trk-sym"><input type="checkbox" id="trk-sym-inject"> Injection site reaction</label>
+              <label class="trk-sym"><input type="checkbox" id="trk-sym-none"> No symptoms</label>
+            </div>
+            <div class="trk-field" style="margin-bottom:12px">
+              <label>Notes (optional)</label>
+              <input class="trk-input" type="text" id="trk-log-notes" placeholder="e.g. skipped a dose, stressful week, started gym..."/>
+            </div>
+            <div class="trk-warn" id="trk-log-err"></div>
+            <button class="trk-btn trk-btn-primary" onclick="trkSaveLog()" style="margin-top:8px;width:100%">Save this week's log</button>
+          </div>
+        </div>
+
+        <!-- History -->
+        <div class="trk-history">
+          <div class="trk-history-head">
+            <span>Weekly log history</span>
+            <div style="display:flex;gap:8px">
+              <button class="trk-btn trk-btn-sm" onclick="trkShowSetup()">Edit setup</button>
+              <button class="trk-btn trk-btn-danger" onclick="trkConfirmReset()">Reset all</button>
+            </div>
+          </div>
+          <div id="trk-history-body" style="overflow-x:auto"></div>
+        </div>
+      </div>
+    </div>
+
+  <div class="guide-footer">
+    <span>Venture Wellness · 2342 Colony Crossing Place, Midlothian, VA · venturewellnessrva.com</span>
+    <span>Julia Montgomery, DNP, FNP-BC · HSA/FSA accepted</span>
+  </div>
+</div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────────
+const TIERS = {
+  fwl:  {protein:4,veggies:5,carbs:3,fats:2},
+  mwl:  {protein:5,veggies:5,carbs:4,fats:2},
+  glp:  {protein:4,veggies:4,carbs:2,fats:2},
+  maint:{protein:5,veggies:5,carbs:4,fats:3}
+};
+
+const MACROS = [
+  {key:'protein',cls:'mp',cls2:'p',icon:'✋',label:'Protein',unit:'palms',meal:'Per meal: 1–2 palms',
+   tags:['Chicken','Fish','Eggs','Greek yogurt']},
+  {key:'veggies',cls:'mv',cls2:'v',icon:'✊',label:'Vegetables',unit:'fists',meal:'Per meal: 1–2 fists',
+   tags:['Spinach','Broccoli','Carrots','Zucchini']},
+  {key:'carbs',cls:'mc2',cls2:'c',icon:'🤲',label:'Carbs',unit:'handfuls',meal:'Per meal: 0–1 handfuls',
+   tags:['Sweet potato','Oats','Blueberries','Brown rice']},
+  {key:'fats',cls:'mf',cls2:'f',icon:'👍',label:'Healthy fats',unit:'thumbs',meal:'Per meal: 0–1 thumbs',
+   tags:['Avocado','Olive oil','Almonds','Flax seeds']},
+];
+
+const FOODS = [
+  {key:'protein',icon:'✋',label:'Protein',headColor:'var(--coral-light)',headText:'var(--coral-mid)',icoColor:'#F5C4B3',
+   more:['Chicken breast','Wild salmon','Canned tuna / sardines','Turkey breast','Whole eggs & egg whites','Plain Greek yogurt (2% or full fat)','Cottage cheese (cultured)','White fish (cod, tilapia, halibut)','Shrimp & scallops','Tempeh'],
+   some:['Lean ground beef (90%+)','Sirloin steak','Pork tenderloin','Tofu','Protein powder (whey or pea)','Edamame','Lean deli turkey (minimally processed)'],
+   less:['Fried chicken / chicken nuggets','Processed deli meats','Pepperoni','Hot dogs','Protein bars with 10+ g added sugar'],
+   note:'Prioritize lean, minimally processed sources. Limit red meat to 3–4 servings per week.'},
+  {key:'veggies',icon:'✊',label:'Vegetables',headColor:'var(--green-light)',headText:'var(--green-mid)',icoColor:'#C0DD97',
+   more:['Spinach & arugula','Kale & collard greens','Broccoli & broccolini','Asparagus','Zucchini & yellow squash','Cauliflower','Brussels sprouts','Cucumber','Bell peppers (all colors)','Cabbage','Mushrooms','Celery & fennel'],
+   some:['Green peas','Beets','Butternut squash','Acorn squash','Edamame (also protein)'],
+   less:['Fried vegetables','Creamed or au gratin preparations','Vegetable chips with heavy oil','Canned veggies with heavy sodium/sauces'],
+   note:'Aim to "eat the rainbow" — different colors provide different nutrients. Non-starchy veggies are essentially free foods. Frozen vegetables are just as nutritious as fresh and take minutes to prepare. For no-prep options, keep cherry tomatoes, small sweet peppers, baby cucumbers, and baby carrots on hand — wash and eat straight from the bag.'},
+  {key:'carbs',icon:'🤲',label:'Carbs',headColor:'var(--amber-light)',headText:'var(--amber-mid)',icoColor:'#FAC775',
+   more:['Sweet potatoes & yams','Steel-cut or rolled oats','Beans & lentils','Blueberries & berries (all)','Brown & wild rice','Quinoa','Barley','Apples & pears','Amaranth','Chickpeas'],
+   some:['White rice','Corn','Whole grain bread & wraps','Bananas','Granola (low sugar)','Whole grain pasta','Whole grain crackers','Canned fruit (no sugar added)','Milk'],
+   less:['White bread & bagels','Sugary breakfast cereals','Pastries & donuts','Chips & pretzels','Candy & candy bars','Fruit juice','Soda','Foods with 10+ g added sugar'],
+   note:'Focus on whole, minimally processed carbs high in fiber. Colorful fruit counts here too.'},
+  {key:'fats',icon:'👍',label:'Healthy fats',headColor:'var(--blue-light)',headText:'var(--blue-mid)',icoColor:'#B5D4F4',
+   more:['Extra virgin olive oil','Avocado & avocado oil','Almonds, walnuts & pecans','Chia seeds & flax seeds','Hemp seeds & pumpkin seeds','Egg yolks','Aged cheese (6+ months)','Brazil nuts & pistachios'],
+   some:['Natural almond or peanut butter','Fresh coconut (unsweetened)','Dark chocolate (70%+)','Full-fat Greek yogurt','Olives & olive tapenade','Pesto (made with EVOO)','Fish & algae oil supplements'],
+   less:['Bacon & high-fat sausage','Margarine & shortening','Highly processed vegetable oils (corn, soybean, canola, cottonseed)','Butter in excess','Hydrogenated / trans fats','Fried foods','Flavored nuts with added sugar','Creamy dressings with poor-quality oils'],
+   note:'Aim for a mix of whole-food fats, nut butters, and pressed oils. Fat is not the enemy — quality matters.'},
+];
+
+const MEALS = {
+  fwl:[
+    {time:'Breakfast',name:'Protein oat bowl',desc:'½ cup rolled oats cooked in water, 1 scoop protein powder or 2 eggs scrambled on the side, handful of blueberries, 1 tsp almond butter.',portions:[{c:'p',l:'1 protein'},{c:'c',l:'1 carb'},{c:'f',l:'½ fat'}]},
+    {time:'Lunch',name:'Big salad with salmon',desc:'3–4 oz canned or grilled salmon over a large bed of spinach, arugula, cucumber, cherry tomatoes, and roasted red peppers. Dress with olive oil and lemon.',portions:[{c:'p',l:'1 protein'},{c:'v',l:'2 veggies'},{c:'f',l:'1 fat'}]},
+    {time:'Snack',name:'Greek yogurt + berries',desc:'¾ cup plain 2% Greek yogurt, ½ cup mixed berries, optional drizzle of honey.',portions:[{c:'p',l:'1 protein'},{c:'c',l:'½ carb'}]},
+    {time:'Dinner',name:'Sheet pan chicken & veg',desc:'4–5 oz baked chicken breast seasoned with herbs, 2 cups roasted broccoli and zucchini with olive oil, ½ cup sweet potato cubes.',portions:[{c:'p',l:'1 protein'},{c:'v',l:'2 veggies'},{c:'c',l:'1 carb'},{c:'f',l:'1 fat'}]},
+  ],
+  mwl:[
+    {time:'Breakfast',name:'Egg scramble + oats',desc:'3 whole eggs scrambled with spinach and peppers, 1 cup cooked oats with cinnamon, black coffee.',portions:[{c:'p',l:'1–2 protein'},{c:'v',l:'1 veggie'},{c:'c',l:'1 carb'}]},
+    {time:'Lunch',name:'Turkey & quinoa bowl',desc:'5 oz ground turkey sautéed with onions and garlic, ¾ cup quinoa, large side salad, olive oil dressing.',portions:[{c:'p',l:'1–2 protein'},{c:'v',l:'2 veggies'},{c:'c',l:'1 carb'},{c:'f',l:'1 fat'}]},
+    {time:'Snack',name:'Cottage cheese + apple',desc:'¾ cup cottage cheese, 1 medium apple sliced, optional cinnamon.',portions:[{c:'p',l:'1 protein'},{c:'c',l:'1 carb'}]},
+    {time:'Dinner',name:'Salmon with roasted veg & rice',desc:'5–6 oz baked salmon, 1½ cups roasted asparagus and cauliflower, ½ cup brown rice.',portions:[{c:'p',l:'2 protein'},{c:'v',l:'2 veggies'},{c:'c',l:'1 carb'},{c:'f',l:'1 fat'}]},
+  ],
+  glp:[
+    {time:'Breakfast',name:'Egg & veggie scramble',desc:'2 eggs scrambled with spinach and cherry tomatoes in 1 tsp olive oil. Small portion — 1 palm of protein, 1 fist of veg. Eat slowly and stop when satisfied.',portions:[{c:'p',l:'1 protein'},{c:'v',l:'1 veggie'},{c:'f',l:'½ fat'}]},
+    {time:'Lunch',name:'Chicken & salad bowl',desc:'3 oz grilled or rotisserie chicken over a bed of arugula, cucumber, and cherry tomatoes. Olive oil and lemon dressing. Focus on getting the protein palm in first.',portions:[{c:'p',l:'1 protein'},{c:'v',l:'1–2 veggies'},{c:'f',l:'1 fat'}]},
+    {time:'Snack',name:'Greek yogurt + berries',desc:'½ cup plain Greek yogurt with a small handful of blueberries. Eat only when genuinely hungry — your appetite cues are suppressed, so a small portion is enough.',portions:[{c:'p',l:'1 protein'},{c:'c',l:'½ carb'}]},
+    {time:'Dinner',name:'Salmon & roasted veg',desc:'3–4 oz baked salmon with 1 fist of roasted zucchini and asparagus. Small portion of sweet potato if you have appetite for a carb. Protein first, always.',portions:[{c:'p',l:'1 protein'},{c:'v',l:'1 veggie'},{c:'c',l:'½ carb'},{c:'f',l:'1 fat'}]},
+  ],
+  maint:[
+    {time:'Breakfast',name:'Savory egg bowl',desc:'3 eggs any style, ½ avocado, 1 cup sautéed spinach and mushrooms in olive oil, optional slice of whole grain toast.',portions:[{c:'p',l:'1–2 protein'},{c:'v',l:'1–2 veggies'},{c:'c',l:'½–1 carb'},{c:'f',l:'1–2 fat'}]},
+    {time:'Lunch',name:'Mediterranean power bowl',desc:'4 oz grilled chicken or salmon, ½ cup chickpeas, large bed of arugula and cucumber, roasted red peppers, 2 tbsp hummus, olive oil and lemon.',portions:[{c:'p',l:'1–2 protein'},{c:'v',l:'2 veggies'},{c:'c',l:'1 carb'},{c:'f',l:'1 fat'}]},
+    {time:'Snack',name:'Apple + almond butter',desc:'1 medium apple sliced, 1½ tbsp natural almond butter.',portions:[{c:'c',l:'1 carb'},{c:'f',l:'1 fat'}]},
+    {time:'Dinner',name:'Steak & roasted vegetables',desc:'4–5 oz lean sirloin or flank steak, 2 cups roasted brussels sprouts and asparagus with olive oil and garlic, ½ cup wild rice.',portions:[{c:'p',l:'1–2 protein'},{c:'v',l:'2 veggies'},{c:'c',l:'1 carb'},{c:'f',l:'1 fat'}]},
+  ],
+};
+
+const QUICK_MEALS = {
+  fwl:[
+    {cat:'Breakfast',name:'Cottage cheese bowl',desc:'¾ cup cottage cheese, ½ cup berries, drizzle of honey, 1 tsp chia seeds. No cooking.',portions:[{c:'p',l:'1 protein'},{c:'c',l:'½ carb'},{c:'f',l:'½ fat'}]},
+    {cat:'Breakfast',name:'Egg & veggie microwave cup',desc:'2 eggs whisked in a mug with spinach and salsa, microwaved 90 seconds. Fast, portable, done.',portions:[{c:'p',l:'1 protein'},{c:'v',l:'1 veggie'}]},
+    {cat:'Lunch',name:'Canned tuna lettuce wraps',desc:'1 can tuna mixed with mustard and diced celery, spooned into large romaine leaves. Under 5 min.',portions:[{c:'p',l:'1 protein'},{c:'v',l:'1 veggie'}]},
+    {cat:'Lunch',name:'Rotisserie chicken salad',desc:'Store-bought rotisserie chicken pulled over a bag salad kit. Add olive oil, lemon. Done in 3 min.',portions:[{c:'p',l:'1 protein'},{c:'v',l:'2 veggies'},{c:'f',l:'1 fat'}]},
+    {cat:'Dinner',name:'Sheet pan shrimp',desc:'Frozen shrimp + frozen broccoli on a pan, olive oil + garlic powder, 400°F for 12 min. Serve over ½ cup precooked rice.',portions:[{c:'p',l:'1 protein'},{c:'v',l:'1 veggie'},{c:'c',l:'1 carb'},{c:'f',l:'1 fat'}]},
+    {cat:'Dinner',name:'Salmon & steam-bag veg',desc:'Microwave a steam-bag of broccoli. Pan-sear a salmon fillet 4 min per side. Olive oil, lemon, done.',portions:[{c:'p',l:'1 protein'},{c:'v',l:'2 veggies'},{c:'f',l:'1 fat'}]},
+  ],
+  mwl:[
+    {cat:'Breakfast',name:'3-egg scramble',desc:'3 eggs + a handful of spinach or leftover veg, scrambled in 1 tsp olive oil. Done in under 5 min.',portions:[{c:'p',l:'1–2 protein'},{c:'v',l:'1 veggie'},{c:'f',l:'½ fat'}]},
+    {cat:'Breakfast',name:'Greek yogurt protein bowl',desc:'1 cup plain Greek yogurt, 1 scoop protein powder stirred in, top with berries and a handful of granola.',portions:[{c:'p',l:'1–2 protein'},{c:'c',l:'1 carb'}]},
+    {cat:'Lunch',name:'Turkey & hummus wrap',desc:'Whole grain wrap, 4 oz lean turkey, 2 tbsp hummus, spinach, tomato, cucumber. Roll and go.',portions:[{c:'p',l:'1–2 protein'},{c:'v',l:'1 veggie'},{c:'c',l:'1 carb'},{c:'f',l:'½ fat'}]},
+    {cat:'Lunch',name:'Canned salmon rice bowl',desc:'1 can salmon over ½ cup precooked rice, avocado slices, cucumber, soy sauce or lemon. 5 min flat.',portions:[{c:'p',l:'1–2 protein'},{c:'c',l:'1 carb'},{c:'f',l:'1 fat'}]},
+    {cat:'Dinner',name:'Ground turkey stir-fry',desc:'5 oz ground turkey browned with garlic, frozen stir-fry veg from a bag, soy sauce and ginger. 12 min.',portions:[{c:'p',l:'1–2 protein'},{c:'v',l:'2 veggies'},{c:'f',l:'½ fat'}]},
+    {cat:'Dinner',name:'Chicken & sweet potato',desc:'Microwave a sweet potato (5 min). Pan-sear a chicken breast (8 min). Steam a bag of green beans. Done.',portions:[{c:'p',l:'1–2 protein'},{c:'v',l:'1 veggie'},{c:'c',l:'1 carb'}]},
+  ],
+  glp:[
+    {cat:'Breakfast',name:'Egg & avocado bowl',desc:'2 scrambled eggs, ¼ avocado sliced, handful of cherry tomatoes. Small plate, protein first. Done in 5 min.',portions:[{c:'p',l:'1 protein'},{c:'v',l:'½ veggie'},{c:'f',l:'1 fat'}]},
+    {cat:'Breakfast',name:'Greek yogurt parfait',desc:'½ cup plain Greek yogurt, small handful of berries, 1 tsp almond butter. No cooking, high protein, easy to eat.',portions:[{c:'p',l:'1 protein'},{c:'c',l:'½ carb'},{c:'f',l:'½ fat'}]},
+    {cat:'Lunch',name:'Tuna & cucumber plate',desc:'1 small can tuna with a squeeze of lemon and Dijon, served alongside sliced cucumber and a few whole grain crackers.',portions:[{c:'p',l:'1 protein'},{c:'v',l:'1 veggie'},{c:'c',l:'½ carb'}]},
+    {cat:'Lunch',name:'Rotisserie chicken bowl',desc:'3 oz pulled rotisserie chicken over baby spinach, olive oil and lemon. Fast, no cooking, solid protein palm.',portions:[{c:'p',l:'1 protein'},{c:'v',l:'1 veggie'},{c:'f',l:'1 fat'}]},
+    {cat:'Dinner',name:'Sheet pan chicken & veg',desc:'3 oz chicken breast + broccoli and zucchini on a pan, olive oil, 400°F for 18 min. Smaller portion than usual — that is correct.',portions:[{c:'p',l:'1 protein'},{c:'v',l:'1 veggie'},{c:'f',l:'½ fat'}]},
+    {cat:'Dinner',name:'Salmon & green beans',desc:'3 oz pan-seared salmon fillet, 1 fist of steamed or sautéed green beans. Simple, balanced, done in 10 min.',portions:[{c:'p',l:'1 protein'},{c:'v',l:'1 veggie'},{c:'f',l:'1 fat'}]},
+  ],
+  maint:[
+    {cat:'Breakfast',name:'Smoked salmon toast',desc:'1 slice whole grain toast, 3 oz smoked salmon, ¼ avocado, capers, lemon. 3 min, feels fancy.',portions:[{c:'p',l:'1 protein'},{c:'c',l:'½ carb'},{c:'f',l:'1 fat'}]},
+    {cat:'Breakfast',name:'Overnight oats',desc:'Make the night before: ½ cup oats, ½ cup Greek yogurt, almond milk, berries, chia seeds.',portions:[{c:'p',l:'1 protein'},{c:'c',l:'1 carb'},{c:'f',l:'½ fat'}]},
+    {cat:'Lunch',name:'Mediterranean plate',desc:'2–3 oz canned sardines or tuna, olives, cherry tomatoes, cucumber, feta, olive oil drizzle.',portions:[{c:'p',l:'1 protein'},{c:'v',l:'2 veggies'},{c:'f',l:'1 fat'}]},
+    {cat:'Lunch',name:'Egg salad lettuce cups',desc:'2 hard-boiled eggs chopped with avocado (instead of mayo), Dijon, celery, served in butter lettuce.',portions:[{c:'p',l:'1 protein'},{c:'v',l:'1 veggie'},{c:'f',l:'1 fat'}]},
+    {cat:'Dinner',name:'Pesto chicken & veg',desc:'Pan-sear chicken 8 min, top with 1 tbsp pesto. Steam broccoli. Quick, satisfying, balanced.',portions:[{c:'p',l:'1–2 protein'},{c:'v',l:'2 veggies'},{c:'f',l:'1 fat'}]},
+    {cat:'Dinner',name:'Steak & cauliflower rice',desc:'Pan-sear a lean sirloin 6 min. Heat frozen cauliflower rice in the same pan. Done in 10 min.',portions:[{c:'p',l:'1–2 protein'},{c:'v',l:'2 veggies'},{c:'f',l:'1 fat'}]},
+  ],
+};
+
+const PREP_PLANS = {
+  fwl:{
+    title:'1-hour Sunday prep',
+    note:'This single prep session covers 4–5 days of protein, veg, and carbs with minimal daily effort.',
+    items:[
+      {icon:'🍗',label:'Baked chicken breast',steps:['Season 4–5 chicken breasts with olive oil, garlic, herbs','Bake at 400°F for 22–25 min','Slice and store in fridge — use in salads, wraps, or bowls all week']},
+      {icon:'🥦',label:'Roasted sheet-pan veg',steps:['Broccoli, zucchini, cauliflower — toss with olive oil and salt','Roast at 425°F for 20 min','Portion into containers — 2 fists per serving ready to go']},
+      {icon:'🍠',label:'Batch sweet potatoes',steps:['Pierce 4–5 sweet potatoes, microwave 5 min each or bake 45 min','Store whole in fridge','Reheat and portion as your carb throughout the week']},
+      {icon:'🥚',label:'Hard-boiled eggs',steps:['Boil 8–10 eggs, store in shell in fridge up to 1 week','Grab 2 as a quick protein addition to any meal','Or slice onto salads and bowls for easy portioning']},
+    ]
+  },
+  mwl:{
+    title:'1-hour Sunday prep',
+    note:'Higher protein focus — this prep supports 5 days of consistent eating without daily cooking.',
+    items:[
+      {icon:'🥩',label:'Ground turkey base',steps:['Brown 1.5 lbs ground turkey with garlic, onion, salt, pepper','Cool and divide into 5 containers','Use as taco filling, bowl topping, or with veg all week']},
+      {icon:'🍗',label:'Batch baked chicken',steps:['Bake 6 chicken breasts at 400°F with olive oil and spices — 25 min','Slice and refrigerate for up to 4 days','Eat cold, warm, or shredded — works in anything']},
+      {icon:'🌾',label:'Big pot of quinoa or rice',steps:['Cook 2 cups dry quinoa or brown rice — makes ~6 cups cooked','Portion into ½ cup servings per container','Mix with any protein and veg for an instant balanced meal']},
+      {icon:'🥗',label:'Chopped salad base',steps:['Chop romaine, cucumber, peppers, and red onion','Store undressed in a large container up to 4 days','Dress only what you eat to keep it fresh']},
+    ]
+  },
+  glp:{
+    title:'1-hour Sunday prep',
+    note:'Same approach as the other programs — smaller portions, same normal foods. The goal is having ready-to-go protein and veg all week so you always hit your palm target even when appetite is low.',
+    items:[
+      {icon:'🍗',label:'Batch baked chicken',steps:['Bake 4 chicken breasts at 400°F with olive oil and seasoning — 22 min','Slice or shred and store in fridge up to 4 days','Pull 3 oz (about 1 palm) per meal — add to salads, bowls, or eat alongside veg']},
+      {icon:'🥚',label:'Hard-boiled eggs',steps:['Boil 8 eggs, store in shell in the fridge up to 1 week','2 eggs = roughly 1 protein portion — easy grab when you have low appetite','Slice onto salads or eat with a handful of cherry tomatoes']},
+      {icon:'🥦',label:'Roasted sheet-pan veg',steps:['Broccoli, zucchini, asparagus — toss with olive oil and salt','Roast at 425°F for 18 min','Portion 1 fist per container — reheat in 60 seconds, veg portion is done']},
+      {icon:'🥗',label:'Ready salad base',steps:['Wash and store arugula or baby spinach in a container with a paper towel','Slice cucumber and cherry tomatoes and keep in a separate container','Combine with your prepped chicken and olive oil in under 2 min — 1 full meal ready']},
+    ]
+  },
+  maint:{
+    title:'1-hour Sunday prep',
+    note:'Balanced prep for body composition — plenty of variety and flavor throughout the week.',
+    items:[
+      {icon:'🐟',label:'Baked salmon fillets',steps:['Season 4 salmon fillets with olive oil, lemon, dill','Bake at 400°F for 12–14 min','Eat warm or cold — great over salads, with roasted veg, or in bowls']},
+      {icon:'🥚',label:'Egg & veggie frittata',steps:['Whisk 8 eggs with spinach, peppers, onion, feta','Bake in an oven-safe pan at 375°F for 20 min','Slice into 4–6 portions — grab a slice for breakfast or lunch all week']},
+      {icon:'🫘',label:'Batch chickpeas & lentils',steps:['Rinse and roast 1 can chickpeas with olive oil and paprika — 25 min at 400°F','Cook 1 cup lentils in broth — 20 min on stove','Both keep 4 days — use as carb/protein hybrids in salads and bowls']},
+      {icon:'🥗',label:'Prepped salad components',steps:['Wash and chop arugula, romaine, and herbs — store with a paper towel to absorb moisture','Slice cucumber, radish, and fennel into separate containers','Assemble fresh each day — takes 2 min when components are ready']},
+    ]
+  },
+};
+
+const OTG_SPOTS = [
+  {icon:'🟡',name:'Chipotle',badge:'good',order:['Burrito bowl (no rice or half rice) with double protein','Fajita veggies + black beans + salsa + guac','Lettuce wrap instead of tortilla = saves 1–2 carb portions','Protein: chicken or steak ~ 1–2 palms','Guac = 1 fat portion — count it'],skip:['Chips & queso — one basket = 3+ carb + fat portions','Queso and sour cream — high fat, easy to overconsume','White rice as a large portion']},
+  {icon:'🟢',name:'Panera Bread',badge:'good',order:['You Pick Two: half salad + cup of soup (turkey chili or chicken noodle)','Green Goddess Cobb Salad (ask for dressing on the side)','Egg & cheese on whole grain for breakfast','Broth bowls for GLP-1 patients — gentle, warm, easy to digest'],skip:['Bakery items — muffins and bagels are 3–4 carb portions each','Mac & cheese bowls — high carb and fat','Lemonade and charged drinks — hidden sugar']},
+  {icon:'🔵',name:'Subway',badge:'ok',order:['Protein bowl (no bread) — double protein + all veg','6-inch on whole wheat if you want bread = 2 carb portions','Best proteins: oven-roasted chicken, tuna (in moderation), turkey','Load up on free veg — spinach, peppers, cucumber, tomato','Olive oil + vinegar dressing over mayo or ranch'],skip:['Footlongs — 4+ carb portions in one sitting','Meatball marinara — high fat and sodium','Sauces: avoid mayo, ranch, and chipotle sauce']},
+  {icon:'🟠',name:'Chick-fil-A',badge:'ok',order:['Grilled chicken sandwich (remove bun for lower carbs) or grilled nuggets','Side salad or fruit cup instead of fries','Market salad = great protein + veggie option','Grilled chicken cool wrap — counts as protein + 1 carb portion'],skip:['Original fried chicken — adds significant fat and carbs','Waffle fries as a side — 3 carb + 2 fat portions','Milkshakes and lemonade — very high sugar']},
+  {icon:'🔴',name:'Starbucks',badge:'ok',order:['Egg white bites (2 = ~1 protein portion, low carb)','Protein boxes: cheese & fruit or chicken & quinoa','Black coffee, Americano, or tea — zero calories','Modifier: ask for protein or almond milk, no syrup, no whip'],skip:['Frappuccinos and sweet lattes — 4–6 carb + fat portions','Bakery items — typically 3–5 carb portions each','Even "light" Fraps have 3+ carb portions worth of sugar']},
+  {icon:'🟤',name:'Grocery store / gas station',badge:'good',order:['String cheese or hard-boiled eggs (many stores sell individually)','Single-serve Greek yogurt cup','Beef jerky or turkey sticks — ~1 protein portion','Nuts or nut butter packet — 1 fat portion','Apple or banana — 1 carb portion, grab and go'],skip:['Granola bars — most are candy bars in disguise (3+ carb + fat)','Chips and trail mix heavy in M&Ms or chocolate','Energy drinks — high sugar or high stimulant']},
+];
+
+const SNACKS = {
+  fwl:[
+    {icon:'🧀',name:'String cheese + apple',desc:'1–2 string cheese sticks and a small apple. High protein, satisfying crunch, no prep.',protein:'~12g protein'},
+    {icon:'🥚',name:'Hard-boiled eggs',desc:'2 hard-boiled eggs with a pinch of salt. Prep a batch Sunday — grab them all week.',protein:'~12g protein'},
+    {icon:'🥛',name:'Greek yogurt cup',desc:'¾ cup plain 2% Greek yogurt with cinnamon or a few berries. One of the highest protein snacks available.',protein:'~17g protein'},
+    {icon:'🍫',name:'Protein shake',desc:'1 scoop whey or pea protein in water or unsweetened almond milk. Fast, portable, zero prep.',protein:'~20–25g protein'},
+    {icon:'🥜',name:'Almonds + cottage cheese',desc:'¼ cup cottage cheese with 10–12 almonds on the side. Protein + fat combo keeps hunger away.',protein:'~15g protein'},
+    {icon:'🫙',name:'Tuna & crackers',desc:'1 single-serve tuna packet (many come in flavors) with 5–6 whole grain crackers.',protein:'~20g protein'},
+  ],
+  mwl:[
+    {icon:'🥩',name:'Beef jerky',desc:'1 oz stick of minimally processed beef or turkey jerky. Look for <5g sugar. Portable anywhere.',protein:'~10g protein'},
+    {icon:'🥛',name:'Cottage cheese bowl',desc:'¾ cup cottage cheese topped with hot sauce or everything bagel seasoning. High volume, very filling.',protein:'~20g protein'},
+    {icon:'🍫',name:'Protein bar',desc:'Choose one with 20+ g protein, <10 g sugar. Quest, RX Bar, or Built Bar are solid options.',protein:'~20g protein'},
+    {icon:'🥚',name:'3 hard-boiled eggs',desc:'Simple, portable, cheap. Prep a dozen on Sunday — they keep in the shell for a week.',protein:'~18g protein'},
+    {icon:'🧀',name:'Low-fat cheese + turkey',desc:'2 slices deli turkey rolled around a cheese stick. ~1 palm of protein, no prep.',protein:'~15g protein'},
+    {icon:'🥜',name:'Edamame',desc:'1 cup frozen edamame microwaved in the bag — a rare plant-based snack with serious protein.',protein:'~17g protein'},
+  ],
+  glp:[
+    {icon:'🥛',name:'Greek yogurt + berries',desc:'½ cup plain Greek yogurt with a small handful of berries. High protein, no prep, eat slowly.',protein:'~12g protein'},
+    {icon:'🧀',name:'String cheese + apple slices',desc:'1–2 string cheese sticks and a few apple slices. Small, satisfying, protein + carb combo.',protein:'~7–14g protein'},
+    {icon:'🥚',name:'2 hard-boiled eggs',desc:'Simple, portable, prep a batch Sunday. 1 palm of protein in a compact package.',protein:'~12g protein'},
+    {icon:'🥜',name:'Almond butter + celery',desc:'1 tbsp almond butter with celery sticks. Fat + fiber — keeps you satisfied between meals.',protein:'~4g protein'},
+    {icon:'🫙',name:'Cottage cheese bowl',desc:'½ cup cottage cheese with a few cherry tomatoes or cucumber slices. Cool, easy, high protein.',protein:'~13g protein'},
+    {icon:'🍫',name:'Protein shake',desc:'½ scoop protein powder in water or unsweetened almond milk. Good option when solid food appetite is low.',protein:'~10–13g protein'},
+  ],
+  maint:[
+    {icon:'🥑',name:'Avocado + egg toast',desc:'½ avocado mashed on 1 slice whole grain toast with a fried egg on top. A full snack or light meal.',protein:'~10g protein'},
+    {icon:'🫙',name:'Smoked salmon + cucumber',desc:'3 slices smoked salmon rolled around cucumber spears. Zero carb, high protein, feels luxe.',protein:'~16g protein'},
+    {icon:'🥜',name:'Nut butter + celery',desc:'2 tbsp almond or peanut butter with celery sticks. Classic combo — fat + fiber = lasting fullness.',protein:'~8g protein'},
+    {icon:'🥛',name:'Kefir',desc:'1 cup plain kefir — drinkable yogurt with probiotics. Great for gut health and easy to sip.',protein:'~11g protein'},
+    {icon:'🧀',name:'Cheese & olive plate',desc:'1 oz aged cheese (parmesan, manchego), 6 olives, a few walnuts. Satisfying micro-charcuterie.',protein:'~8g protein'},
+    {icon:'🍫',name:'Dark chocolate + almonds',desc:'1 oz 70%+ dark chocolate with a small handful of almonds. Satisfies cravings without derailing.',protein:'~5g protein'},
+  ],
+};
+
+const RESOURCES = [
+  {name:'Precision Nutrition Recipe Database',desc:'Hundreds of whole-food recipes with macro breakdowns, organized by goal and dietary preference.',tag:'Recipes',url:'https://www.precisionnutrition.com/category/recipes'},
+  {name:'Budget Bytes',desc:'Practical, affordable healthy recipes with full nutritional info. Great for meal prep and batch cooking.',tag:'Meal prep',url:'https://www.budgetbytes.com/category/recipes/healthy/'},
+  {name:'PN — Eat Well For Less',desc:'Precision Nutrition\'s guide to healthy eating on a budget with simple meal strategies.',tag:'Strategy',url:'https://www.precisionnutrition.com/eat-healthy-on-a-budget'},
+  {name:'Nom Nom Paleo',desc:'Quick, flavorful whole-food recipes focused on protein and vegetables. Great for on-the-go ideas.',tag:'Quick meals',url:'https://nomnompaleo.com/recipes'},
+  {name:'The Adventure Bite — Dinner Ideas',desc:'A large collection of practical, family-friendly dinner recipes organized by protein and style. Great for finding new ideas that fit your hand portion targets.',tag:'Recipes',url:'https://theadventurebite.com/dinner-ideas/'},
+  {name:'Cronometer',desc:'More accurate macro and micronutrient tracker than most apps. Free version covers everything you need.',tag:'Tracking',url:'https://cronometer.com'},
+];
+
+const TIPS_DATA = [
+  {icon:'🔔',title:'Recognize true hunger',body:'Real hunger builds gradually, feels like emptiness in your stomach, and is satisfied by any food. Head hunger is sudden, specific ("I want chips"), and tied to stress or boredom. Before eating, pause 5 seconds and ask: am I actually hungry?',highlight:'Rate your hunger 1–10 before each meal. Eat at a 3–4. Stop at a 6–7.'},
+  {icon:'⏱️',title:'Slow down to lose more',body:'Your gut takes 15–20 minutes to signal fullness to your brain. Eating fast means you routinely overshoot your actual needs. Put your fork down between bites. Chew fully. Aim for 15–20 minutes per meal minimum.',highlight:'Try this: take one bite, put fork down, breathe, then take the next. Notice how much less you need.'},
+  {icon:'🧠',title:'Stop at 80% full',body:'This is the single most effective habit for sustainable fat loss. You don\'t need to feel stuffed to be satisfied. Aim to finish meals feeling light, energized, and comfortable — not full. The discomfort of "full" is your body telling you it got too much.',highlight:'Plate 80% of what you normally would and eat that first. Wait 10 minutes. You probably don\'t need the rest.'},
+  {icon:'💧',title:'Hydrate before you eat',body:'Mild dehydration is indistinguishable from mild hunger. Before reaching for food between meals, drink 8–12 oz of water and wait 10 minutes. Many "hunger" signals disappear completely with proper hydration.',highlight:'Aim for at least half your body weight in ounces of water daily. Coffee and tea count (in moderation).'},
+  {icon:'🌙',title:'Your evening habits matter most',body:'Most overeating happens in the 3 hours before bed. Not because you\'re hungry — because you\'re bored, tired, or decompressing. Identify your personal triggers. A walk, herbal tea, or a non-food ritual can break the evening snack cycle.',highlight:'If evening hunger is real, keep Greek yogurt or a handful of nuts on hand — protein satisfies without spiking blood sugar.'},
+  {icon:'📊',title:'Track patterns, not perfection',body:'You don\'t need to count every calorie. But noticing patterns — when you tend to overeat, which meals leave you hungry, which days feel easiest — gives you data to make smart adjustments without obsessing.',highlight:'Use your bubble tracker for one week straight. You\'ll immediately see which categories and days need attention.'},
+];
+
+const VENUES = [
+  {icon:'🍣',name:'Japanese / sushi',tips:['Choose sashimi over rolls for more protein, less carbs','Edamame is a great protein-forward appetizer','Miso soup adds volume with minimal calories','Limit rice-heavy rolls — 1 roll = roughly 1–2 carb portions','Ask for sauces on the side']},
+  {icon:'🥗',name:'Salad bars / fast casual',tips:['Build your plate: protein base first, then veggies, then a small grain','Dressings: olive oil + vinegar beats creamy every time (1 thumb = 1 tbsp)','Add eggs, grilled chicken, or legumes for protein','Skip the croutons or count them as your carb portion','Ask for dressing on the side — you\'ll use far less']},
+  {icon:'🍕',name:'Italian / pizza',tips:['Start with a large salad to take the edge off hunger','Grilled fish or chicken over heavy pasta dishes','If you have pasta, half the serving + double the protein','1 slice of pizza ≈ 1 carb + 1–2 fat portions — plan accordingly','Tomato-based sauces over cream sauces']},
+  {icon:'🌮',name:'Mexican',tips:['Fajitas (no tortilla) are the ultimate protein-and-veggie meal','Choose grilled over fried options','Guacamole is a great fat source — count 2 tbsp as 1 fat portion','Black beans ≈ 1 carb + protein hybrid','Limit chips — 1 small handful = about 1 carb portion']},
+  {icon:'🍔',name:'American / burgers',tips:['Lettuce wrap instead of bun saves 1–2 carb portions','Order a side salad or extra veg instead of fries','Grilled chicken or lean burger (turkey, bison) over fried','Skip the special sauce — ask for mustard or salsa instead','A side of cottage cheese or sliced tomatoes at many spots']},
+  {icon:'🍜',name:'Asian / Thai / Chinese',tips:['Steamed or stir-fried over deep fried','Ask for sauce on the side — these are often high sugar','Protein + vegetable dishes over noodle-heavy dishes','Brown rice when available, or ask for less white rice','Clear broths (like pho) add volume with low calories']},
+];
+
+const GLP_SIDE_EFFECTS = [
+  {title:'Nausea',icon:'🤢',tips:['Eat cold or room temperature foods — heat intensifies smell and nausea','Avoid lying down within 1–2 hours of eating','Ginger tea, ginger chews, or peppermint can help','Eat your smallest meals later in the day','Stop eating the moment you feel even mild nausea — do not push through']},
+  {title:'Loss of appetite',icon:'😶',tips:['Eat on a schedule, not just when hungry — appetite signals are suppressed','Protein shakes and smoothies count — prioritize getting protein in even without hunger','Small bites of high-protein foods throughout the day beats one large meal','Track protein specifically — aim for your palm targets even in small servings','Skipping protein long-term leads to muscle loss, which slows metabolism']},
+  {title:'Constipation',icon:'⚠️',tips:['Increase water to at least 80+ oz per day','Add 1–2 tbsp of chia or flax seeds daily (counts as fat portion)','Walk 10–20 minutes after meals to stimulate digestion','Increase veggie intake if tolerated — fiber helps','Contact your provider if this persists beyond 1 week']},
+  {title:'Fatigue / low energy',icon:'⚡',tips:['This often indicates insufficient calorie or protein intake','Make sure you\'re hitting your protein targets — even small portions count','Add electrolytes (sodium, potassium, magnesium) if restricting heavily','Light movement helps — a short walk is better than rest on low-energy days','If fatigue is severe or persistent, contact your Venture Wellness provider']},
+];
+
+const GLP_NUTRITION = [
+  {title:'Protein is non-negotiable',icon:'🥩',tips:['Even when appetite is very low, protein protects your muscle mass','On days you can barely eat: prioritize protein above everything else','Shakes, yogurt, eggs, and cottage cheese are easy low-volume options','A protein shake counts as a palm — use it when solid food isn\'t appealing','Muscle loss slows your metabolism and makes long-term weight loss harder']},
+  {title:'Hydration strategy',icon:'💧',tips:['Sip water consistently throughout the day — don\'t chug large amounts','64–80+ oz minimum per day; more if you are physically active','Add electrolytes if experiencing nausea, fatigue, or muscle cramps','Avoid carbonated drinks if experiencing bloating or nausea','Herbal teas, diluted electrolyte drinks, and bone broth all count']},
+  {title:'Portion reality on GLP-1',icon:'📏',tips:['Your portions will naturally be smaller — this is expected and correct','Do not force full portion targets if you feel full — listen to your body','Priority order: protein → vegetables → carbs → fats','As you adapt to the medication, appetite and tolerance usually improve','Check in with your provider if you cannot tolerate solid food consistently']},
+  {title:'Foods that work best',icon:'✅',tips:['Soft, easy-to-digest foods are better tolerated early on','Scrambled eggs, Greek yogurt, soft fish, cottage cheese are ideal protein sources','Cooked vegetables over raw — easier on the stomach','Avoid high-fat, greasy, or very spicy foods, especially early in treatment','Small, frequent meals (4–5 per day) often work better than 3 large ones']},
+];
+
+const DAYS = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let plan = null;
+let patientName = '';
+
+// ── ONBOARDING ────────────────────────────────────────────────────────────────
+function selPlan(id) {
+  plan = id;
+  document.querySelectorAll('.plan-btn').forEach(b => b.classList.remove('sel'));
+  document.getElementById('pb-'+id).classList.add('sel');
+  chk();
+}
+function chk() {
+  const name = document.getElementById('ob-name').value.trim();
+  document.getElementById('ob-go').disabled = !(name && plan);
+}
+function showOverlay() {
+  // re-select the current plan button so it shows as selected when they return
+  if (plan) {
+    document.querySelectorAll('.plan-btn').forEach(b => b.classList.remove('sel'));
+    const pb = document.getElementById('pb-'+plan);
+    if (pb) pb.classList.add('sel');
+  }
+  document.getElementById('overlay').style.display = 'flex';
+  document.getElementById('guide').classList.remove('on');
+}
+
+// ── FIREBASE ──────────────────────────────────────────────────────────────────
+let db = null;
+let docRef = null;
+let trackerData = {}; // local cache: key -> '0'|'1'
+let saveTimer = null;
+
+function setSyncStatus(msg, color) {
+  const el = document.getElementById('syncStatus');
+  if (!el) return;
+  el.textContent = msg;
+  el.style.color = color || '';
+}
+
+async function initFirebase() {
+  const { initializeApp } = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js');
+  const { getFirestore, doc, getDoc, setDoc } = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js');
+
+  const app = initializeApp({
+    apiKey: "AIzaSyBhu3TzzzuUGBvGQl-xgcnxfxiOzl8qFBg",
+    authDomain: "venture-wellness-nutrition.firebaseapp.com",
+    projectId: "venture-wellness-nutrition",
+    storageBucket: "venture-wellness-nutrition.firebasestorage.app",
+    messagingSenderId: "485213066347",
+    appId: "1:485213066347:web:b7a73b78349e5a8fe08d2e"
+  });
+
+  db = getFirestore(app);
+  const docId = `${patientName.toLowerCase().replace(/[^a-z\s]/g,'').trim().replace(/\s+/g,'-')}-${plan}`;
+  docRef = doc(db, 'trackers', docId);
+
+  try {
+    setSyncStatus('Loading your progress...');
+    const snap = await getDoc(docRef);
+    if (snap.exists()) {
+      trackerData = snap.data().bubbles || {};
+      const saved = snap.data();
+      if (saved.startingWeight) {
+        document.getElementById('ob-sw').value = saved.startingWeight;
+      }
+      if (saved.currentWeight) {
+        document.getElementById('ob-gw').value = saved.currentWeight;
+      }
+    }
+    setSyncStatus('✓ Progress synced', 'var(--teal-mid)');
+  } catch(e) {
+    setSyncStatus('Saving locally', 'var(--muted)');
+  }
+
+  // expose setDoc for save function
+  window._fsSetDoc = setDoc;
+}
+
+async function saveToFirebase() {
+  if (!docRef || !window._fsSetDoc) return;
+  const sw = document.getElementById('ob-sw').value.trim();
+  const gw = document.getElementById('ob-gw').value.trim();
+  try {
+    await window._fsSetDoc(docRef, {
+      bubbles: trackerData,
+      startingWeight: sw,
+      currentWeight: gw,
+      updatedAt: new Date().toISOString()
+    });
+    setSyncStatus('✓ Saved', 'var(--teal-mid)');
+  } catch(e) {
+    setSyncStatus('Save failed — check connection', 'var(--coral-mid)');
+  }
+}
+
+function scheduleSave() {
+  setSyncStatus('Saving...');
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(saveToFirebase, 800);
+}
+
+// ── BUBBLE TRACKER ────────────────────────────────────────────────────────────
+function storageKey(day, macro, i) { return `${day}-${macro}-${i}`; }
+function extraCountKey(day, macro) { return `${day}-${macro}-xcount`; }
+
+function makeBubble(bcls, key, isExtra) {
+  const on = trackerData[key] === '1';
+  const el = document.createElement('div');
+  el.className = `bubble b-${bcls}${isExtra ? ' extra' : ''}${on ? ' on' : ''}`;
+  el.addEventListener('click', () => {
+    el.classList.toggle('on');
+    trackerData[key] = el.classList.contains('on') ? '1' : '0';
+    scheduleSave();
+  });
+  return el;
+}
+
+function makeAddBtn(container, bcls, day, macro) {
+  const btn = document.createElement('button');
+  btn.className = 'add-bubble';
+  btn.title = 'Add extra portion';
+  btn.textContent = '+';
+  btn.addEventListener('click', () => {
+    const existing = container.querySelectorAll('.bubble.extra').length;
+    const newIdx = 1000 + existing;
+    const key = storageKey(day, macro, newIdx);
+    const bubble = makeBubble(bcls, key, true);
+    container.insertBefore(bubble, btn);
+    const xcKey = extraCountKey(day, macro);
+    trackerData[xcKey] = String((parseInt(trackerData[xcKey] || '0')) + 1);
+    scheduleSave();
+  });
+  return btn;
+}
+
+function buildBubbleCell(n, bcls, day, macro) {
+  const wrap = document.createElement('div');
+  wrap.className = 'bubbles';
+  for (let i = 0; i < n; i++) {
+    wrap.appendChild(makeBubble(bcls, storageKey(day, macro, i), false));
+  }
+  const xc = parseInt(trackerData[extraCountKey(day, macro)] || '0');
+  for (let i = 0; i < xc; i++) {
+    wrap.appendChild(makeBubble(bcls, storageKey(day, macro, 1000 + i), true));
+  }
+  wrap.appendChild(makeAddBtn(wrap, bcls, day, macro));
+  return wrap;
+}
+
+function resetTracker() {
+  if (!confirm('Reset all bubbles for this week?')) return;
+  trackerData = {};
+  buildTracker();
+  scheduleSave();
+}
+
+// ── SAVE / RESTORE (removed — Firebase handles this) ─────────────────────────
+
+
+// ── BUILDERS ──────────────────────────────────────────────────────────────────
+function buildTracker() {
+  const t = TIERS[plan];
+  const tbody = document.getElementById('trackerBody');
+  tbody.innerHTML = '';
+  DAYS.forEach(d => {
+    const tr = document.createElement('tr');
+    const dayTd = document.createElement('td');
+    dayTd.className = 'dl';
+    dayTd.textContent = d;
+    tr.appendChild(dayTd);
+    MACROS.forEach(m => {
+      const td = document.createElement('td');
+      td.appendChild(buildBubbleCell(t[m.key], m.cls2, d, m.key));
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+}
+
+function buildMacroCards() {
+  const t = TIERS[plan];
+  document.getElementById('macroCards').innerHTML = MACROS.map(m => `
+    <div class="mc ${m.cls}">
+      <div class="mc-head"><div class="mc-ico">${m.icon}</div><div class="mc-lbl">${m.label}</div></div>
+      <div class="mc-body">
+        <div class="mc-num">${t[m.key]}</div>
+        <div class="mc-unit">${m.unit} per day</div>
+        <div class="mc-meal">${m.meal}</div>
+        <div class="tags">${m.tags.map(f=>`<span class="tag">${f}</span>`).join('')}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function buildFoodGuide() {
+  document.getElementById('foodGuide').innerHTML = FOODS.map(cat => `
+    <div class="food-cat">
+      <div class="food-cat-head" style="background:${cat.headColor}">
+        <div class="food-cat-icon" style="background:${cat.icoColor}">${cat.icon}</div>
+        <div class="food-cat-title" style="color:${cat.headText}">${cat.label}</div>
+      </div>
+      <div class="food-cat-body">
+        <div class="food-tier ft-more">
+          <div class="ft-label">Eat more</div>
+          <ul class="food-list">${cat.more.map(f=>`<li>${f}</li>`).join('')}</ul>
+        </div>
+        <div class="food-tier ft-some">
+          <div class="ft-label">Eat some</div>
+          <ul class="food-list">${cat.some.map(f=>`<li>${f}</li>`).join('')}</ul>
+        </div>
+        <div class="food-tier ft-less">
+          <div class="ft-label">Eat less</div>
+          <ul class="food-list">${cat.less.map(f=>`<li>${f}</li>`).join('')}</ul>
+        </div>
+      </div>
+      <div class="food-note">${cat.note}</div>
+    </div>
+  `).join('');
+}
+
+function buildMeals() {
+  const MEAL_TABS = [
+    {id:'sample',label:'Sample day'},
+    {id:'quick',label:'Under 15 min'},
+    {id:'prep',label:'Meal prep'},
+    {id:'otg',label:'On the go'},
+    {id:'snacks',label:'Protein snacks'},
+    {id:'resources',label:'More resources'},
+  ];
+  document.getElementById('mealSubnav').innerHTML = MEAL_TABS.map((t,i) =>
+    `<button class="msn-btn${i===0?' active':''}" onclick="switchMealTab('${t.id}')">${t.label}</button>`
+  ).join('');
+
+  renderMealTab('sample');
+}
+
+function switchMealTab(id) {
+  document.querySelectorAll('.msn-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`.msn-btn[onclick="switchMealTab('${id}')"]`).classList.add('active');
+  renderMealTab(id);
+}
+
+function mealRowHTML(m) {
+  return `<div class="meal-row">
+    <div class="meal-time">${m.time||m.cat}</div>
+    <div>
+      <div class="meal-name">${m.name}</div>
+      <div class="meal-desc">${m.desc}</div>
+      <div class="meal-portions">${m.portions.map(p=>`<span class="mp-tag ${p.c}">${p.l}</span>`).join('')}</div>
+    </div>
+  </div>`;
+}
+
+function renderMealTab(id) {
+  const el = document.getElementById('mealIdeas');
+  if (id === 'sample') {
+    const meals = MEALS[plan];
+    el.innerHTML = `
+      <div class="meal-day">
+        <div class="meal-day-head"><div class="meal-day-title">Sample day of eating</div><div class="meal-day-sub">Adjust portions to your targets</div></div>
+        ${meals.map(mealRowHTML).join('')}
+      </div>
+      <div class="tip" style="margin-top:12px">
+        <div class="tip-icon">💡</div><div class="tip-title">Remember</div>
+        <div class="tip-body">These are examples, not prescriptions. Swap proteins, veggies, and carbs freely — the portions are what matter, not the specific foods.</div>
+      </div>`;
+  } else if (id === 'quick') {
+    const meals = QUICK_MEALS[plan];
+    const cats = [...new Set(meals.map(m=>m.cat))];
+    el.innerHTML = `<div class="quick-grid">${meals.map(m=>`
+      <div class="quick-card">
+        <div class="qc-time">${m.cat}</div>
+        <div class="qc-name">${m.name}</div>
+        <div class="qc-desc">${m.desc}</div>
+        <div class="qc-badges">${m.portions.map(p=>`<span class="mp-tag ${p.c}">${p.l}</span>`).join('')}</div>
+      </div>`).join('')}</div>`;
+  } else if (id === 'prep') {
+    const pp = PREP_PLANS[plan];
+    el.innerHTML = `
+      <div class="tip" style="margin-bottom:14px">
+        <div class="tip-icon">🗓️</div><div class="tip-title">${pp.title}</div>
+        <div class="tip-body">${pp.note}</div>
+      </div>
+      <div class="prep-grid">${pp.items.map(item=>`
+        <div class="prep-card">
+          <div class="prep-head"><span>${item.icon}</span>${item.label}</div>
+          <div class="prep-body">${item.steps.map(s=>`<div class="prep-item">${s}</div>`).join('')}</div>
+        </div>`).join('')}</div>`;
+  } else if (id === 'otg') {
+    el.innerHTML = OTG_SPOTS.map(s=>`
+      <div class="otg-card">
+        <div class="otg-head">
+          <div class="otg-place"><span>${s.icon}</span>${s.name}</div>
+          <span class="otg-badge ${s.badge}">${s.badge==='good'?'Good option':'Use wisely'}</span>
+        </div>
+        <div class="otg-body">
+          <div class="otg-col order"><div class="otg-col-label">Order this</div>${s.order.map(t=>`<div class="otg-item">${t}</div>`).join('')}</div>
+          <div class="otg-col skip"><div class="otg-col-label">Skip this</div>${s.skip.map(t=>`<div class="otg-item">${t}</div>`).join('')}</div>
+        </div>
+      </div>`).join('');
+  } else if (id === 'snacks') {
+    const snacks = SNACKS[plan];
+    el.innerHTML = `<div class="snack-grid">${snacks.map(s=>`
+      <div class="snack-card">
+        <div class="snack-icon">${s.icon}</div>
+        <div class="snack-name">${s.name}</div>
+        <div class="snack-desc">${s.desc}</div>
+        <span class="snack-protein">${s.protein}</span>
+      </div>`).join('')}</div>`;
+  } else if (id === 'resources') {
+    el.innerHTML = `
+      <div class="tip" style="margin-bottom:14px">
+        <div class="tip-icon">🔗</div><div class="tip-title">Curated external resources</div>
+        <div class="tip-body">These are free, reputable resources for recipe ideas, tracking, and deeper nutrition education. None of them require a subscription to be useful.</div>
+      </div>
+      <div class="resource-grid">${RESOURCES.map(r=>`
+        <a class="resource-card" href="${r.url}" target="_blank" rel="noopener">
+          <div class="rc-top"><span class="rc-tag">${r.tag}</span><span class="rc-ext">↗ external link</span></div>
+          <div class="rc-name">${r.name}</div>
+          <div class="rc-desc">${r.desc}</div>
+        </a>`).join('')}</div>`;
+  }
+}
+
+function buildTips() {
+  document.getElementById('tipsGrid').innerHTML = TIPS_DATA.map(t => `
+    <div class="tip">
+      <div class="tip-icon">${t.icon}</div>
+      <div class="tip-title">${t.title}</div>
+      <div class="tip-body">${t.body}</div>
+      <div class="tip-highlight">${t.highlight}</div>
+    </div>
+  `).join('');
+}
+
+function buildEatingOut() {
+  document.getElementById('venueGrid').innerHTML = VENUES.map(v => `
+    <div class="venue-card">
+      <div class="venue-head"><span>${v.icon}</span>${v.name}</div>
+      <div class="venue-body">${v.tips.map(t=>`<div class="venue-tip">${t}</div>`).join('')}</div>
+    </div>
+  `).join('');
+}
+
+function buildGlp() {
+  document.getElementById('glpGrid').innerHTML = GLP_SIDE_EFFECTS.map(c => `
+    <div class="glp-card">
+      <h4><span>${c.icon}</span>${c.title}</h4>
+      ${c.tips.map(t=>`<div class="glp-rule">${t}</div>`).join('')}
+    </div>
+  `).join('');
+  document.getElementById('glpNutrition').innerHTML = GLP_NUTRITION.map(c => `
+    <div class="glp-card">
+      <h4><span>${c.icon}</span>${c.title}</h4>
+      ${c.tips.map(t=>`<div class="glp-rule">${t}</div>`).join('')}
+    </div>
+  `).join('');
+}
+
+// ── TABS ──────────────────────────────────────────────────────────────────────
+function buildTabs() {
+  const tabs = [
+    {id:'plan',label:'Your plan'},
+    {id:'food',label:'Food guide'},
+    {id:'meals',label:'Meal ideas'},
+    {id:'tips',label:'Eating tips'},
+    {id:'out',label:'Eating out'},
+  ];
+  if (plan === 'glp') tabs.push({id:'glp',label:'GLP guide',glp:true});
+  tabs.push({id:'tracker',label:'💉 Dose tracker',glp:true});
+
+  document.getElementById('tabStrip').innerHTML = tabs.map((t,i) => `
+    <button class="tab${i===0?' active':''}${t.glp?' glp-tab':''}" onclick="switchTab('${t.id}')">${t.label}</button>
+  `).join('');
+}
+
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// GLP-1 DOSE TRACKER
+// ═══════════════════════════════════════════════════════════════════════════════
+const TRK_PHARMACIES = {
+  southend_22: { name:'Southend', conc:22, maxUnits:null, startUnits:10, isStriker:false },
+  akina_10:    { name:'Akina',    conc:10, maxUnits:null, startUnits:25, isStriker:false },
+  akina_25:    { name:'Akina',    conc:25, maxUnits:null, startUnits:10, isStriker:false },
+  striker:     { name:'Striker',  conc:10, maxUnits:50,   startUnits:20, isStriker:true  }
+};
+
+function trkDoseLabel(units, pharmKey) {
+  const p = TRK_PHARMACIES[pharmKey];
+  if (!p || !units) return '';
+  const mg = ((units / 100) * p.conc).toFixed(2);
+  const mL = (units / 100).toFixed(2);
+  return mg + ' mg · ' + mL + ' mL · ' + units + ' units';
+}
+
+function trkPharmacyChange() {
+  const key = document.getElementById('trk-pharmacy').value;
+  const p = TRK_PHARMACIES[key];
+  const note = document.getElementById('trk-striker-note');
+  if (note) note.style.display = (p && p.isStriker) ? 'block' : 'none';
+  if (p) {
+    document.getElementById('trk-start-units').value = p.startUnits;
+    trkUpdateDoseDisplay('trk-start-units','trk-start-dose-display');
+  }
+}
+
+function trkUpdateDoseDisplay(inputId, displayId) {
+  const key = document.getElementById('trk-pharmacy').value;
+  const units = parseInt(document.getElementById(inputId).value);
+  const el = document.getElementById(displayId);
+  if (key && units > 0) {
+    el.textContent = trkDoseLabel(units, key);
+    el.style.display = 'inline-flex';
+  } else {
+    el.style.display = 'none';
+  }
+}
+
+function trkGetSetup() { try { return JSON.parse(localStorage.getItem('vw_trk_setup')); } catch { return null; } }
+function trkGetLogs()  { try { return JSON.parse(localStorage.getItem('vw_trk_logs')) || []; } catch { return []; } }
+function trkSaveLogs(logs) { localStorage.setItem('vw_trk_logs', JSON.stringify(logs)); }
+
+function trkShowErr(elId, msg) {
+  const el = document.getElementById(elId);
+  if (!el) return;
+  el.textContent = msg;
+  el.classList.add('show');
+  el.style.display = 'block';
+}
+function trkHideErr(elId) {
+  const el = document.getElementById(elId);
+  if (el) { el.textContent = ''; el.style.display = 'none'; }
+}
+
+function trkSaveSetup() {
+  const key = document.getElementById('trk-pharmacy').value;
+  const units = parseInt(document.getElementById('trk-start-units').value);
+  const weight = parseFloat(document.getElementById('trk-sw').value);
+  const fat = parseFloat(document.getElementById('trk-sf').value);
+  const lean = parseFloat(document.getElementById('trk-sl').value);
+  const date = document.getElementById('trk-start-date').value;
+  const freq = document.getElementById('trk-freq').value;
+
+  trkHideErr('trk-setup-err');
+  if (!key) { trkShowErr('trk-setup-err','Please select your pharmacy.'); return; }
+  if (!units || units <= 0) { trkShowErr('trk-setup-err','Please enter your starting dose in units.'); return; }
+  if (!weight || weight <= 0) { trkShowErr('trk-setup-err','Please enter your starting weight.'); return; }
+  if (!date) { trkShowErr('trk-setup-err','Please enter your start date.'); return; }
+  const p = TRK_PHARMACIES[key];
+  if (p.isStriker && units > p.maxUnits) { trkShowErr('trk-setup-err','Striker max dose is 50 units (2.5 mg).'); return; }
+
+  const setup = { key, units, weight, fat: isNaN(fat)?null:fat, lean: isNaN(lean)?null:lean, date, freq };
+  localStorage.setItem('vw_trk_setup', JSON.stringify(setup));
+  trkLoadDashboard();
+}
+
+function trkShowSetup() {
+  document.getElementById('trk-setup-card').style.display = '';
+  document.getElementById('trk-dashboard').style.display = 'none';
+  const s = trkGetSetup();
+  if (s) {
+    document.getElementById('trk-pharmacy').value = s.key;
+    document.getElementById('trk-start-units').value = s.units;
+    document.getElementById('trk-sw').value = s.weight;
+    if (s.fat) document.getElementById('trk-sf').value = s.fat;
+    if (s.lean) document.getElementById('trk-sl').value = s.lean;
+    document.getElementById('trk-start-date').value = s.date;
+    document.getElementById('trk-freq').value = s.freq || 'weekly';
+    trkPharmacyChange();
+  }
+}
+
+let trkWeightChart = null, trkCompChart = null;
+
+function trkLoadDashboard() {
+  const s = trkGetSetup();
+  if (!s) return;
+  document.getElementById('trk-setup-card').style.display = 'none';
+  document.getElementById('trk-dashboard').style.display = '';
+  trkRenderSummary();
+  trkRenderCharts();
+  trkRenderHistory();
+  trkCheckNotifyBanner();
+}
+
+function trkRenderSummary() {
+  const s = trkGetSetup();
+  const logs = trkGetLogs();
+  const p = TRK_PHARMACIES[s.key];
+  const startMs = new Date(s.date).getTime();
+  const weeks = Math.max(1, Math.round((Date.now() - startMs) / (7*24*3600*1000)));
+  document.getElementById('trk-summary-sub').textContent = 'Week ' + weeks + ' · ' + p.name + ' ' + p.conc + ' mg/mL';
+
+  const latest = logs.length ? logs[logs.length-1] : null;
+  const cw = latest ? latest.weight : s.weight;
+  const cf = latest && latest.fat != null ? latest.fat : s.fat;
+  const cl = latest && latest.lean != null ? latest.lean : s.lean;
+  const cu = latest ? latest.units : s.units;
+
+  const totalLost = s.weight - cw;
+  const lostEl = document.getElementById('trk-s-lost');
+  lostEl.textContent = (totalLost >= 0 ? '-' : '+') + Math.abs(totalLost).toFixed(1);
+
+  document.getElementById('trk-s-fat').textContent = (s.fat && cf) ? '-' + Math.abs(s.fat - cf).toFixed(1) : '—';
+  const leanEl = document.getElementById('trk-s-lean');
+  if (s.lean && cl) {
+    const lc = cl - s.lean;
+    leanEl.textContent = (lc >= 0 ? '+' : '') + lc.toFixed(1);
+  } else { leanEl.textContent = '—'; }
+
+  document.getElementById('trk-s-dose').textContent = cu + 'u';
+  document.getElementById('trk-s-dose-sub').textContent = trkDoseLabel(cu, s.key);
+
+  if (logs.length >= 2) {
+    document.getElementById('trk-s-rate').textContent = (Math.abs(totalLost) / logs.length).toFixed(1);
+  } else { document.getElementById('trk-s-rate').textContent = '—'; }
+
+  // On-track indicator
+  const ot = document.getElementById('trk-ontrack');
+  if (logs.length >= 2) {
+    const pctWk = (Math.abs(totalLost) / s.weight * 100) / logs.length;
+    ot.style.display = '';
+    ot.className = 'trk-alert ';
+    if (pctWk >= 0.5 && pctWk <= 1.5) {
+      ot.className += 'green';
+      document.getElementById('trk-ontrack-title').textContent = '✓ On track';
+      document.getElementById('trk-ontrack-msg').textContent = 'You\'re losing at a healthy, sustainable rate that protects muscle mass.';
+    } else if (pctWk < 0.5) {
+      ot.className += 'yellow';
+      document.getElementById('trk-ontrack-title').textContent = '⚡ Progress may have stalled';
+      document.getElementById('trk-ontrack-msg').textContent = 'Your rate of loss is slower than expected. Review your nutrition plan and check in with your provider about dose.';
+    } else {
+      ot.className += 'red';
+      document.getElementById('trk-ontrack-title').textContent = '⚠ Losing quickly — protect muscle';
+      document.getElementById('trk-ontrack-msg').textContent = 'Make sure you\'re hitting your protein targets. Let your provider know at your next visit.';
+    }
+  } else { ot.style.display = 'none'; }
+}
+
+function trkRenderCharts() {
+  const s = trkGetSetup();
+  const logs = trkGetLogs();
+  const labels = ['Start', ...logs.map((_,i) => 'Wk '+(i+1))];
+  const weights = [s.weight, ...logs.map(l => l.weight)];
+
+  // Build fat/lean arrays — include setup values if present, otherwise null for start point
+  // Show comp chart if ANY log or setup has fat or lean data
+  const hasFat  = s.fat  != null || logs.some(l => l.fat  != null);
+  const hasLean = s.lean != null || logs.some(l => l.lean != null);
+  const fats  = hasFat  ? [s.fat  ?? null, ...logs.map(l => l.fat  ?? null)] : null;
+  const leans = hasLean ? [s.lean ?? null, ...logs.map(l => l.lean ?? null)] : null;
+
+  const baseOpts = {
+    responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{labels:{font:{size:10},boxWidth:10}}},
+    scales:{y:{ticks:{font:{size:10}}},x:{ticks:{font:{size:10}}}}
+  };
+
+  if (trkWeightChart) trkWeightChart.destroy();
+  trkWeightChart = new Chart(document.getElementById('trk-chart-weight'), {
+    type:'line',
+    data:{labels,datasets:[{label:'Weight (lbs)',data:weights,borderColor:'#1D9E75',backgroundColor:'rgba(29,158,117,.08)',tension:.3,pointRadius:3,fill:true}]},
+    options:JSON.parse(JSON.stringify(baseOpts))
+  });
+
+  if (trkCompChart) trkCompChart.destroy();
+  if (hasFat || hasLean) {
+    document.getElementById('trk-comp-label').textContent = 'Body composition (lbs)';
+    const datasets = [];
+    if (hasFat)  datasets.push({label:'Fat mass (lbs)', data:fats,  borderColor:'#D85A30',backgroundColor:'rgba(216,90,48,.07)',tension:.3,pointRadius:3,spanGaps:true});
+    if (hasLean) datasets.push({label:'Lean mass (lbs)',data:leans, borderColor:'#7F77DD',backgroundColor:'rgba(127,119,221,.07)',tension:.3,pointRadius:3,spanGaps:true});
+    trkCompChart = new Chart(document.getElementById('trk-chart-comp'), {
+      type:'line',
+      data:{labels, datasets},
+      options:JSON.parse(JSON.stringify(baseOpts))
+    });
+  } else {
+    document.getElementById('trk-comp-label').textContent = 'Body composition — log scan data to chart';
+    trkCompChart = new Chart(document.getElementById('trk-chart-comp'), {
+      type:'line',
+      data:{labels,datasets:[{label:'Weight (lbs)',data:weights,borderColor:'#1D9E75',tension:.3,pointRadius:3}]},
+      options:JSON.parse(JSON.stringify(baseOpts))
+    });
+  }
+}
+
+function trkRenderHistory() {
+  const s = trkGetSetup();
+  const logs = trkGetLogs();
+  const el = document.getElementById('trk-history-body');
+  if (!logs.length) { el.innerHTML = '<div class="trk-empty">No logs yet — add your first check-in above.</div>'; return; }
+  const rows = logs.map((l,i) => {
+    const syms = [];
+    if (l.symptoms) {
+      if (l.symptoms.nausea) syms.push('Nausea');
+      if (l.symptoms.fatigue) syms.push('Fatigue');
+      if (l.symptoms.constip) syms.push('Constipation');
+      if (l.symptoms.diarr) syms.push('Diarrhea');
+      if (l.symptoms.appetite) syms.push('Low appetite');
+      if (l.symptoms.head) syms.push('Headache');
+      if (l.symptoms.inject) syms.push('Injection site');
+      if (l.symptoms.none) syms.push('None');
+    }
+    const prev = i === 0 ? s.weight : logs[i-1].weight;
+    const delta = l.weight - prev;
+    const badge = delta < 0 ? 'green' : delta > 0 ? 'red' : 'yellow';
+    const deltaStr = (delta > 0 ? '+' : '') + delta.toFixed(1) + ' lbs';
+    return '<tr>' +
+      '<td>Wk '+(i+1)+'<br><span style="color:var(--muted);font-size:10px">'+(l.date||'')+'</span></td>' +
+      '<td><strong>'+l.units+'u</strong><br><span style="color:var(--muted);font-size:10px">'+trkDoseLabel(l.units,s.key)+'</span></td>' +
+      '<td>'+l.weight+' lbs<br><span class="trk-badge '+badge+'">'+deltaStr+'</span></td>' +
+      '<td>'+(l.fat?l.fat+' lbs fat':'—')+'<br>'+(l.lean?'<span style="color:var(--purple-mid)">'+l.lean+' lbs lean</span>':'—')+'</td>' +
+      '<td>'+(l.protein?l.protein+'g/day':'—')+'</td>' +
+      '<td style="color:var(--muted)">'+(syms.length?syms.join(', '):'—')+'</td>' +
+      '<td style="color:var(--muted);max-width:120px">'+(l.notes||'—')+'</td>' +
+      '<td><button class="trk-btn trk-btn-danger" onclick="trkDeleteLog('+i+')" style="padding:3px 7px;font-size:10px">✕</button></td>' +
+      '</tr>';
+  }).join('');
+  el.innerHTML = '<table class="trk-table"><thead><tr><th>Week</th><th>Dose</th><th>Weight</th><th>Body comp</th><th>Protein</th><th>Symptoms</th><th>Notes</th><th></th></tr></thead><tbody>'+rows+'</tbody></table>';
+}
+
+function trkSaveLog() {
+  const s = trkGetSetup();
+  const units = parseInt(document.getElementById('trk-log-units').value);
+  const weight = parseFloat(document.getElementById('trk-log-wt').value);
+  const fat = parseFloat(document.getElementById('trk-log-fat').value);
+  const lean = parseFloat(document.getElementById('trk-log-lean').value);
+  const protein = parseFloat(document.getElementById('trk-log-prot').value);
+  const sched = document.getElementById('trk-log-sched').value;
+  const notes = document.getElementById('trk-log-notes').value.trim();
+  trkHideErr('trk-log-err');
+  if (!units || units <= 0) { trkShowErr('trk-log-err','Please enter the units injected.'); return; }
+  if (!weight || weight <= 0) { trkShowErr('trk-log-err','Please enter your weight.'); return; }
+  const p = TRK_PHARMACIES[s.key];
+  if (p.isStriker && units > p.maxUnits) { trkShowErr('trk-log-err','Striker max dose is 50 units (2.5 mg).'); return; }
+
+  const log = {
+    units, weight, sched,
+    fat: isNaN(fat)?null:fat,
+    lean: isNaN(lean)?null:lean,
+    protein: isNaN(protein)?null:protein,
+    symptoms:{
+      nausea:document.getElementById('trk-sym-nausea').checked,
+      fatigue:document.getElementById('trk-sym-fatigue').checked,
+      constip:document.getElementById('trk-sym-constip').checked,
+      diarr:document.getElementById('trk-sym-diarr').checked,
+      appetite:document.getElementById('trk-sym-appetite').checked,
+      head:document.getElementById('trk-sym-head').checked,
+      inject:document.getElementById('trk-sym-inject').checked,
+      none:document.getElementById('trk-sym-none').checked
+    },
+    notes,
+    date: new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})
+  };
+  const logs = trkGetLogs();
+  logs.push(log);
+  trkSaveLogs(logs);
+
+  // reset form
+  ['trk-log-units','trk-log-wt','trk-log-fat','trk-log-lean','trk-log-prot','trk-log-notes'].forEach(id => { const el = document.getElementById(id); if(el) el.value = ''; });
+  ['trk-sym-nausea','trk-sym-fatigue','trk-sym-constip','trk-sym-diarr','trk-sym-appetite','trk-sym-head','trk-sym-inject','trk-sym-none'].forEach(id => { const el = document.getElementById(id); if(el) el.checked = false; });
+  document.getElementById('trk-log-dose-display').style.display = 'none';
+
+  trkRenderSummary();
+  trkRenderCharts();
+  trkRenderHistory();
+  trkCheckNotifyBanner();
+}
+
+function trkDeleteLog(idx) {
+  if (!confirm('Remove this log entry?')) return;
+  const logs = trkGetLogs();
+  logs.splice(idx, 1);
+  trkSaveLogs(logs);
+  trkRenderSummary();
+  trkRenderCharts();
+  trkRenderHistory();
+  trkCheckNotifyBanner();
+}
+
+function trkCheckTitration() {
+  const s = trkGetSetup();
+  const p = TRK_PHARMACIES[s.key];
+  const logs = trkGetLogs();
+  const cu = logs.length ? logs[logs.length-1].units : s.units;
+  const noScale = document.getElementById('trk-tit-scale').checked;
+  const wtUp = document.getElementById('trk-tit-up').checked;
+  const nutr = document.getElementById('trk-tit-nutr').checked;
+  const res = document.getElementById('trk-tit-result');
+  if (!noScale && !wtUp && !nutr) {
+    res.innerHTML = '<div class="trk-alert green"><div class="trk-alert-title">✓ Stay at your current dose</div>Your medication appears to be working. Keep going.</div>';
+    return;
+  }
+  if (p.isStriker) {
+    const next = cu + 5;
+    if (next > p.maxUnits) {
+      res.innerHTML = '<div class="trk-alert red"><div class="trk-alert-title">⚠ At maximum Striker dose</div>You\'ve reached the 50-unit (2.5 mg) ceiling. Contact your Venture Wellness provider to discuss next steps.</div>';
+    } else {
+      res.innerHTML = '<div class="trk-alert yellow"><div class="trk-alert-title">Consider increasing by 5 units</div>Next dose: <strong>'+next+' units ('+trkDoseLabel(next,s.key)+')</strong>. Increase only if you\'ve been at your current dose for 3+ weeks and are tolerating it well.</div>';
+    }
+  } else {
+    const next = cu + 5;
+    res.innerHTML = '<div class="trk-alert yellow"><div class="trk-alert-title">You may be ready to increase by 5 units</div>Next dose: <strong>'+next+' units ('+trkDoseLabel(next,s.key)+')</strong>. <strong>Notify Venture Wellness if your total increase exceeds 20 units over 4 weeks.</strong></div>';
+  }
+}
+
+function trkCheckNotifyBanner() {
+  const s = trkGetSetup();
+  const p = TRK_PHARMACIES[s.key];
+  const banner = document.getElementById('trk-notify-banner');
+  if (!banner) return;
+  if (p.isStriker) { banner.classList.remove('show'); return; }
+  const logs = trkGetLogs();
+  if (logs.length < 2) { banner.classList.remove('show'); return; }
+  const recent = logs.slice(-4);
+  const diff = recent[recent.length-1].units - recent[0].units;
+  banner.classList.toggle('show', diff >= 20);
+}
+
+function trkConfirmReset() {
+  if (confirm('This will permanently delete all your tracker data. Continue?')) {
+    localStorage.removeItem('vw_trk_setup');
+    localStorage.removeItem('vw_trk_logs');
+    document.getElementById('trk-setup-card').style.display = '';
+    document.getElementById('trk-dashboard').style.display = 'none';
+    if (trkWeightChart) { trkWeightChart.destroy(); trkWeightChart = null; }
+    if (trkCompChart) { trkCompChart.destroy(); trkCompChart = null; }
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+
+function trkInitIfNeeded() {
+  const s = trkGetSetup();
+  if (s) trkLoadDashboard();
+}
+
+function switchTab(id) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelector(`.tab[onclick="switchTab('${id}')"]`).classList.add('active');
+  document.getElementById('panel-'+id).classList.add('active');
+  if (id === 'tracker') trkInitIfNeeded();
+}
+
+// ── LAUNCH ────────────────────────────────────────────────────────────────────
+function launch() {
+  patientName = document.getElementById('ob-name').value.trim();
+  const sw = document.getElementById('ob-sw').value.trim();
+  const gw = document.getElementById('ob-gw').value.trim();
+
+  document.getElementById('topbar-name').textContent = patientName;
+  document.getElementById('hero-name').textContent = patientName;
+  document.getElementById('hero-stats').innerHTML = ''; // populated after Firebase loads
+
+  buildTabs();
+  buildMacroCards();
+  buildFoodGuide();
+  buildMeals();
+  buildTips();
+  buildEatingOut();
+  if (plan === 'glp') buildGlp();
+
+  document.getElementById('overlay').style.display = 'none';
+  document.getElementById('guide').classList.add('on');
+  window.scrollTo(0,0);
+
+  // Persist name and plan so the overlay pre-fills on return visits
+  try {
+    localStorage.setItem('vw_patient_name', patientName);
+    localStorage.setItem('vw_patient_plan', plan);
+  } catch(e) {}
+
+  // Init Firebase, load saved data, then rebuild tracker with cloud state
+  initFirebase().then(() => {
+    // refresh hero stats in case Firebase restored saved weights
+    const restoredSw = document.getElementById('ob-sw').value.trim();
+    const restoredGw = document.getElementById('ob-gw').value.trim();
+    document.getElementById('hero-stats').innerHTML = [
+      restoredSw ? `<div class="hstat"><div class="hstat-val">${restoredSw} lbs</div><div class="hstat-lbl">Starting weight</div></div>` : '',
+      restoredGw ? `<div class="hstat"><div class="hstat-val">${restoredGw} lbs</div><div class="hstat-lbl">Current weight</div></div>` : '',
+    ].join('');
+    buildTracker();
+    scheduleSave(); // persist weights immediately on launch
+  }).catch(() => {
+    setSyncStatus('Offline — progress not saved', 'var(--coral-mid)');
+    buildTracker();
+  });
+}
+
+// ── COMPLETE WEEK ─────────────────────────────────────────────────────────────
+function openCompleteWeek() {
+  const planLabels = {fwl:'Weight loss \u2014 women',mwl:'Weight loss \u2014 men',glp:'GLP program',maint:'Hormone & maintenance'};
+  const total = Object.values(trackerData).filter(v => v === '1').length;
+  const safeName = patientName.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  let summary = '<strong>' + safeName + '</strong> \u00b7 ' + (planLabels[plan] || plan) + '<br>';
+  summary += 'Bubbles filled this week: <strong>' + total + '</strong>';
+  document.getElementById('cw-summary').innerHTML = summary;
+  document.getElementById('cw-overlay').classList.remove('hidden');
+}
+
+function closeCompleteWeek() {
+  document.getElementById('cw-overlay').classList.add('hidden');
+}
+
+function clearSession() {
+  if (!confirm('This will clear your name and program selection. Your tracker data will not be deleted. Continue?')) return;
+  try {
+    localStorage.removeItem('vw_patient_name');
+    localStorage.removeItem('vw_patient_plan');
+  } catch(e) {}
+  location.reload();
+}
+</script>
+
+<!-- COMPLETE WEEK MODAL -->
+<div class="cw-overlay hidden" id="cw-overlay">
+  <div class="cw-card">
+    <div class="cw-success">
+      <div class="cw-success-icon">🎉</div>
+      <div class="cw-success-title">Great week!</div>
+      <div id="cw-summary" style="font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:16px;text-align:left;background:var(--teal-light);border-radius:10px;padding:12px 14px"></div>
+      <div style="background:var(--amber-light);border-left:3px solid var(--amber);border-radius:0 8px 8px 0;padding:11px 14px;text-align:left;margin-bottom:16px;font-size:12px;color:var(--amber-mid);line-height:1.65">
+        <strong>To share with your provider:</strong> take a screenshot of this screen and upload it to the patient portal, or bring it to your next visit.
+      </div>
+      <button class="cw-submit" style="width:100%" onclick="closeCompleteWeek()">Done</button>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+// Restore name + plan from last visit and auto-launch if both exist
+(function() {
+  // Prevent negative values on all number inputs
+  document.querySelectorAll('input[type=number]').forEach(function(el) {
+    el.addEventListener('input', function() {
+      if (this.value !== '' && parseFloat(this.value) < 0) this.value = '';
+    });
+  });
+
+  try {
+    const savedName = localStorage.getItem('vw_patient_name');
+    const savedPlan = localStorage.getItem('vw_patient_plan');
+    if (savedName) {
+      document.getElementById('ob-name').value = savedName;
+    }
+    if (savedPlan) {
+      plan = savedPlan;
+      const pb = document.getElementById('pb-' + savedPlan);
+      if (pb) pb.classList.add('sel');
+    }
+    if (savedName && savedPlan) {
+      chk();
+      launch();
+    }
+  } catch(e) {}
+
+  // Also restore tracker if setup exists
+  const s = (function(){ try { return JSON.parse(localStorage.getItem('vw_trk_setup')); } catch(e) { return null; } })();
+  if (s) trkLoadDashboard();
+})();
+</script>
+</body>
+</html>
