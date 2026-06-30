@@ -9,7 +9,7 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --teal:#1D9E75;--teal-light:#E1F5EE;--teal-mid:#0F6E56;--teal-dark:#085041;
-  --coral:#D85A30;--coral-light:#FAECE7;--coral-mid:#993C1D;
+  --coral:#5A6B85;--coral-light:#E9EDF1;--coral-mid:#2B3A55;
   --green:#639922;--green-light:#EAF3DE;--green-mid:#3B6D11;
   --amber:#BA7517;--amber-light:#FAEEDA;--amber-mid:#854F0B;
   --blue:#378ADD;--blue-light:#E6F1FB;--blue-mid:#185FA5;
@@ -71,13 +71,22 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 
 /* TABS */
 .tab-strip-wrap{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:45px;z-index:90}
-.tab-strip{max-width:720px;margin:0 auto;padding:0 20px;display:flex;gap:0;overflow-x:auto;scrollbar-width:none}
-.tab-strip::-webkit-scrollbar{display:none}
+.tab-strip{max-width:720px;margin:0 auto;padding:0 20px;display:flex;gap:0}
 .tab{font-size:12px;font-weight:500;padding:13px 16px;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;white-space:nowrap;transition:all .15s;background:none;border-top:none;border-left:none;border-right:none;font-family:'DM Sans',sans-serif}
 .tab:hover{color:var(--text)}
 .tab.active{color:var(--teal-mid);border-bottom-color:var(--teal)}
-.glp-tab{color:var(--purple-mid)!important}
-.glp-tab.active{border-bottom-color:var(--purple)!important}
+
+.tab-dd{position:relative}
+.tab-dd-trigger{font-size:12px;font-weight:500;padding:13px 16px;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;white-space:nowrap;transition:all .15s;background:none;border-top:none;border-left:none;border-right:none;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:4px}
+.tab-dd-trigger:hover{color:var(--text)}
+.tab-dd-trigger.active{color:var(--teal-mid);border-bottom-color:var(--teal)}
+.tab-dd-trigger .car{font-size:9px;transition:transform .15s}
+.tab-dd.open .tab-dd-trigger .car{transform:rotate(180deg)}
+.tab-dd-menu{display:none;position:absolute;top:100%;left:0;background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.08);min-width:180px;padding:6px;z-index:95}
+.tab-dd.open .tab-dd-menu{display:block}
+.tab-dd-item{display:block;width:100%;text-align:left;font-size:12px;font-weight:500;padding:9px 12px;border-radius:7px;cursor:pointer;color:var(--text);background:none;border:none;font-family:'DM Sans',sans-serif;transition:background .1s}
+.tab-dd-item:hover{background:var(--teal-light)}
+.tab-dd-item.active{color:var(--teal-mid);background:var(--teal-light)}
 
 /* CONTENT */
 .content{max-width:720px;margin:0 auto;padding:24px 20px 60px}
@@ -101,7 +110,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .mc-meal{font-size:10px;color:var(--muted);border-top:1px solid var(--border);padding-top:6px;margin-top:5px;line-height:1.5}
 .tags{display:flex;flex-wrap:wrap;gap:3px;margin-top:5px}
 .tag{font-size:10px;padding:2px 7px;border-radius:999px}
-.mp .mc-head{background:var(--coral-light)}.mp .mc-ico{background:#F5C4B3}.mp .mc-lbl,.mp .mc-num{color:var(--coral-mid)}.mp .tag{background:var(--coral-light);color:var(--coral-mid)}
+.mp .mc-head{background:var(--coral-light)}.mp .mc-ico{background:#C9D2DE}.mp .mc-lbl,.mp .mc-num{color:var(--coral-mid)}.mp .tag{background:var(--coral-light);color:var(--coral-mid)}
 .mv .mc-head{background:var(--green-light)}.mv .mc-ico{background:#C0DD97}.mv .mc-lbl,.mv .mc-num{color:var(--green-mid)}.mv .tag{background:var(--green-light);color:var(--green-mid)}
 .mc2 .mc-head{background:var(--amber-light)}.mc2 .mc-ico{background:#FAC775}.mc2 .mc-lbl,.mc2 .mc-num{color:var(--amber-mid)}.mc2 .tag{background:var(--amber-light);color:var(--amber-mid)}
 .mf .mc-head{background:var(--blue-light)}.mf .mc-ico{background:#B5D4F4}.mf .mc-lbl,.mf .mc-num{color:var(--blue-mid)}.mf .tag{background:var(--blue-light);color:var(--blue-mid)}
@@ -156,13 +165,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .tracker td.dl{text-align:left;font-size:11px;font-weight:500;color:var(--muted)}
 .th-p{color:var(--coral-mid)}.th-v{color:var(--green-mid)}.th-c{color:var(--amber-mid)}.th-f{color:var(--blue-mid)}
 .bubbles{display:flex;gap:4px;justify-content:center;flex-wrap:wrap}
-.bubble{width:16px;height:16px;border-radius:50%;border:1.5px solid;cursor:pointer;transition:background .1s;flex-shrink:0}
-.b-p{border-color:var(--coral)}.b-p.on{background:var(--coral)}
-.b-v{border-color:var(--green)}.b-v.on{background:var(--green)}
-.b-c{border-color:var(--amber)}.b-c.on{background:var(--amber)}
-.b-f{border-color:var(--blue)}.b-f.on{background:var(--blue)}
+.bubble{width:16px;height:16px;border-radius:50%;border:1.5px solid;cursor:pointer;transition:background .1s;flex-shrink:0;position:relative}
+.b-p{border-color:var(--coral)}.b-p.on{background:var(--coral)}.b-p.half{background:linear-gradient(90deg,var(--coral) 50%,transparent 50%)}
+.b-v{border-color:var(--green)}.b-v.on{background:var(--green)}.b-v.half{background:linear-gradient(90deg,var(--green) 50%,transparent 50%)}
+.b-c{border-color:var(--amber)}.b-c.on{background:var(--amber)}.b-c.half{background:linear-gradient(90deg,var(--amber) 50%,transparent 50%)}
+.b-f{border-color:var(--blue)}.b-f.on{background:var(--blue)}.b-f.half{background:linear-gradient(90deg,var(--blue) 50%,transparent 50%)}
 .bubble.extra{border-style:dashed;opacity:0.55}
-.bubble.extra.on{opacity:1}
+.bubble.extra.on,.bubble.extra.half{opacity:1}
 .add-bubble{width:16px;height:16px;border-radius:50%;border:1.5px dashed var(--muted);background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--muted);font-size:11px;line-height:1;padding:0;font-family:'DM Sans',sans-serif;transition:all .15s}
 .add-bubble:hover{border-color:var(--teal);color:var(--teal)}
 .sbb{font-family:'DM Sans',sans-serif;font-size:12px;}
@@ -301,6 +310,38 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .glp-rule{font-size:11px;color:var(--muted);line-height:1.65;padding:4px 0;border-bottom:1px solid var(--border)}
 .glp-rule:last-child{border-bottom:none}
 .glp-rule strong{color:var(--text);font-weight:500}
+
+/* Hunger scale */
+.hs-intro{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:18px}
+.hs-scale{display:flex;gap:6px;margin-bottom:10px}
+.hs-num{flex:1;aspect-ratio:1;border:1px solid var(--border);border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--text);cursor:pointer;transition:all .15s}
+.hs-num:hover{border-color:var(--teal)}
+.hs-num.sel{background:var(--teal);border-color:var(--teal);color:#fff}
+.hs-label{font-size:11px;color:var(--muted);text-align:center;margin-bottom:18px;min-height:14px}
+.hs-actions{display:flex;gap:10px}
+.hs-log-btn{flex:1;background:var(--teal);color:#fff;border:none;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;padding:10px;border-radius:8px;cursor:pointer;transition:background .15s}
+.hs-log-btn:hover{background:var(--teal-mid)}
+.hs-log-btn.alt{background:#fff;color:var(--teal-mid);border:1px solid var(--teal-mid)}
+.hs-log-btn.alt:hover{background:var(--teal-light)}
+.hs-entry{display:flex;justify-content:space-between;align-items:center;background:#fff;border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin-bottom:6px;font-size:11px}
+.hs-entry-tag{font-weight:500;padding:2px 8px;border-radius:999px;font-size:10px}
+.hs-entry-tag.before{background:var(--amber-light);color:var(--amber-mid)}
+.hs-entry-tag.after{background:var(--green-light);color:var(--green-mid)}
+.hs-entry-val{font-weight:600;color:var(--teal-mid)}
+.hs-empty{font-size:11px;color:var(--muted);padding:10px 0}
+
+/* Weekly check-in */
+.ci-intro{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:18px}
+.ci-form{display:flex;flex-direction:column;gap:14px}
+.ci-field label{display:block;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--text);margin-bottom:6px}
+.ci-field textarea{width:100%;border:1px solid var(--border);border-radius:8px;padding:10px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text);resize:vertical;min-height:54px}
+.ci-field textarea:focus{outline:none;border-color:var(--teal)}
+.ci-scale{display:flex;gap:6px}
+.ci-scale-num{flex:1;border:1px solid var(--border);border-radius:8px;background:#fff;padding:8px 0;text-align:center;font-size:12px;font-weight:500;cursor:pointer;transition:all .15s}
+.ci-scale-num.sel{background:var(--teal);border-color:var(--teal);color:#fff}
+.ci-entry{background:#fff;border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:8px;font-size:11px;line-height:1.6}
+.ci-entry-date{font-weight:600;color:var(--teal-mid);margin-bottom:4px}
+.ci-empty{font-size:11px;color:var(--muted);padding:10px 0}
 .glp-warning{background:#FFF3F3;border:1px solid #F09595;border-radius:10px;padding:12px 14px;margin-top:12px;font-size:11px;color:#791F1F;line-height:1.65}
 
 /* ADJUST */
@@ -333,6 +374,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .trk-setup-body{padding:14px 16px}
 .trk-field-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:12px}
 .trk-field{display:flex;flex-direction:column;gap:4px}
+.trk-conc-note{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:14px}
+.trk-conc-suggest{font-size:11px;color:var(--teal-mid);background:var(--teal-light);border-radius:8px;padding:8px 12px;margin-bottom:10px}
 .trk-field label{font-size:10px;text-transform:uppercase;letter-spacing:.07em;font-weight:500;color:var(--muted)}
 .trk-input{font-family:'DM Sans',sans-serif;font-size:13px;padding:8px 10px;border:1px solid var(--border);border-radius:8px;color:var(--text);background:var(--bg);outline:none;transition:border-color .15s;width:100%}
 .trk-input:focus{border-color:var(--teal)}
@@ -489,10 +532,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
         <div class="hand-grid">
           <div class="hand-item">
             <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="18" y="28" width="28" height="20" rx="4" fill="#F5C4B3"/>
-              <rect x="22" y="14" width="20" height="16" rx="4" fill="#F5C4B3"/>
-              <rect x="18" y="28" width="28" height="4" fill="#F0997B"/>
-              <text x="32" y="54" text-anchor="middle" font-family="DM Sans" font-size="7" fill="#993C1D" font-weight="500">1 PALM</text>
+              <rect x="18" y="28" width="28" height="20" rx="4" fill="#C9D2DE"/>
+              <rect x="22" y="14" width="20" height="16" rx="4" fill="#C9D2DE"/>
+              <rect x="18" y="28" width="28" height="4" fill="#8E9CB5"/>
+              <text x="32" y="54" text-anchor="middle" font-family="DM Sans" font-size="7" fill="#2B3A55" font-weight="500">1 PALM</text>
             </svg>
             <div class="hi-label" style="color:var(--coral-mid)">Protein</div>
             <div class="hi-sub">1 palm = 1 portion</div>
@@ -622,6 +665,30 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       <div class="glp-grid" id="glpNutrition"></div>
       <div class="glp-warning">⚠️ Contact your Venture Wellness provider if you are unable to tolerate adequate protein or fluids for more than 2–3 days, or if you experience severe nausea, vomiting, or abdominal pain.</div>
     </div>
+
+    <!-- TAB: HUNGER SCALE -->
+    <div class="tab-panel" id="panel-hunger">
+      <div class="sh">Food noise & hunger scale</div>
+      <div class="hs-intro">"Food noise" is the constant mental chatter about food — thinking about your next meal, snacks, or cravings even when you're not physically hungry. Real hunger builds gradually and is satisfied by any food. Head hunger (or food noise) is sudden, specific, and often tied to stress, boredom, or habit. Use the scale below to check in with yourself before and after meals — aim to start eating around a 3–4 and stop around a 6–7.</div>
+      <div class="hs-scale" id="hsScale"></div>
+      <div class="hs-label" id="hsLabel">Tap a number to rate how you feel right now</div>
+      <div class="hs-actions">
+        <button class="hs-log-btn" onclick="hsLogEntry('before')">Log as Before Meal</button>
+        <button class="hs-log-btn alt" onclick="hsLogEntry('after')">Log as After Meal</button>
+      </div>
+      <div class="sh" style="margin-top:28px">Recent check-ins</div>
+      <div id="hsHistory"></div>
+    </div>
+
+    <!-- TAB: WEEKLY CHECK-IN -->
+    <div class="tab-panel" id="panel-checkin">
+      <div class="sh">Weekly check-in</div>
+      <div class="ci-intro">Take a few minutes each week to reflect on patterns. This is for you — a simple way to notice what's working and what to adjust before next week.</div>
+      <div class="ci-form" id="ciForm"></div>
+      <button class="complete-btn" style="margin-top:14px" onclick="ciSubmit()">Save this week's check-in</button>
+      <div class="sh" style="margin-top:28px">Past check-ins</div>
+      <div id="ciHistory"></div>
+    </div>
   </div>
 
 
@@ -644,7 +711,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
                 <option value="akina_10">Akina — 10 mg/mL</option>
                 <option value="akina_25">Akina — 25 mg/mL</option>
                 <option value="striker">Striker — 5 mg/0.5 mL (microdosing + B12)</option>
+                <option value="custom">Custom concentration</option>
               </select>
+              <input class="trk-input" type="number" id="trk-custom-conc" placeholder="Concentration (mg/mL)" min="0.1" step="0.1" style="display:none;margin-top:6px" oninput="trkUpdateDoseDisplay('trk-start-units','trk-start-dose-display')"/>
             </div>
             <div class="trk-field">
               <label>Injection frequency</label>
@@ -783,11 +852,37 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
           <div class="trk-history-head">
             <span>Weekly log history</span>
             <div style="display:flex;gap:8px">
+              <button class="trk-btn trk-btn-sm" onclick="trkOpenConcUpdate()">Update concentration</button>
               <button class="trk-btn trk-btn-sm" onclick="trkShowSetup()">Edit setup</button>
               <button class="trk-btn trk-btn-danger" onclick="trkConfirmReset()">Reset all</button>
             </div>
           </div>
           <div id="trk-history-body" style="overflow-x:auto"></div>
+        </div>
+
+        <!-- Concentration update -->
+        <div class="trk-setup" id="trk-conc-card" style="display:none;margin-top:14px">
+          <div class="trk-setup-head">🔄 Update your concentration</div>
+          <div class="trk-setup-body">
+            <div class="trk-conc-note">If your pharmacy or vial concentration changed, enter the new concentration below. We'll suggest an equivalent unit dose based on your last logged dose so your mg amount stays consistent — you can adjust it before saving.</div>
+            <div class="trk-field-grid">
+              <div class="trk-field">
+                <label>New concentration (mg/mL)</label>
+                <input class="trk-input" type="number" id="trk-conc-new" placeholder="e.g. 10" min="0.1" step="0.1" oninput="trkSuggestConcUnits()"/>
+              </div>
+              <div class="trk-field">
+                <label>New dose (units)</label>
+                <input class="trk-input" type="number" id="trk-conc-units" placeholder="auto-suggested" min="1" max="100" oninput="trkUpdateDoseDisplay('trk-conc-units','trk-conc-dose-display')"/>
+                <div class="trk-dose-pill" id="trk-conc-dose-display" style="display:none"></div>
+              </div>
+            </div>
+            <div class="trk-conc-suggest" id="trk-conc-suggest" style="display:none"></div>
+            <div class="trk-warn show" id="trk-conc-err" style="display:none"></div>
+            <div style="display:flex;gap:8px;margin-top:10px">
+              <button class="trk-btn trk-btn-primary" onclick="trkSaveConcUpdate()">Save new concentration</button>
+              <button class="trk-btn trk-btn-sm" onclick="document.getElementById('trk-conc-card').style.display='none'">Cancel</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -819,7 +914,7 @@ const MACROS = [
 ];
 
 const FOODS = [
-  {key:'protein',icon:'✋',label:'Protein',headColor:'var(--coral-light)',headText:'var(--coral-mid)',icoColor:'#F5C4B3',
+  {key:'protein',icon:'✋',label:'Protein',headColor:'var(--coral-light)',headText:'var(--coral-mid)',icoColor:'#C9D2DE',
    more:['Chicken breast','Wild salmon','Canned tuna / sardines','Turkey breast','Whole eggs & egg whites','Plain Greek yogurt (2% or full fat)','Cottage cheese (cultured)','White fish (cod, tilapia, halibut)','Shrimp & scallops','Tempeh'],
    some:['Lean ground beef (90%+)','Sirloin steak','Pork tenderloin','Tofu','Protein powder (whey or pea)','Edamame','Lean deli turkey (minimally processed)'],
    less:['Fried chicken / chicken nuggets','Processed deli meats','Pepperoni','Hot dogs','Protein bars with 10+ g added sugar'],
@@ -1139,12 +1234,26 @@ function storageKey(day, macro, i) { return `${day}-${macro}-${i}`; }
 function extraCountKey(day, macro) { return `${day}-${macro}-xcount`; }
 
 function makeBubble(bcls, key, isExtra) {
-  const on = trackerData[key] === '1';
+  const val = trackerData[key] || '0';
   const el = document.createElement('div');
-  el.className = `bubble b-${bcls}${isExtra ? ' extra' : ''}${on ? ' on' : ''}`;
-  el.addEventListener('click', () => {
-    el.classList.toggle('on');
-    trackerData[key] = el.classList.contains('on') ? '1' : '0';
+  el.className = `bubble b-${bcls}${isExtra ? ' extra' : ''}${val==='1' ? ' on' : ''}${val==='0.5' ? ' half' : ''}`;
+  el.title = 'Tap for full portion · tap right edge for half';
+
+  el.addEventListener('click', (e) => {
+    // Right ~50% of the bubble sets/clears a half portion; left side toggles full.
+    const rect = el.getBoundingClientRect();
+    const hitHalf = (e.clientX - rect.left) > rect.width / 2;
+    const current = trackerData[key] || '0';
+
+    let next;
+    if (hitHalf) {
+      next = current === '0.5' ? '0' : '0.5';
+    } else {
+      next = current === '1' ? '0' : '1';
+    }
+    trackerData[key] = next;
+    el.classList.toggle('on', next === '1');
+    el.classList.toggle('half', next === '0.5');
     scheduleSave();
   });
   return el;
@@ -1392,21 +1501,158 @@ function buildGlp() {
   `).join('');
 }
 
+// ═══════════════════════════════════════════════════════════════════════════════
+// HUNGER SCALE TOOL
+// ═══════════════════════════════════════════════════════════════════════════════
+let hsSelected = null;
+const HS_LABELS = {1:'Starving — lightheaded, irritable',2:'Very hungry',3:'Hungry — good time to eat',4:'Slightly hungry',5:'Neutral',6:'Satisfied — good stopping point',7:'Comfortably full',8:'Full',9:'Very full',10:'Stuffed — uncomfortable'};
+
+function hsGetLogs() { try { return JSON.parse(localStorage.getItem('vw_hunger_logs')) || []; } catch { return []; } }
+function hsSaveLogs(logs) { localStorage.setItem('vw_hunger_logs', JSON.stringify(logs)); }
+
+function buildHungerScale() {
+  document.getElementById('hsScale').innerHTML = Array.from({length:10},(_,i)=>i+1).map(n => `
+    <div class="hs-num${hsSelected===n?' sel':''}" onclick="hsSelect(${n})">${n}</div>
+  `).join('');
+  hsRenderHistory();
+}
+
+function hsSelect(n) {
+  hsSelected = n;
+  document.getElementById('hsLabel').textContent = HS_LABELS[n];
+  document.querySelectorAll('.hs-num').forEach(el => el.classList.remove('sel'));
+  document.querySelectorAll('.hs-num')[n-1].classList.add('sel');
+}
+
+function hsLogEntry(tag) {
+  if (!hsSelected) { document.getElementById('hsLabel').textContent = 'Tap a number first'; return; }
+  const logs = hsGetLogs();
+  logs.unshift({val:hsSelected, tag, ts:Date.now()});
+  hsSaveLogs(logs.slice(0,20));
+  hsSelected = null;
+  document.getElementById('hsLabel').textContent = 'Logged — tap a number to rate again';
+  document.querySelectorAll('.hs-num').forEach(el => el.classList.remove('sel'));
+  hsRenderHistory();
+}
+
+function hsRenderHistory() {
+  const logs = hsGetLogs();
+  const el = document.getElementById('hsHistory');
+  if (!logs.length) { el.innerHTML = '<div class="hs-empty">No check-ins logged yet.</div>'; return; }
+  el.innerHTML = logs.slice(0,8).map(l => `
+    <div class="hs-entry">
+      <span class="hs-entry-tag ${l.tag}">${l.tag === 'before' ? 'Before meal' : 'After meal'}</span>
+      <span>${new Date(l.ts).toLocaleDateString('en-US',{month:'short',day:'numeric'})} · ${new Date(l.ts).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'})}</span>
+      <span class="hs-entry-val">${l.val}/10</span>
+    </div>
+  `).join('');
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// WEEKLY CHECK-IN
+// ═══════════════════════════════════════════════════════════════════════════════
+const CI_FIELDS = [
+  {key:'wins', label:'What went well this week?', type:'text'},
+  {key:'challenges', label:'What was hardest this week?', type:'text'},
+  {key:'sideEffects', label:'Anything physical you noticed this week (energy, digestion, sleep, etc.)?', type:'text'},
+  {key:'energy', label:'Overall energy this week (1 = low, 10 = high)', type:'scale'},
+  {key:'intention', label:'One thing you\'ll focus on next week', type:'text'},
+];
+let ciScaleValues = {};
+
+function ciGetEntries() { try { return JSON.parse(localStorage.getItem('vw_checkin_entries')) || []; } catch { return []; } }
+function ciSaveEntries(entries) { localStorage.setItem('vw_checkin_entries', JSON.stringify(entries)); }
+
+function buildCheckin() {
+  document.getElementById('ciForm').innerHTML = CI_FIELDS.map(f => {
+    if (f.type === 'scale') {
+      return `<div class="ci-field"><label>${f.label}</label><div class="ci-scale" id="ciScale_${f.key}">
+        ${Array.from({length:10},(_,i)=>i+1).map(n=>`<div class="ci-scale-num" onclick="ciSelectScale('${f.key}',${n})">${n}</div>`).join('')}
+      </div></div>`;
+    }
+    return `<div class="ci-field"><label>${f.label}</label><textarea id="ci_${f.key}" placeholder="Type your answer..."></textarea></div>`;
+  }).join('');
+  ciRenderHistory();
+}
+
+function ciSelectScale(key, n) {
+  ciScaleValues[key] = n;
+  const wrap = document.getElementById('ciScale_'+key);
+  wrap.querySelectorAll('.ci-scale-num').forEach((el,i) => el.classList.toggle('sel', i+1===n));
+}
+
+function ciSubmit() {
+  const entry = {ts:Date.now()};
+  CI_FIELDS.forEach(f => {
+    entry[f.key] = f.type === 'scale' ? (ciScaleValues[f.key] || null) : document.getElementById('ci_'+f.key).value.trim();
+  });
+  const entries = ciGetEntries();
+  entries.unshift(entry);
+  ciSaveEntries(entries.slice(0,12));
+  ciScaleValues = {};
+  buildCheckin();
+}
+
+function ciRenderHistory() {
+  const entries = ciGetEntries();
+  const el = document.getElementById('ciHistory');
+  if (!entries.length) { el.innerHTML = '<div class="ci-empty">No check-ins saved yet.</div>'; return; }
+  el.innerHTML = entries.slice(0,6).map(e => `
+    <div class="ci-entry">
+      <div class="ci-entry-date">${new Date(e.ts).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}</div>
+      ${e.wins ? `<div><strong>Wins:</strong> ${e.wins}</div>` : ''}
+      ${e.challenges ? `<div><strong>Challenges:</strong> ${e.challenges}</div>` : ''}
+      ${e.sideEffects ? `<div><strong>Noticed this week:</strong> ${e.sideEffects}</div>` : ''}
+      ${e.energy ? `<div><strong>Energy:</strong> ${e.energy}/10</div>` : ''}
+      ${e.intention ? `<div><strong>Next week:</strong> ${e.intention}</div>` : ''}
+    </div>
+  `).join('');
+}
+
 // ── TABS ──────────────────────────────────────────────────────────────────────
 function buildTabs() {
-  const tabs = [
-    {id:'plan',label:'Your plan'},
+  const eatItems = [
     {id:'food',label:'Food guide'},
     {id:'meals',label:'Meal ideas'},
     {id:'tips',label:'Eating tips'},
     {id:'out',label:'Eating out'},
   ];
-  if (plan === 'glp') tabs.push({id:'glp',label:'GLP guide',glp:true});
-  tabs.push({id:'tracker',label:'💉 Dose tracker',glp:true});
 
-  document.getElementById('tabStrip').innerHTML = tabs.map((t,i) => `
-    <button class="tab${i===0?' active':''}${t.glp?' glp-tab':''}" onclick="switchTab('${t.id}')">${t.label}</button>
-  `).join('');
+  const medItems = [];
+  if (plan === 'glp') medItems.push({id:'glp',label:'GLP guide'});
+  medItems.push({id:'hunger',label:'Food noise & hunger scale'});
+  medItems.push({id:'checkin',label:'Weekly check-in'});
+  medItems.push({id:'tracker',label:'Dose tracker'});
+
+  document.getElementById('tabStrip').innerHTML = `
+    <button class="tab active" onclick="switchTab('plan')">Your plan</button>
+    ${buildDropdown('eat', 'What to eat', eatItems)}
+    ${buildDropdown('med', 'Medication & hunger', medItems)}
+  `;
+
+  document.querySelectorAll('.tab-dd-trigger').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const dd = btn.closest('.tab-dd');
+      const wasOpen = dd.classList.contains('open');
+      document.querySelectorAll('.tab-dd.open').forEach(o => o.classList.remove('open'));
+      if (!wasOpen) dd.classList.add('open');
+    });
+  });
+  document.addEventListener('click', () => {
+    document.querySelectorAll('.tab-dd.open').forEach(o => o.classList.remove('open'));
+  });
+}
+
+function buildDropdown(groupId, label, items) {
+  return `
+    <div class="tab-dd" id="dd-${groupId}">
+      <button class="tab-dd-trigger" type="button">${label} <span class="car">▾</span></button>
+      <div class="tab-dd-menu">
+        ${items.map(t => `<button type="button" class="tab-dd-item" data-tabid="${t.id}" onclick="switchTab('${t.id}')">${t.label}</button>`).join('')}
+      </div>
+    </div>
+  `;
 }
 
 
@@ -1420,38 +1666,61 @@ const TRK_PHARMACIES = {
   striker:     { name:'Striker',  conc:10, maxUnits:50,   startUnits:20, isStriker:true  }
 };
 
-function trkDoseLabel(units, pharmKey) {
-  const p = TRK_PHARMACIES[pharmKey];
-  if (!p || !units) return '';
-  const mg = ((units / 100) * p.conc).toFixed(2);
+function trkDoseLabel(units, conc) {
+  if (!conc || !units) return '';
+  const mg = ((units / 100) * conc).toFixed(2);
   const mL = (units / 100).toFixed(2);
   return mg + ' mg · ' + mL + ' mL · ' + units + ' units';
+}
+
+function trkActiveConc() {
+  const key = document.getElementById('trk-pharmacy').value;
+  if (key === 'custom') return parseFloat(document.getElementById('trk-custom-conc').value);
+  const p = TRK_PHARMACIES[key];
+  return p ? p.conc : null;
 }
 
 function trkPharmacyChange() {
   const key = document.getElementById('trk-pharmacy').value;
   const p = TRK_PHARMACIES[key];
   const note = document.getElementById('trk-striker-note');
+  const customField = document.getElementById('trk-custom-conc');
   if (note) note.style.display = (p && p.isStriker) ? 'block' : 'none';
+  customField.style.display = (key === 'custom') ? 'block' : 'none';
   if (p) {
     document.getElementById('trk-start-units').value = p.startUnits;
-    trkUpdateDoseDisplay('trk-start-units','trk-start-dose-display');
   }
+  trkUpdateDoseDisplay('trk-start-units','trk-start-dose-display');
 }
 
 function trkUpdateDoseDisplay(inputId, displayId) {
-  const key = document.getElementById('trk-pharmacy').value;
+  const conc = trkActiveConc();
   const units = parseInt(document.getElementById(inputId).value);
   const el = document.getElementById(displayId);
-  if (key && units > 0) {
-    el.textContent = trkDoseLabel(units, key);
+  if (conc > 0 && units > 0) {
+    el.textContent = trkDoseLabel(units, conc);
     el.style.display = 'inline-flex';
   } else {
     el.style.display = 'none';
   }
 }
 
-function trkGetSetup() { try { return JSON.parse(localStorage.getItem('vw_trk_setup')); } catch { return null; } }
+function trkGetSetup() {
+  let s;
+  try { s = JSON.parse(localStorage.getItem('vw_trk_setup')); } catch { return null; }
+  if (!s) return null;
+  // Migrate setup objects saved before conc/pharmName/isStriker/maxUnits were stored explicitly.
+  if (s.conc == null) {
+    const p = TRK_PHARMACIES[s.key];
+    if (p) {
+      s.conc = p.conc;
+      s.pharmName = p.name;
+      s.isStriker = !!p.isStriker;
+      s.maxUnits = p.maxUnits;
+    }
+  }
+  return s;
+}
 function trkGetLogs()  { try { return JSON.parse(localStorage.getItem('vw_trk_logs')) || []; } catch { return []; } }
 function trkSaveLogs(logs) { localStorage.setItem('vw_trk_logs', JSON.stringify(logs)); }
 
@@ -1478,13 +1747,22 @@ function trkSaveSetup() {
 
   trkHideErr('trk-setup-err');
   if (!key) { trkShowErr('trk-setup-err','Please select your pharmacy.'); return; }
+  const conc = trkActiveConc();
+  if (key === 'custom' && (!conc || conc <= 0)) { trkShowErr('trk-setup-err','Please enter your medication concentration (mg/mL).'); return; }
   if (!units || units <= 0) { trkShowErr('trk-setup-err','Please enter your starting dose in units.'); return; }
   if (!weight || weight <= 0) { trkShowErr('trk-setup-err','Please enter your starting weight.'); return; }
   if (!date) { trkShowErr('trk-setup-err','Please enter your start date.'); return; }
   const p = TRK_PHARMACIES[key];
-  if (p.isStriker && units > p.maxUnits) { trkShowErr('trk-setup-err','Striker max dose is 50 units (2.5 mg).'); return; }
+  const isStriker = !!(p && p.isStriker);
+  const maxUnits = p ? p.maxUnits : null;
+  if (isStriker && units > maxUnits) { trkShowErr('trk-setup-err','Striker max dose is 50 units (2.5 mg).'); return; }
 
-  const setup = { key, units, weight, fat: isNaN(fat)?null:fat, lean: isNaN(lean)?null:lean, date, freq };
+  const setup = {
+    key, conc,
+    pharmName: key === 'custom' ? 'Custom' : p.name,
+    isStriker, maxUnits,
+    units, weight, fat: isNaN(fat)?null:fat, lean: isNaN(lean)?null:lean, date, freq
+  };
   localStorage.setItem('vw_trk_setup', JSON.stringify(setup));
   trkLoadDashboard();
 }
@@ -1495,6 +1773,7 @@ function trkShowSetup() {
   const s = trkGetSetup();
   if (s) {
     document.getElementById('trk-pharmacy').value = s.key;
+    if (s.key === 'custom') document.getElementById('trk-custom-conc').value = s.conc;
     document.getElementById('trk-start-units').value = s.units;
     document.getElementById('trk-sw').value = s.weight;
     if (s.fat) document.getElementById('trk-sf').value = s.fat;
@@ -1521,16 +1800,16 @@ function trkLoadDashboard() {
 function trkRenderSummary() {
   const s = trkGetSetup();
   const logs = trkGetLogs();
-  const p = TRK_PHARMACIES[s.key];
   const startMs = new Date(s.date).getTime();
   const weeks = Math.max(1, Math.round((Date.now() - startMs) / (7*24*3600*1000)));
-  document.getElementById('trk-summary-sub').textContent = 'Week ' + weeks + ' · ' + p.name + ' ' + p.conc + ' mg/mL';
+  document.getElementById('trk-summary-sub').textContent = 'Week ' + weeks + ' · ' + s.pharmName + ' ' + s.conc + ' mg/mL';
 
   const latest = logs.length ? logs[logs.length-1] : null;
   const cw = latest ? latest.weight : s.weight;
   const cf = latest && latest.fat != null ? latest.fat : s.fat;
   const cl = latest && latest.lean != null ? latest.lean : s.lean;
   const cu = latest ? latest.units : s.units;
+  const cConc = latest && latest.conc ? latest.conc : s.conc;
 
   const totalLost = s.weight - cw;
   const lostEl = document.getElementById('trk-s-lost');
@@ -1544,7 +1823,7 @@ function trkRenderSummary() {
   } else { leanEl.textContent = '—'; }
 
   document.getElementById('trk-s-dose').textContent = cu + 'u';
-  document.getElementById('trk-s-dose-sub').textContent = trkDoseLabel(cu, s.key);
+  document.getElementById('trk-s-dose-sub').textContent = trkDoseLabel(cu, cConc);
 
   if (logs.length >= 2) {
     document.getElementById('trk-s-rate').textContent = (Math.abs(totalLost) / logs.length).toFixed(1);
@@ -1602,7 +1881,7 @@ function trkRenderCharts() {
   if (hasFat || hasLean) {
     document.getElementById('trk-comp-label').textContent = 'Body composition (lbs)';
     const datasets = [];
-    if (hasFat)  datasets.push({label:'Fat mass (lbs)', data:fats,  borderColor:'#D85A30',backgroundColor:'rgba(216,90,48,.07)',tension:.3,pointRadius:3,spanGaps:true});
+    if (hasFat)  datasets.push({label:'Fat mass (lbs)', data:fats,  borderColor:"#5A6B85",backgroundColor:'rgba(90,107,133,.07)',tension:.3,pointRadius:3,spanGaps:true});
     if (hasLean) datasets.push({label:'Lean mass (lbs)',data:leans, borderColor:'#7F77DD',backgroundColor:'rgba(127,119,221,.07)',tension:.3,pointRadius:3,spanGaps:true});
     trkCompChart = new Chart(document.getElementById('trk-chart-comp'), {
       type:'line',
@@ -1640,9 +1919,10 @@ function trkRenderHistory() {
     const delta = l.weight - prev;
     const badge = delta < 0 ? 'green' : delta > 0 ? 'red' : 'yellow';
     const deltaStr = (delta > 0 ? '+' : '') + delta.toFixed(1) + ' lbs';
+    const entryConc = l.conc || s.conc;
     return '<tr>' +
       '<td>Wk '+(i+1)+'<br><span style="color:var(--muted);font-size:10px">'+(l.date||'')+'</span></td>' +
-      '<td><strong>'+l.units+'u</strong><br><span style="color:var(--muted);font-size:10px">'+trkDoseLabel(l.units,s.key)+'</span></td>' +
+      '<td><strong>'+l.units+'u</strong><br><span style="color:var(--muted);font-size:10px">'+trkDoseLabel(l.units,entryConc)+'</span></td>' +
       '<td>'+l.weight+' lbs<br><span class="trk-badge '+badge+'">'+deltaStr+'</span></td>' +
       '<td>'+(l.fat?l.fat+' lbs fat':'—')+'<br>'+(l.lean?'<span style="color:var(--purple-mid)">'+l.lean+' lbs lean</span>':'—')+'</td>' +
       '<td>'+(l.protein?l.protein+'g/day':'—')+'</td>' +
@@ -1666,11 +1946,10 @@ function trkSaveLog() {
   trkHideErr('trk-log-err');
   if (!units || units <= 0) { trkShowErr('trk-log-err','Please enter the units injected.'); return; }
   if (!weight || weight <= 0) { trkShowErr('trk-log-err','Please enter your weight.'); return; }
-  const p = TRK_PHARMACIES[s.key];
-  if (p.isStriker && units > p.maxUnits) { trkShowErr('trk-log-err','Striker max dose is 50 units (2.5 mg).'); return; }
+  if (s.isStriker && units > s.maxUnits) { trkShowErr('trk-log-err','Striker max dose is 50 units (2.5 mg).'); return; }
 
   const log = {
-    units, weight, sched,
+    units, weight, sched, conc: s.conc,
     fat: isNaN(fat)?null:fat,
     lean: isNaN(lean)?null:lean,
     protein: isNaN(protein)?null:protein,
@@ -1713,9 +1992,80 @@ function trkDeleteLog(idx) {
   trkCheckNotifyBanner();
 }
 
+// ── CONCENTRATION CHANGE ─────────────────────────────────────────────────────
+function trkOpenConcUpdate() {
+  document.getElementById('trk-conc-new').value = '';
+  document.getElementById('trk-conc-units').value = '';
+  document.getElementById('trk-conc-dose-display').style.display = 'none';
+  document.getElementById('trk-conc-suggest').style.display = 'none';
+  trkHideErr('trk-conc-err');
+  document.getElementById('trk-conc-card').style.display = '';
+  document.getElementById('trk-conc-card').scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+function trkSuggestConcUnits() {
+  const newConc = parseFloat(document.getElementById('trk-conc-new').value);
+  const suggestEl = document.getElementById('trk-conc-suggest');
+  if (!newConc || newConc <= 0) { suggestEl.style.display = 'none'; return; }
+
+  const s = trkGetSetup();
+  const logs = trkGetLogs();
+  const latest = logs.length ? logs[logs.length-1] : null;
+  const lastUnits = latest ? latest.units : s.units;
+  const lastConc = latest && latest.conc ? latest.conc : s.conc;
+  const lastMg = (lastUnits / 100) * lastConc;
+  const suggestedUnits = Math.round((lastMg / newConc) * 100);
+
+  document.getElementById('trk-conc-units').value = suggestedUnits;
+  trkUpdateDoseDisplay('trk-conc-units','trk-conc-dose-display');
+
+  suggestEl.style.display = 'block';
+  suggestEl.textContent = 'Suggested: your last dose was ' + lastMg.toFixed(2) + ' mg (' + lastUnits + ' units at ' + lastConc + ' mg/mL). At ' + newConc + ' mg/mL, that equals ' + suggestedUnits + ' units — pre-filled above. Adjust if your provider gave you a different instruction.';
+}
+
+function trkSaveConcUpdate() {
+  trkHideErr('trk-conc-err');
+  const newConc = parseFloat(document.getElementById('trk-conc-new').value);
+  const newUnits = parseInt(document.getElementById('trk-conc-units').value);
+  if (!newConc || newConc <= 0) { trkShowErr('trk-conc-err','Please enter the new concentration (mg/mL).'); return; }
+  if (!newUnits || newUnits <= 0) { trkShowErr('trk-conc-err','Please enter the new dose in units.'); return; }
+
+  const s = trkGetSetup();
+  const logs = trkGetLogs();
+  const latest = logs.length ? logs[logs.length-1] : null;
+
+  // Record the change as a new log entry so it's visible in history, using the most recent
+  // weight/body comp on file (no new measurement required just to log a concentration change).
+  const log = {
+    units: newUnits, conc: newConc,
+    weight: latest ? latest.weight : s.weight,
+    fat: latest ? latest.fat : s.fat,
+    lean: latest ? latest.lean : s.lean,
+    protein: null, sched: s.freq,
+    symptoms: {nausea:false,fatigue:false,constip:false,diarr:false,appetite:false,head:false,inject:false,none:false},
+    notes: 'Concentration updated to ' + newConc + ' mg/mL.',
+    date: new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})
+  };
+  logs.push(log);
+  trkSaveLogs(logs);
+
+  // Update setup so all future forms/displays default to the new concentration.
+  s.conc = newConc;
+  s.pharmName = 'Custom';
+  s.key = 'custom';
+  s.isStriker = false;
+  s.maxUnits = null;
+  localStorage.setItem('vw_trk_setup', JSON.stringify(s));
+
+  document.getElementById('trk-conc-card').style.display = 'none';
+  trkRenderSummary();
+  trkRenderCharts();
+  trkRenderHistory();
+  trkCheckNotifyBanner();
+}
+
 function trkCheckTitration() {
   const s = trkGetSetup();
-  const p = TRK_PHARMACIES[s.key];
   const logs = trkGetLogs();
   const cu = logs.length ? logs[logs.length-1].units : s.units;
   const noScale = document.getElementById('trk-tit-scale').checked;
@@ -1726,25 +2076,24 @@ function trkCheckTitration() {
     res.innerHTML = '<div class="trk-alert green"><div class="trk-alert-title">✓ Stay at your current dose</div>Your medication appears to be working. Keep going.</div>';
     return;
   }
-  if (p.isStriker) {
+  if (s.isStriker) {
     const next = cu + 5;
-    if (next > p.maxUnits) {
+    if (next > s.maxUnits) {
       res.innerHTML = '<div class="trk-alert red"><div class="trk-alert-title">⚠ At maximum Striker dose</div>You\'ve reached the 50-unit (2.5 mg) ceiling. Contact your Venture Wellness provider to discuss next steps.</div>';
     } else {
-      res.innerHTML = '<div class="trk-alert yellow"><div class="trk-alert-title">Consider increasing by 5 units</div>Next dose: <strong>'+next+' units ('+trkDoseLabel(next,s.key)+')</strong>. Increase only if you\'ve been at your current dose for 3+ weeks and are tolerating it well.</div>';
+      res.innerHTML = '<div class="trk-alert yellow"><div class="trk-alert-title">Consider increasing by 5 units</div>Next dose: <strong>'+next+' units ('+trkDoseLabel(next,s.conc)+')</strong>. Increase only if you\'ve been at your current dose for 3+ weeks and are tolerating it well.</div>';
     }
   } else {
     const next = cu + 5;
-    res.innerHTML = '<div class="trk-alert yellow"><div class="trk-alert-title">You may be ready to increase by 5 units</div>Next dose: <strong>'+next+' units ('+trkDoseLabel(next,s.key)+')</strong>. <strong>Notify Venture Wellness if your total increase exceeds 20 units over 4 weeks.</strong></div>';
+    res.innerHTML = '<div class="trk-alert yellow"><div class="trk-alert-title">You may be ready to increase by 5 units</div>Next dose: <strong>'+next+' units ('+trkDoseLabel(next,s.conc)+')</strong>. <strong>Notify Venture Wellness if your total increase exceeds 20 units over 4 weeks.</strong></div>';
   }
 }
 
 function trkCheckNotifyBanner() {
   const s = trkGetSetup();
-  const p = TRK_PHARMACIES[s.key];
   const banner = document.getElementById('trk-notify-banner');
   if (!banner) return;
-  if (p.isStriker) { banner.classList.remove('show'); return; }
+  if (s.isStriker) { banner.classList.remove('show'); return; }
   const logs = trkGetLogs();
   if (logs.length < 2) { banner.classList.remove('show'); return; }
   const recent = logs.slice(-4);
@@ -1771,10 +2120,25 @@ function trkInitIfNeeded() {
 }
 
 function switchTab(id) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  document.querySelector(`.tab[onclick="switchTab('${id}')"]`).classList.add('active');
   document.getElementById('panel-'+id).classList.add('active');
+
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-dd-trigger').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-dd-item').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-dd').forEach(dd => dd.classList.remove('open'));
+
+  const standaloneBtn = document.querySelector(`.tab[onclick="switchTab('${id}')"]`);
+  if (standaloneBtn) {
+    standaloneBtn.classList.add('active');
+  } else {
+    const item = document.querySelector(`.tab-dd-item[data-tabid="${id}"]`);
+    if (item) {
+      item.classList.add('active');
+      item.closest('.tab-dd').querySelector('.tab-dd-trigger').classList.add('active');
+    }
+  }
+
   if (id === 'tracker') trkInitIfNeeded();
 }
 
@@ -1795,6 +2159,8 @@ function launch() {
   buildTips();
   buildEatingOut();
   if (plan === 'glp') buildGlp();
+  buildHungerScale();
+  buildCheckin();
 
   document.getElementById('overlay').style.display = 'none';
   document.getElementById('guide').classList.add('on');
@@ -1826,7 +2192,7 @@ function launch() {
 // ── COMPLETE WEEK ─────────────────────────────────────────────────────────────
 function openCompleteWeek() {
   const planLabels = {fwl:'Weight loss \u2014 women',mwl:'Weight loss \u2014 men',glp:'GLP program',maint:'Hormone & maintenance'};
-  const total = Object.values(trackerData).filter(v => v === '1').length;
+  const total = Object.values(trackerData).reduce((sum, v) => sum + (v === '1' ? 1 : v === '0.5' ? 0.5 : 0), 0);
   const safeName = patientName.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   let summary = '<strong>' + safeName + '</strong> \u00b7 ' + (planLabels[plan] || plan) + '<br>';
   summary += 'Bubbles filled this week: <strong>' + total + '</strong>';
