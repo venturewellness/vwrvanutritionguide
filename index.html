@@ -494,6 +494,52 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
         <div style="font-size:11px;color:var(--teal-dark);line-height:1.5;padding-top:3px">Log your weekly weight and body composition in the <strong>💉 Dose tracker</strong> tab if you're on GLP-1</div>
       </div>
     </div>
+
+    <!-- Dose converter -->
+    <div style="margin-top:20px;border-radius:14px;overflow:hidden;box-shadow:0 2px 12px rgba(43,58,85,.13)">
+      <div style="background:var(--slate);padding:12px 16px;display:flex;align-items:center;gap:10px">
+        <span style="font-size:20px;line-height:1">⇄</span>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:#fff;letter-spacing:.01em">Tirzepatide Dose Converter</div>
+          <div style="font-size:11px;color:var(--mist);margin-top:1px">Switching concentrations? Find your correct new unit dose.</div>
+        </div>
+      </div>
+      <div style="background:#fff;padding:14px 16px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+          <div>
+            <div style="font-size:10px;font-weight:600;color:var(--slate);margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em">Current concentration</div>
+            <select id="lp-cv-from" onchange="lpConvChange()" style="width:100%;padding:8px 10px;border:2px solid var(--mist);border-radius:8px;font-size:12px;color:var(--slate);background:#fff;appearance:none;-webkit-appearance:none;font-weight:500">
+              <option value="">Select →</option>
+              <option value="10">Akina 10 mg/mL</option>
+            <option value="10">Striker 5 mg/0.5 mL (10 mg/mL)</option>
+              <option value="22">Southend 22 mg/mL</option>
+              <option value="25">Akina 25 mg/mL</option>
+              <option value="30">Akina 30 mg/mL</option>
+              <option value="custom">Custom</option>
+            </select>
+            <input type="number" id="lp-cv-from-custom" placeholder="mg/mL" min="0.1" step="0.1" style="display:none;margin-top:5px;width:100%;padding:8px 10px;border:2px solid var(--mist);border-radius:8px;font-size:12px;color:var(--slate);box-sizing:border-box" oninput="lpRunConvert()"/>
+          </div>
+          <div>
+            <div style="font-size:10px;font-weight:600;color:var(--slate);margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em">Current dose (units)</div>
+            <input type="number" id="lp-cv-units" placeholder="e.g. 10" min="1" max="100" style="width:100%;padding:8px 10px;border:2px solid var(--mist);border-radius:8px;font-size:12px;color:var(--slate);box-sizing:border-box;font-weight:500" oninput="lpRunConvert()"/>
+          </div>
+          <div>
+            <div style="font-size:10px;font-weight:600;color:var(--slate);margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em">New concentration</div>
+            <select id="lp-cv-to" onchange="lpConvChange()" style="width:100%;padding:8px 10px;border:2px solid var(--mist);border-radius:8px;font-size:12px;color:var(--slate);background:#fff;appearance:none;-webkit-appearance:none;font-weight:500">
+              <option value="">Select →</option>
+              <option value="10">Akina 10 mg/mL</option>
+            <option value="10">Striker 5 mg/0.5 mL (10 mg/mL)</option>
+              <option value="22">Southend 22 mg/mL</option>
+              <option value="25">Akina 25 mg/mL</option>
+              <option value="30">Akina 30 mg/mL</option>
+              <option value="custom">Custom</option>
+            </select>
+            <input type="number" id="lp-cv-to-custom" placeholder="mg/mL" min="0.1" step="0.1" style="display:none;margin-top:5px;width:100%;padding:8px 10px;border:2px solid var(--mist);border-radius:8px;font-size:12px;color:var(--slate);box-sizing:border-box" oninput="lpRunConvert()"/>
+          </div>
+        </div>
+        <div id="lp-cv-result" style="display:none"></div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -579,6 +625,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
         <div class="tracker-bar">
           <div class="tracker-bar-left">
             <span>Tap each bubble as you hit your portions</span>
+            <small style="display:block;margin-top:2px;color:var(--muted)">Tap the <strong>right half</strong> of a bubble for a half portion</small>
             <small id="syncStatus">Connecting...</small>
           </div>
           <div class="tracker-actions">
@@ -710,6 +757,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
                 <option value="southend_22">Southend — 22 mg/mL</option>
                 <option value="akina_10">Akina — 10 mg/mL</option>
                 <option value="akina_25">Akina — 25 mg/mL</option>
+                <option value="akina_30">Akina — 30 mg/mL</option>
                 <option value="striker">Striker — 5 mg/0.5 mL (microdosing + B12)</option>
                 <option value="custom">Custom concentration</option>
               </select>
@@ -864,11 +912,20 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
         <div class="trk-setup" id="trk-conc-card" style="display:none;margin-top:14px">
           <div class="trk-setup-head">🔄 Update your concentration</div>
           <div class="trk-setup-body">
-            <div class="trk-conc-note">If your pharmacy or vial concentration changed, enter the new concentration below. We'll suggest an equivalent unit dose based on your last logged dose so your mg amount stays consistent — you can adjust it before saving.</div>
+            <div class="trk-conc-note">If your pharmacy or vial concentration changed, select your new concentration below. We'll suggest an equivalent unit dose based on your last logged dose so your mg amount stays consistent — you can adjust it before saving.</div>
             <div class="trk-field-grid">
               <div class="trk-field">
-                <label>New concentration (mg/mL)</label>
-                <input class="trk-input" type="number" id="trk-conc-new" placeholder="e.g. 10" min="0.1" step="0.1" oninput="trkSuggestConcUnits()"/>
+                <label>New concentration</label>
+                <select class="trk-select" id="trk-conc-preset" onchange="trkConcPresetChange()">
+                  <option value="">Select concentration</option>
+                  <option value="10">Akina — 10 mg/mL</option>
+                  <option value="10">Striker — 5 mg/0.5 mL (10 mg/mL)</option>
+                  <option value="22">Southend — 22 mg/mL</option>
+                  <option value="25">Akina — 25 mg/mL</option>
+                  <option value="30">Akina — 30 mg/mL</option>
+                  <option value="custom">Custom concentration</option>
+                </select>
+                <input class="trk-input" type="number" id="trk-conc-new" placeholder="Enter mg/mL" min="0.1" step="0.1" style="display:none;margin-top:6px" oninput="trkSuggestConcUnits()"/>
               </div>
               <div class="trk-field">
                 <label>New dose (units)</label>
@@ -882,6 +939,47 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
               <button class="trk-btn trk-btn-primary" onclick="trkSaveConcUpdate()">Save new concentration</button>
               <button class="trk-btn trk-btn-sm" onclick="document.getElementById('trk-conc-card').style.display='none'">Cancel</button>
             </div>
+          </div>
+        </div>
+
+        <!-- Concentration converter -->
+        <div class="trk-setup" id="trk-conv-card" style="margin-top:14px">
+          <div class="trk-setup-head">⇄ Concentration converter</div>
+          <div class="trk-setup-body">
+            <div class="trk-conc-note">Use this to convert a dose between concentrations. Select your current and new concentrations, enter the units you inject, and the tool will show you the equivalent units at the new concentration.</div>
+            <div class="trk-field-grid">
+              <div class="trk-field">
+                <label>Current concentration</label>
+                <select class="trk-select" id="trk-cv-from-preset" onchange="trkConvFromChange()">
+                  <option value="">Select concentration</option>
+                  <option value="10">Akina — 10 mg/mL</option>
+                  <option value="10">Striker — 5 mg/0.5 mL (10 mg/mL)</option>
+                  <option value="22">Southend — 22 mg/mL</option>
+                  <option value="25">Akina — 25 mg/mL</option>
+                  <option value="30">Akina — 30 mg/mL</option>
+                  <option value="custom">Custom</option>
+                </select>
+                <input class="trk-input" type="number" id="trk-cv-from-custom" placeholder="Enter mg/mL" min="0.1" step="0.1" style="display:none;margin-top:6px" oninput="trkRunConvert()"/>
+              </div>
+              <div class="trk-field">
+                <label>Current dose (units)</label>
+                <input class="trk-input" type="number" id="trk-cv-units" placeholder="e.g. 10" min="1" max="100" oninput="trkRunConvert()"/>
+              </div>
+              <div class="trk-field">
+                <label>New concentration</label>
+                <select class="trk-select" id="trk-cv-to-preset" onchange="trkConvToChange()">
+                  <option value="">Select concentration</option>
+                  <option value="10">Akina — 10 mg/mL</option>
+                  <option value="10">Striker — 5 mg/0.5 mL (10 mg/mL)</option>
+                  <option value="22">Southend — 22 mg/mL</option>
+                  <option value="25">Akina — 25 mg/mL</option>
+                  <option value="30">Akina — 30 mg/mL</option>
+                  <option value="custom">Custom</option>
+                </select>
+                <input class="trk-input" type="number" id="trk-cv-to-custom" placeholder="Enter mg/mL" min="0.1" step="0.1" style="display:none;margin-top:6px" oninput="trkRunConvert()"/>
+              </div>
+            </div>
+            <div id="trk-cv-result" style="display:none;margin-top:12px"></div>
           </div>
         </div>
       </div>
@@ -1663,6 +1761,7 @@ const TRK_PHARMACIES = {
   southend_22: { name:'Southend', conc:22, maxUnits:null, startUnits:10, isStriker:false },
   akina_10:    { name:'Akina',    conc:10, maxUnits:null, startUnits:25, isStriker:false },
   akina_25:    { name:'Akina',    conc:25, maxUnits:null, startUnits:10, isStriker:false },
+  akina_30:    { name:'Akina',    conc:30, maxUnits:null, startUnits:10, isStriker:false },
   striker:     { name:'Striker',  conc:10, maxUnits:50,   startUnits:20, isStriker:true  }
 };
 
@@ -1994,7 +2093,9 @@ function trkDeleteLog(idx) {
 
 // ── CONCENTRATION CHANGE ─────────────────────────────────────────────────────
 function trkOpenConcUpdate() {
+  document.getElementById('trk-conc-preset').value = '';
   document.getElementById('trk-conc-new').value = '';
+  document.getElementById('trk-conc-new').style.display = 'none';
   document.getElementById('trk-conc-units').value = '';
   document.getElementById('trk-conc-dose-display').style.display = 'none';
   document.getElementById('trk-conc-suggest').style.display = 'none';
@@ -2003,8 +2104,27 @@ function trkOpenConcUpdate() {
   document.getElementById('trk-conc-card').scrollIntoView({behavior:'smooth', block:'center'});
 }
 
+function trkConcPresetChange() {
+  const val = document.getElementById('trk-conc-preset').value;
+  const customInput = document.getElementById('trk-conc-new');
+  if (val === 'custom') {
+    customInput.style.display = '';
+    customInput.value = '';
+    document.getElementById('trk-conc-suggest').style.display = 'none';
+  } else {
+    customInput.style.display = 'none';
+    trkSuggestConcUnits();
+  }
+}
+
+function trkGetConcNew() {
+  const preset = document.getElementById('trk-conc-preset').value;
+  if (preset === 'custom') return parseFloat(document.getElementById('trk-conc-new').value);
+  return preset ? parseFloat(preset) : NaN;
+}
+
 function trkSuggestConcUnits() {
-  const newConc = parseFloat(document.getElementById('trk-conc-new').value);
+  const newConc = trkGetConcNew();
   const suggestEl = document.getElementById('trk-conc-suggest');
   if (!newConc || newConc <= 0) { suggestEl.style.display = 'none'; return; }
 
@@ -2025,9 +2145,9 @@ function trkSuggestConcUnits() {
 
 function trkSaveConcUpdate() {
   trkHideErr('trk-conc-err');
-  const newConc = parseFloat(document.getElementById('trk-conc-new').value);
+  const newConc = trkGetConcNew();
   const newUnits = parseInt(document.getElementById('trk-conc-units').value);
-  if (!newConc || newConc <= 0) { trkShowErr('trk-conc-err','Please enter the new concentration (mg/mL).'); return; }
+  if (!newConc || newConc <= 0) { trkShowErr('trk-conc-err','Please select your new concentration.'); return; }
   if (!newUnits || newUnits <= 0) { trkShowErr('trk-conc-err','Please enter the new dose in units.'); return; }
 
   const s = trkGetSetup();
@@ -2211,6 +2331,91 @@ function clearSession() {
     localStorage.removeItem('vw_patient_plan');
   } catch(e) {}
   location.reload();
+}
+
+// ── LANDING PAGE CONVERTER ──────────────────────────────────────────────────
+function lpConvChange() {
+  const fromVal = document.getElementById('lp-cv-from').value;
+  const toVal   = document.getElementById('lp-cv-to').value;
+  document.getElementById('lp-cv-from-custom').style.display = (fromVal === 'custom') ? '' : 'none';
+  document.getElementById('lp-cv-to-custom').style.display   = (toVal   === 'custom') ? '' : 'none';
+  if (fromVal !== 'custom' && toVal !== 'custom') lpRunConvert();
+}
+
+function lpGetConc(selectId, customId) {
+  const val = document.getElementById(selectId).value;
+  if (val === 'custom') return parseFloat(document.getElementById(customId).value);
+  return val ? parseFloat(val) : NaN;
+}
+
+function lpRunConvert() {
+  const fromConc = lpGetConc('lp-cv-from', 'lp-cv-from-custom');
+  const toConc   = lpGetConc('lp-cv-to',   'lp-cv-to-custom');
+  const units = parseFloat(document.getElementById('lp-cv-units').value);
+  const res = document.getElementById('lp-cv-result');
+
+  if (isNaN(fromConc) || isNaN(toConc) || isNaN(units) || fromConc <= 0 || toConc <= 0 || units <= 0) {
+    res.style.display = 'none';
+    return;
+  }
+
+  const mg = (units / 100) * fromConc;
+  const newUnits = Math.round((mg / toConc) * 100);
+  const newMl = (newUnits / 100).toFixed(2);
+
+  res.style.display = 'block';
+  res.innerHTML =
+    '<div style="background:var(--slate);border-radius:10px;padding:12px 14px;font-size:12px;color:#fff;text-align:center">' +
+    '<div style="font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--mist);margin-bottom:6px">Your new dose</div>' +
+    '<div style="font-size:26px;font-weight:700;line-height:1">' + newUnits + ' units</div>' +
+    '<div style="font-size:12px;color:var(--mist);margin-top:2px">' + newMl + ' mL &nbsp;·&nbsp; ' + mg.toFixed(2) + ' mg</div>' +
+    '<div style="margin-top:8px;font-size:10px;color:#C8D8D8;border-top:1px solid rgba(255,255,255,.15);padding-top:8px">' + units + ' units @ ' + fromConc + ' mg/mL = ' + mg.toFixed(2) + ' mg → ' + newUnits + ' units @ ' + toConc + ' mg/mL</div>' +
+    '<div style="margin-top:6px;font-size:10px;color:#C8D8D8">Confirm all dose changes with your provider before switching.</div>' +
+    '</div>';
+}
+
+// ── CONCENTRATION CONVERTER ──────────────────────────────────────────────────
+function trkConvFromChange() {
+  const val = document.getElementById('trk-cv-from-preset').value;
+  document.getElementById('trk-cv-from-custom').style.display = (val === 'custom') ? '' : 'none';
+  if (val !== 'custom') trkRunConvert();
+}
+
+function trkConvToChange() {
+  const val = document.getElementById('trk-cv-to-preset').value;
+  document.getElementById('trk-cv-to-custom').style.display = (val === 'custom') ? '' : 'none';
+  if (val !== 'custom') trkRunConvert();
+}
+
+function trkGetConc(selectId, customId) {
+  const val = document.getElementById(selectId).value;
+  if (val === 'custom') return parseFloat(document.getElementById(customId).value);
+  return val ? parseFloat(val) : NaN;
+}
+
+function trkRunConvert() {
+  const fromConc = trkGetConc('trk-cv-from-preset', 'trk-cv-from-custom');
+  const toConc   = trkGetConc('trk-cv-to-preset',   'trk-cv-to-custom');
+  const units = parseFloat(document.getElementById('trk-cv-units').value);
+  const res = document.getElementById('trk-cv-result');
+
+  if (isNaN(fromConc) || isNaN(toConc) || isNaN(units) || fromConc <= 0 || toConc <= 0 || units <= 0) {
+    res.style.display = 'none';
+    return;
+  }
+
+  const mg = (units / 100) * fromConc;
+  const newUnits = Math.round((mg / toConc) * 100);
+  const newMl = (newUnits / 100).toFixed(2);
+
+  res.style.display = 'block';
+  res.innerHTML =
+    '<div class="trk-alert yellow" style="margin:0">' +
+    '<div class="trk-alert-title">Conversion result</div>' +
+    '<strong>' + units + ' units at ' + fromConc + ' mg/mL</strong> = <strong>' + mg.toFixed(2) + ' mg</strong><br>' +
+    'At <strong>' + toConc + ' mg/mL</strong>: inject <strong>' + newUnits + ' units</strong> (' + newMl + ' mL)<br>' +
+    '<span style="color:var(--muted);font-size:11px">Always confirm dose changes with your provider before switching.</span>' +
+    '</div>';
 }
 </script>
 
