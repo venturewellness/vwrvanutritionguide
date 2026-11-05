@@ -1026,6 +1026,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
             <div class="trk-field"><label>Bike time (hours)</label><input class="trk-input" type="number" id="fu-bike" min="0" step="0.05" placeholder="e.g. 6" oninput="fuSave()"/></div>
             <div class="trk-field"><label>Run time (hours)</label><input class="trk-input" type="number" id="fu-run" min="0" step="0.05" placeholder="e.g. 4.5" oninput="fuSave()"/></div>
           </div>
+          <div class="fu-note" style="margin:-4px 0 12px">Times are in hours: 6 h 30 min = 6.5, 1 h 15 min = 1.25.</div>
           <div class="trk-field-grid">
             <div class="trk-field"><label>Salt marks on hat or kit?</label>
               <select class="trk-select" id="fu-salt" onchange="fuSave()">
@@ -1049,7 +1050,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       <div class="fu-card">
         <div class="fu-head">Sweat tests <button class="trk-btn trk-btn-sm" type="button" onclick="fuAddTest()">+ Add a test</button></div>
         <div class="fu-body">
-          <div class="fu-note" style="margin:0 0 10px">Weigh yourself before and after a race-pace session of an hour or more, nude or in dry kit, towelled off. Write down what you drank and any bathroom stops.</div>
+          <div class="fu-note" style="margin:0 0 10px">Weigh yourself before and after a race-pace session of an hour or more, nude or in dry kit, towelled off. Write down what you drank and any bathroom stops. Enter time in hours: 90 minutes = 1.5.</div>
           <div class="fu-tests" id="fu-tests"></div>
           <div class="fu-note" id="fu-avg"></div>
         </div>
@@ -2349,7 +2350,8 @@ const FU = {
   naEst:{no:500, some:900, heavy:1400},             // mg/L by salt marks
   bikeCarbMax:90, bikeCarbMin:60, carbStep:10, runCarbLess:15,
   loadLow:10, loadHigh:12, bfLow:1, bfHigh:3,        // g/kg
-  preLow:5, preHigh:7, pre2h:3, preNa:1000           // mL/kg; mg
+  preLow:5, preHigh:7, pre2h:3, preNa:1000,          // mL/kg; mg
+  srMin:0.3, srMax:3.0, saltyNa:900                 // L/h a test must fall in; mg/L that counts as salty
 };
 const LB_KG = 0.4536, OZ_L = 0.0295735, L_OZ = 33.814;
 
@@ -2374,20 +2376,30 @@ function fuSave() {
   d.salt = document.getElementById('fu-salt').value; d.cramp = document.getElementById('fu-cramp').value;
   d.tests = [...document.querySelectorAll('.fu-test')].map(el => {
     const t = {};
-    el.querySelectorAll('input').forEach(i => { const v = parseFloat(i.value); t[i.dataset.k] = isFinite(v) ? v : null; });
+    el.querySelectorAll('input').forEach(i => {
+      const v = parseFloat(i.value);
+      if (v < 0) i.value = '';
+      t[i.dataset.k] = isFinite(v) && v >= 0 ? v : null;
+    });
     return t;
   });
   fuPut(d);
-  document.querySelectorAll('.fu-test').forEach((el, i) => {
-    const r = fuRate(d.tests[i]);
-    el.querySelector('.fu-rate').textContent = r === null ? '' : `${r.toFixed(2)} L/h · ${Math.round(r*L_OZ)} oz/h`;
-  });
   fuRender();
 }
 
 function fuRate(t) {
   if (!t || !t.hrs || t.hrs <= 0 || t.pre === null || t.post === null) return null;
   return Math.max(0, ((t.pre - t.post) * LB_KG + (t.drank || 0) * OZ_L - (t.urine || 0) * OZ_L) / t.hrs);
+}
+
+function fuOk(r) { return r !== null && r >= FU.srMin && r <= FU.srMax; }
+
+function fuShowRates(tests) {
+  document.querySelectorAll('.fu-test').forEach((el, i) => {
+    const r = fuRate(tests[i]), lbl = el.querySelector('.fu-rate');
+    lbl.textContent = r === null ? '' : fuOk(r) ? `${r.toFixed(2)} L/h · ${Math.round(r*L_OZ)} oz/h` : 'Check this test';
+    lbl.style.color = r !== null && !fuOk(r) ? 'var(--coral-mid)' : '';
+  });
 }
 
 function fuAddTest() {
@@ -2411,11 +2423,12 @@ function fuRenderTests(tests) {
 }
 
 function fuPlan(d) {
-  const rates = (d.tests || []).map(fuRate).filter(r => r !== null);
+  const done = (d.tests || []).map(fuRate).filter(r => r !== null);
+  const rates = done.filter(fuOk);
   const sr = rates.length ? rates.reduce((a, b) => a + b, 0) / rates.length : null;
   const kg = d.wt ? d.wt * LB_KG : null;
   const na = d.na || (d.salt ? FU.naEst[d.salt] : null);
-  const p = {sr, kg, na, rates:rates.length};
+  const p = {sr, kg, na, rates:rates.length, bad:done.length - rates.length};
   if (sr !== null) {
     p.lowOz = Math.min(sr * FU.fluidLow, FU.fluidMax) * L_OZ;
     p.highOz = Math.min(sr * FU.fluidHigh, FU.fluidMax) * L_OZ;
@@ -2432,21 +2445,23 @@ function fuPlan(d) {
     if (p.naH) p.naTotal = p.naH * hrs;
     p.carbTotal = d.bike * p.bikeCarb + d.run * p.runCarb;
   }
-  p.salty = d.salt === 'some' || d.salt === 'heavy' || d.cramp === 'yes';
+  p.salty = d.salt === 'some' || d.salt === 'heavy' || d.cramp === 'yes' || (d.na || 0) >= FU.saltyNa;
   return p;
 }
 
 function fuRender() {
   const d = fuGet(), p = fuPlan(d), r = Math.round;
   const fmt = n => r(n).toLocaleString('en-US');
+  fuShowRates(d.tests || []);
+  const off = p.bad ? ` ${p.bad === 1 ? 'One test was' : p.bad + ' tests were'} left out because the numbers look off. Check that time is in hours (90 min = 1.5) and both weights are right.` : '';
   document.getElementById('fu-avg').textContent = p.sr !== null
-    ? `Your sweat rate: ${p.sr.toFixed(2)} L an hour (${r(p.sr*L_OZ)} oz), average of ${p.rates} test${p.rates>1?'s':''}.` : '';
+    ? `Your sweat rate: ${p.sr.toFixed(2)} L an hour (${r(p.sr*L_OZ)} oz), average of ${p.rates} test${p.rates>1?'s':''}.${off}` : off.trim();
   const out = document.getElementById('fu-result');
   if (p.sr === null || !p.kg || !p.na) {
     const need = [];
     if (!p.kg) need.push('your body weight');
     if (!p.na) need.push('the salt-marks question');
-    if (p.sr === null) need.push('one sweat test');
+    if (p.sr === null) need.push(p.bad ? 'a sweat test with realistic numbers' : 'one sweat test');
     const list = need.length > 1 ? need.slice(0, -1).join(', ') + ' and ' + need[need.length - 1] : need[0];
     out.innerHTML = `<div class="fu-empty">Add ${list} to see your race plan.</div>`;
     return;
