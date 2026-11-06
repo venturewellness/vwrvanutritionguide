@@ -381,16 +381,45 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .fu-intro{font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:14px}
 .fu-card{background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:14px}
 .fu-head{padding:12px 16px;border-bottom:1px solid var(--border);font-size:13px;font-weight:500;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.fu-head>span{display:flex;align-items:center}
+.fu-num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--teal);color:#fff;font-size:11px;font-weight:600;margin-right:9px;flex-shrink:0}
 .fu-body{padding:14px 16px}
 .fu-note{font-size:11px;color:var(--muted);line-height:1.6;margin-top:4px}
+.fu-how{background:var(--teal-light);border-radius:10px;padding:10px 12px;margin-bottom:12px}
+.fu-how summary{cursor:pointer;font-size:12px;font-weight:500;color:var(--teal-dark)}
+.fu-how ol{margin:8px 0 6px 18px;font-size:12px;line-height:1.7;color:var(--teal-dark)}
+.fu-how .fu-note{color:var(--teal-dark)}
 .fu-tests{display:flex;flex-direction:column;gap:10px}
-.fu-test{border:1px dashed var(--border);border-radius:10px;padding:10px 12px}
-.fu-test-top{display:flex;justify-content:space-between;align-items:center;font-size:11px;font-weight:500;color:var(--muted);margin-bottom:8px}
-.fu-rate{font-size:12px;color:var(--teal-mid);font-weight:500}
+.fu-test{border:1px solid var(--border);border-radius:10px;padding:10px 12px;background:var(--bg)}
+.fu-test-top{display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:600;color:var(--text);margin-bottom:8px}
+.fu-segs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.fu-seg{display:inline-flex;align-self:flex-start;border:1px solid var(--border);border-radius:8px;overflow:hidden;background:#fff}
+.fu-seg button{font-family:'DM Sans',sans-serif;font-size:11px;padding:7px 11px;border:none;background:none;color:var(--muted);cursor:pointer;white-space:nowrap}
+.fu-seg button+button{border-left:1px solid var(--border)}
+.fu-seg button.on{background:var(--teal);color:#fff}
+.fu-out{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+.fu-pill{font-size:11px;background:var(--teal-light);color:var(--teal-dark);border-radius:20px;padding:4px 10px;line-height:1.4}
+.fu-pill b{font-weight:600}
+.fu-pill.warn{background:var(--amber-light);color:var(--amber-mid)}
+.fu-time{display:flex;gap:6px;align-items:center}
+.fu-time input{min-width:0}
+.fu-time span{font-size:11px;color:var(--muted)}
+.fu-logrow{padding:10px 0;border-bottom:1px solid var(--border)}
+.fu-logrow:first-child{padding-top:0}
+.fu-logrow:last-of-type{border-bottom:none}
+.fu-logname{font-size:12px;font-weight:600;margin-bottom:6px;display:flex;justify-content:space-between;gap:8px}
+.fu-logname span{font-weight:400;color:var(--muted);font-size:11px;white-space:nowrap}
+.fu-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.fu-stats div{background:var(--bg);border-radius:8px;padding:6px 4px;text-align:center}
+.fu-stats span{display:block;font-size:9px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.fu-stats b{font-size:14px;font-weight:600;color:var(--text)}
+.fu-stats .avg{background:var(--teal-light)}
+.fu-stats .avg b{color:var(--teal-dark)}
 .fu-empty{font-size:12px;color:var(--muted);background:var(--bg);border-radius:8px;padding:12px;line-height:1.6}
 .fu-legs{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
 .fu-leg{border:1px solid var(--border);border-radius:10px;padding:12px}
-.fu-leg-name{font-family:'DM Serif Display',serif;font-size:18px;color:var(--teal-dark);margin-bottom:6px}
+.fu-leg-name{font-family:'DM Serif Display',serif;font-size:18px;color:var(--teal-dark);margin-bottom:2px}
+.fu-leg-src{font-size:10px;color:var(--muted);margin-bottom:6px;line-height:1.5}
 .fu-row{display:flex;justify-content:space-between;gap:8px;font-size:12px;padding:5px 0;border-bottom:1px solid var(--border)}
 .fu-row:last-child{border-bottom:none}
 .fu-row b{font-weight:600;color:var(--text);text-align:right}
@@ -402,7 +431,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .fu-flag.ok{background:var(--teal-light);color:var(--teal-dark)}
 .fu-flag.warn{background:var(--amber-light);color:var(--amber-mid)}
 .fu-safety{background:var(--coral-light);border-left:3px solid var(--coral);border-radius:0 10px 10px 0;padding:10px 14px;font-size:11px;color:var(--coral-mid);line-height:1.7}
-@media(max-width:520px){.fu-when{flex-basis:92px}}
+@media(max-width:520px){.fu-when{flex-basis:92px}.fu-seg button{padding:7px 9px}}
 
 /* ── GLP-1 DOSE TRACKER ─────────────────────────────────────────────────── */
 .trk-disclaimer{background:var(--purple-light);border-left:3px solid var(--purple);border-radius:0 10px 10px 0;padding:10px 14px;margin-bottom:16px;font-size:11px;color:var(--purple-mid);line-height:1.65}
@@ -779,7 +808,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       <div class="sh" style="margin-top:28px">Past check-ins</div>
       <div id="ciHistory"></div>
     </div>
-  </div>
 
 
     <!-- TAB: GLP-1 DOSE TRACKER -->
@@ -1031,19 +1059,45 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <!-- TAB: RACE FUEL -->
     <div class="tab-panel" id="panel-fuel">
       <div class="sh">Race fuel</div>
-      <div class="fu-intro">Your fluid, sodium and carb plan for a long race, built from your own sweat rate. Fill in the race details, log one or two sweat tests on long race-pace sessions, and your race-day card fills in below. Practice it in training before race day.</div>
+      <div class="fu-intro">Your race-day fluid, sodium and carb plan, built from your own sweat rate. Do a few sweat tests on the bike and the run, in different weather and at different efforts. Then fill in your race, and your plan appears below. Practice it in training before race day.</div>
 
       <div class="fu-card">
-        <div class="fu-head">Race details</div>
+        <div class="fu-head"><span><span class="fu-num">1</span>Sweat tests</span><button class="trk-btn trk-btn-sm" type="button" onclick="fuAddTest()">+ Add a test</button></div>
+        <div class="fu-body">
+          <details class="fu-how">
+            <summary>How to do a sweat test</summary>
+            <ol>
+              <li>Weigh yourself with no clothes on right before a bike or run session of an hour or more.</li>
+              <li>Train. Write down how many minutes you went, how much you drank, and how many times you peed.</li>
+              <li>Towel off and weigh yourself again, with no clothes on.</li>
+              <li>Note the weather (under or over 85°F) and the effort: easy (Zone 1–2) or hard (Zone 3–5).</li>
+            </ol>
+            <div class="fu-note">Each bathroom stop counts as about 10 oz (300 mL). Test the bike and the run separately: most people sweat more on the run.</div>
+          </details>
+          <div class="fu-tests" id="fu-tests"></div>
+        </div>
+      </div>
+
+      <div class="fu-card">
+        <div class="fu-head"><span><span class="fu-num">2</span>Your sweat log</span></div>
+        <div class="fu-body"><div id="fu-log"></div></div>
+      </div>
+
+      <div class="fu-card">
+        <div class="fu-head"><span><span class="fu-num">3</span>Your race</span></div>
         <div class="fu-body">
           <div class="trk-field-grid">
             <div class="trk-field"><label>Body weight (lb)</label><input class="trk-input" type="number" id="fu-wt" min="60" step="0.1" placeholder="e.g. 175" oninput="fuSave()"/></div>
-            <div class="trk-field"><label>Swim time (hours)</label><input class="trk-input" type="number" id="fu-swim" min="0" step="0.05" placeholder="e.g. 1.25" oninput="fuSave()"/></div>
-            <div class="trk-field"><label>Bike time (hours)</label><input class="trk-input" type="number" id="fu-bike" min="0" step="0.05" placeholder="e.g. 6" oninput="fuSave()"/></div>
-            <div class="trk-field"><label>Run time (hours)</label><input class="trk-input" type="number" id="fu-run" min="0" step="0.05" placeholder="e.g. 4.5" oninput="fuSave()"/></div>
+            <div class="trk-field"><label>Swim time</label><div class="fu-time"><input class="trk-input" type="number" id="fu-swim-h" min="0" step="1" placeholder="1" oninput="fuSave()"/><span>h</span><input class="trk-input" type="number" id="fu-swim-m" min="0" max="59" step="5" placeholder="15" oninput="fuSave()"/><span>min</span></div></div>
+            <div class="trk-field"><label>Bike time</label><div class="fu-time"><input class="trk-input" type="number" id="fu-bike-h" min="0" step="1" placeholder="6" oninput="fuSave()"/><span>h</span><input class="trk-input" type="number" id="fu-bike-m" min="0" max="59" step="5" placeholder="0" oninput="fuSave()"/><span>min</span></div></div>
+            <div class="trk-field"><label>Run time</label><div class="fu-time"><input class="trk-input" type="number" id="fu-run-h" min="0" step="1" placeholder="4" oninput="fuSave()"/><span>h</span><input class="trk-input" type="number" id="fu-run-m" min="0" max="59" step="5" placeholder="30" oninput="fuSave()"/><span>min</span></div></div>
           </div>
-          <div class="fu-note" style="margin:-4px 0 12px">Times are in hours: 6 h 30 min = 6.5, 1 h 15 min = 1.25.</div>
           <div class="trk-field-grid">
+            <div class="trk-field"><label>Race-day forecast</label><div class="fu-seg" id="fu-heat"><button type="button" data-v="cool" onclick="fuSeg(this)">Under 85°F</button><button type="button" data-v="hot" onclick="fuSeg(this)">85°F or hotter</button></div></div>
+            <div class="trk-field"><label>Bike effort</label><div class="fu-seg" id="fu-bikeZone"><button type="button" data-v="easy" onclick="fuSeg(this)">Zone 1–2</button><button type="button" data-v="hard" onclick="fuSeg(this)">Zone 3–5</button></div></div>
+            <div class="trk-field"><label>Run effort</label><div class="fu-seg" id="fu-runZone"><button type="button" data-v="easy" onclick="fuSeg(this)">Zone 1–2</button><button type="button" data-v="hard" onclick="fuSeg(this)">Zone 3–5</button></div></div>
+          </div>
+          <div class="trk-field-grid" style="margin-bottom:0">
             <div class="trk-field"><label>Salt marks on hat or kit?</label>
               <select class="trk-select" id="fu-salt" onchange="fuSave()">
                 <option value="">Choose one</option>
@@ -1063,17 +1117,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
         </div>
       </div>
 
-      <div class="fu-card">
-        <div class="fu-head">Sweat tests <button class="trk-btn trk-btn-sm" type="button" onclick="fuAddTest()">+ Add a test</button></div>
-        <div class="fu-body">
-          <div class="fu-note" style="margin:0 0 10px">Weigh yourself before and after a race-pace session of an hour or more, nude or in dry kit, towelled off. Write down what you drank and any bathroom stops. Enter time in hours: 90 minutes = 1.5.</div>
-          <div class="fu-tests" id="fu-tests"></div>
-          <div class="fu-note" id="fu-avg"></div>
-        </div>
-      </div>
-
       <div id="fu-result"></div>
     </div>
+  </div>
 
   <div class="guide-footer">
     <span>Venture Wellness · 2342 Colony Crossing Place, Midlothian, VA · venturewellnessrva.com</span>
@@ -2355,13 +2401,18 @@ function switchTab(id) {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// RACE FUEL — same math as the clinic's Race Prep Planner spreadsheet
+// RACE FUEL — sweat tests by sport, weather and effort → race-day plan
 // ═══════════════════════════════════════════════════════════════════════════════
-// Sources: Sawka 2007 ACSM fluid stand (replace part of sweat loss, 5–7 mL/kg 4 h before);
-// Thomas 2016 ACSM/AND/DC (carb load 10–12 g/kg/day, breakfast 1–4 g/kg);
-// Jeukendrup 2014 (60–90 g/h carbs); Baker 2017 (sweat sodium range).
+// Sources: Tindal 2023, IRONMAN "Do you know your sweat rate?" (weight lost + drink − ~300 mL
+// per bathroom stop; test bike and run in heat < or ≥ 85°F and Zone 1–2 vs 3–5; replace 60–70%;
+// run usually sweatier, so drink more on the bike to hold <1% loss; 2–3% loss OK; recover
+// 150–200% of weight lost in 1–2 h). Sawka 2007 ACSM (pre-race 5–7 mL/kg); Thomas 2016
+// (carb load 10–12 g/kg/day, breakfast 1–3 g/kg); Jeukendrup 2014 (60–90 g/h); Baker 2017 (sodium).
 const FU = {
-  fluidLow:0.6, fluidHigh:0.8, fluidMax:1.0,        // share of sweat loss; L/h cap
+  fluidLow:0.6, fluidHigh:0.7, fluidMax:1.0,        // share of sweat loss; L/h cap
+  bikeHold:0.01, bikeShareMax:0.85,                 // bike: hold ~1% body weight loss, never over 85% of sweat
+  peeL:0.3, recLow:1.5, recHigh:2.0,                // L per bathroom stop; recovery share of weight lost
+  lossOk:2, lossMax:3,                              // % body weight lost by the finish
   naMatch:0.75, naFloor:300, naCeil:1500,           // share of sweat sodium in what you drink; mg/h
   naEst:{no:500, some:900, heavy:1400},             // mg/L by salt marks
   bikeCarbMax:90, bikeCarbMin:60, carbStep:10, runCarbLess:15,
@@ -2369,157 +2420,267 @@ const FU = {
   preLow:5, preHigh:7, pre2h:3, preNa:1000,          // mL/kg; mg
   srMin:0.3, srMax:3.0, saltyNa:900                 // L/h a test must fall in; mg/L that counts as salty
 };
+const FU_LBL = {bike:'Bike', run:'Run', cool:'under 85°F', hot:'85°F+', easy:'Zone 1–2', hard:'Zone 3–5'};
 const LB_KG = 0.4536, OZ_L = 0.0295735, L_OZ = 33.814;
 
 function fuGet() { try { return JSON.parse(localStorage.getItem('vw_fuel')) || {tests:[]}; } catch { return {tests:[]}; } }
 function fuPut(d) { try { localStorage.setItem('vw_fuel', JSON.stringify(d)); } catch {} }
-function fuNum(id) { const v = parseFloat(document.getElementById(id).value); return isFinite(v) ? v : null; }
+function fuNum(id) { const v = parseFloat(document.getElementById(id).value); return isFinite(v) && v >= 0 ? v : null; }
+function fuHrs(leg) {
+  const h = fuNum('fu-'+leg+'-h'), m = fuNum('fu-'+leg+'-m');
+  return h === null && m === null ? null : (h || 0) + (m || 0) / 60;
+}
+function fuSetSeg(id, v) {
+  const g = document.getElementById(id); g.dataset.v = v || '';
+  [...g.children].forEach(b => b.classList.toggle('on', b.dataset.v === v));
+}
 
 function fuInit() {
   const d = fuGet();
   const sw = parseFloat(document.getElementById('ob-sw').value);
   const set = (id, v) => { if (v !== undefined && v !== null) document.getElementById(id).value = v; };
   set('fu-wt', d.wt ?? (isFinite(sw) ? sw : null));
-  ['swim','bike','run','salt','na','carb','cramp'].forEach(k => set('fu-'+k, d[k]));
+  ['salt','na','carb','cramp'].forEach(k => set('fu-'+k, d[k]));
+  ['swim','bike','run'].forEach(k => {
+    if (d[k] === null || d[k] === undefined) return;
+    let h = Math.floor(d[k]), m = Math.round((d[k] - h) * 60);
+    if (m === 60) { h++; m = 0; }
+    set('fu-'+k+'-h', h); set('fu-'+k+'-m', m);
+  });
+  ['heat','bikeZone','runZone'].forEach(k => fuSetSeg('fu-'+k, d[k]));
+  // tests saved before minutes and bathroom stops existed
+  (d.tests || []).forEach(t => { if (t.min == null && t.hrs) t.min = Math.round(t.hrs * 60); });
+  fuPut(d);
   fuRenderTests(d.tests || []);
   fuRender();
 }
 
+function fuSeg(btn) {
+  const g = btn.parentElement;
+  g.dataset.v = btn.dataset.v;
+  [...g.children].forEach(b => b.classList.toggle('on', b === btn));
+  fuSave();
+}
+
 function fuSave() {
-  const d = fuGet();
-  d.wt = fuNum('fu-wt'); d.swim = fuNum('fu-swim'); d.bike = fuNum('fu-bike'); d.run = fuNum('fu-run');
-  d.na = fuNum('fu-na'); d.carb = fuNum('fu-carb');
+  const d = fuGet(), old = d.tests || [];
+  d.wt = fuNum('fu-wt'); d.na = fuNum('fu-na'); d.carb = fuNum('fu-carb');
+  d.swim = fuHrs('swim'); d.bike = fuHrs('bike'); d.run = fuHrs('run');
   d.salt = document.getElementById('fu-salt').value; d.cramp = document.getElementById('fu-cramp').value;
-  d.tests = [...document.querySelectorAll('.fu-test')].map(el => {
+  ['heat','bikeZone','runZone'].forEach(k => d[k] = document.getElementById('fu-'+k).dataset.v || '');
+  d.tests = [...document.querySelectorAll('.fu-test')].map((el, i) => {
     const t = {};
-    el.querySelectorAll('input').forEach(i => {
-      const v = parseFloat(i.value);
-      if (v < 0) i.value = '';
-      t[i.dataset.k] = isFinite(v) && v >= 0 ? v : null;
+    if (old[i] && old[i].urine != null) t.urine = old[i].urine;   // older tests logged urine in oz
+    el.querySelectorAll('input').forEach(inp => {
+      const v = parseFloat(inp.value);
+      if (v < 0) inp.value = '';
+      t[inp.dataset.k] = isFinite(v) && v >= 0 ? v : null;
     });
+    el.querySelectorAll('.fu-seg').forEach(g => t[g.dataset.k] = g.dataset.v || '');
     return t;
   });
   fuPut(d);
   fuRender();
 }
 
-function fuRate(t) {
-  if (!t || !t.hrs || t.hrs <= 0 || t.pre === null || t.post === null) return null;
-  return Math.max(0, ((t.pre - t.post) * LB_KG + (t.drank || 0) * OZ_L - (t.urine || 0) * OZ_L) / t.hrs);
+// One test → sweat rate (L/h), % body weight lost, recovery drink
+function fuCalc(t) {
+  if (!t || !t.min || t.min <= 0 || !t.pre || t.post === null || t.post === undefined) return null;
+  const lostLb = t.pre - t.post;
+  const urineL = t.pee != null ? t.pee * FU.peeL : (t.urine || 0) * OZ_L;
+  const rate = Math.max(0, (lostLb * LB_KG + (t.drank || 0) * OZ_L - urineL) / (t.min / 60));
+  return {sport:t.sport || '', heat:t.heat || '', zone:t.zone || '', rate, lostLb,
+          pct: lostLb / t.pre * 100, ok: rate >= FU.srMin && rate <= FU.srMax};
 }
 
-function fuOk(r) { return r !== null && r >= FU.srMin && r <= FU.srMax; }
-
-function fuShowRates(tests) {
+function fuShowTestResults(tests) {
+  const r = Math.round;
   document.querySelectorAll('.fu-test').forEach((el, i) => {
-    const r = fuRate(tests[i]), lbl = el.querySelector('.fu-rate');
-    lbl.textContent = r === null ? '' : fuOk(r) ? `${r.toFixed(2)} L/h · ${Math.round(r*L_OZ)} oz/h` : 'Check this test';
-    lbl.style.color = r !== null && !fuOk(r) ? 'var(--coral-mid)' : '';
+    const c = fuCalc(tests[i]), box = el.querySelector('.fu-out');
+    if (!c) { box.innerHTML = ''; return; }
+    if (!c.ok) { box.innerHTML = '<span class="fu-pill warn">Check this test: the numbers look off. Are the minutes and both weights right?</span>'; return; }
+    const pills = [`<span class="fu-pill">Sweat rate <b>${r(c.rate*L_OZ)} oz/h</b> (${c.rate.toFixed(2)} L/h)</span>`];
+    if (c.lostLb > 0) {
+      pills.push(`<span class="fu-pill${c.pct > FU.lossMax ? ' warn' : ''}">Lost <b>${c.pct.toFixed(1)}%</b> of body weight</span>`);
+      pills.push(`<span class="fu-pill">Recover: drink <b>${r(c.lostLb*LB_KG*FU.recLow*L_OZ)}–${r(c.lostLb*LB_KG*FU.recHigh*L_OZ)} oz</b> in the next 1–2 h</span>`);
+    } else {
+      pills.push('<span class="fu-pill warn">No weight lost: you drank as much as you sweated or more. Drink less next time.</span>');
+    }
+    box.innerHTML = pills.join('');
   });
 }
 
 function fuAddTest() {
-  const d = fuGet(); d.tests = d.tests || []; d.tests.push({});
+  const d = fuGet(); d.tests = d.tests || [];
+  const last = d.tests[d.tests.length - 1] || {};
+  d.tests.push({sport: last.sport || 'bike', heat: last.heat || 'cool', zone: last.zone || 'easy'});
   fuPut(d); fuRenderTests(d.tests); fuSave();
 }
 function fuRemoveTest(i) {
+  if (!confirm('Remove this sweat test?')) return;
   const d = fuGet(); d.tests.splice(i, 1); fuPut(d); fuRenderTests(d.tests); fuSave();
 }
 function fuRenderTests(tests) {
   const box = document.getElementById('fu-tests');
-  if (!tests.length) { box.innerHTML = '<div class="fu-empty">No sweat tests yet. Tap <strong>+ Add a test</strong> after your next long race-pace session.</div>'; return; }
-  const f = (k, label, ph, v) => `<div class="trk-field"><label>${label}</label><input class="trk-input" type="number" step="0.1" min="0" data-k="${k}" placeholder="${ph}" value="${v ?? ''}" oninput="fuSave()"/></div>`;
+  if (!tests.length) { box.innerHTML = '<div class="fu-empty">No sweat tests yet. Tap <strong>+ Add a test</strong> after your next bike or run session of an hour or more.</div>'; return; }
+  const f = (k, label, ph, v, step) => `<div class="trk-field"><label>${label}</label><input class="trk-input" type="number" step="${step}" min="0" data-k="${k}" placeholder="${ph}" value="${v ?? ''}" oninput="fuSave()"/></div>`;
+  const seg = (k, opts, v) => `<div class="fu-seg" data-k="${k}" data-v="${v || ''}">${opts.map(o =>
+    `<button type="button" data-v="${o}" class="${o === v ? 'on' : ''}" onclick="fuSeg(this)">${FU_LBL[o]}</button>`).join('')}</div>`;
   box.innerHTML = tests.map((t, i) => `
     <div class="fu-test">
-      <div class="fu-test-top"><span>Test ${i+1}</span><span class="fu-rate"></span><button class="trk-btn trk-btn-sm" type="button" onclick="fuRemoveTest(${i})">Remove</button></div>
-      <div class="trk-field-grid" style="margin-bottom:0">
-        ${f('hrs','Hours','e.g. 2',t.hrs)}${f('pre','Weight before (lb)','e.g. 176',t.pre)}${f('post','Weight after (lb)','e.g. 173.4',t.post)}${f('drank','Drank (oz)','e.g. 40',t.drank)}${f('urine','Urine (oz)','0 if none',t.urine)}
+      <div class="fu-test-top"><span>Test ${i+1}</span><button class="trk-btn trk-btn-sm" type="button" onclick="fuRemoveTest(${i})">Remove</button></div>
+      <div class="fu-segs">${seg('sport',['bike','run'],t.sport)}${seg('heat',['cool','hot'],t.heat)}${seg('zone',['easy','hard'],t.zone)}</div>
+      <div class="trk-field-grid" style="margin-bottom:10px">
+        ${f('min','Minutes','e.g. 120',t.min,5)}${f('pre','Weight before (lb)','e.g. 130',t.pre,0.1)}${f('post','Weight after (lb)','e.g. 128',t.post,0.1)}${f('drank','Drank (oz)','e.g. 24',t.drank,1)}${f('pee','Bathroom stops','0',t.pee ?? (t.urine != null ? null : ''),1)}
       </div>
+      <div class="fu-out"></div>
     </div>`).join('');
 }
 
+// Sweat rate for one race leg, using the tests closest to race conditions
+function fuLegRate(calcs, sport, heat, zone) {
+  const tiers = [
+    heat && zone ? c => c.sport === sport && c.heat === heat && c.zone === zone : null,
+    heat ? c => c.sport === sport && c.heat === heat : null,
+    c => c.sport === sport,
+    c => true
+  ];
+  for (let i = 0; i < tiers.length; i++) {
+    if (!tiers[i]) continue;
+    const set = calcs.filter(tiers[i]);
+    if (!set.length) continue;
+    const rs = set.map(c => c.rate);
+    return {sr: rs.reduce((a, b) => a + b, 0) / rs.length, lo: Math.min(...rs), hi: Math.max(...rs), n: rs.length, tier: i};
+  }
+  return null;
+}
+
 function fuPlan(d) {
-  const done = (d.tests || []).map(fuRate).filter(r => r !== null);
-  const rates = done.filter(fuOk);
-  const sr = rates.length ? rates.reduce((a, b) => a + b, 0) / rates.length : null;
+  const all = (d.tests || []).map(fuCalc).filter(c => c);
+  const calcs = all.filter(c => c.ok);
   const kg = d.wt ? d.wt * LB_KG : null;
   const na = d.na || (d.salt ? FU.naEst[d.salt] : null);
-  const p = {sr, kg, na, rates:rates.length, bad:done.length - rates.length};
-  if (sr !== null) {
-    p.lowOz = Math.min(sr * FU.fluidLow, FU.fluidMax) * L_OZ;
-    p.highOz = Math.min(sr * FU.fluidHigh, FU.fluidMax) * L_OZ;
-    p.per15 = (p.lowOz + p.highOz) / 2 / 4;
-    if (na) p.naH = Math.max(FU.naFloor, Math.min(FU.naCeil, (p.lowOz + p.highOz) / 2 / L_OZ * na * FU.naMatch));
+  const p = {kg, na, calcs, bad: all.length - calcs.length};
+  const legs = {bike: fuLegRate(calcs, 'bike', d.heat, d.bikeZone), run: fuLegRate(calcs, 'run', d.heat, d.runZone)};
+  if (!legs.bike || !legs.run) return p;
+  for (const k of ['bike', 'run']) {
+    const L = legs[k];
+    L.lowL = Math.min(L.sr * FU.fluidLow, FU.fluidMax);
+    L.highL = Math.min(L.sr * FU.fluidHigh, FU.fluidMax);
   }
-  p.bikeCarb = d.carb !== null && d.carb !== undefined ? Math.min(FU.bikeCarbMax, Math.max(FU.bikeCarbMin, d.carb + FU.carbStep)) : FU.bikeCarbMin;
-  p.runCarb = Math.max(30, p.bikeCarb - FU.runCarbLess);
-  if (sr !== null && d.bike !== null && d.run !== null && d.bike !== undefined && d.run !== undefined) {
-    const hrs = d.bike + d.run;
-    p.sweatL = sr * hrs;
-    p.drinkL = (p.lowOz + p.highOz) / 2 / L_OZ * hrs;
-    if (kg) p.lossPct = (p.sweatL - p.drinkL) / kg * 100;
-    if (p.naH) p.naTotal = p.naH * hrs;
-    p.carbTotal = d.bike * p.bikeCarb + d.run * p.runCarb;
+  // The run usually costs more fluid than the bike: drink more on the bike to arrive near 1% down
+  const B = legs.bike, R = legs.run;
+  if (B.tier < 3 && R.tier < 3 && R.sr > B.sr && kg && d.bike) {
+    const hold = B.sr - FU.bikeHold * kg / d.bike;
+    const high = Math.min(FU.fluidMax, B.sr * FU.bikeShareMax, Math.max(B.highL, hold));
+    if (high > B.highL + 0.01) { B.highL = high; p.bikeBoost = true; }
+  }
+  for (const k of ['bike', 'run']) {
+    const L = legs[k];
+    L.midL = (L.lowL + L.highL) / 2;
+    L.per15 = L.midL * L_OZ / 4;
+    if (na) L.naH = Math.max(FU.naFloor, Math.min(FU.naCeil, L.midL * na * FU.naMatch));
+  }
+  p.legs = legs;
+  B.carb = d.carb !== null && d.carb !== undefined ? Math.min(FU.bikeCarbMax, Math.max(FU.bikeCarbMin, d.carb + FU.carbStep)) : FU.bikeCarbMin;
+  R.carb = Math.max(30, B.carb - FU.runCarbLess);
+  if (d.bike && d.run) {
+    p.sweatL = B.sr * d.bike + R.sr * d.run;
+    p.drinkL = B.midL * d.bike + R.midL * d.run;
+    p.netL = Math.max(0, p.sweatL - p.drinkL);
+    if (kg) p.lossPct = p.netL / kg * 100;
+    if (na) p.naTotal = B.naH * d.bike + R.naH * d.run;
+    p.carbTotal = B.carb * d.bike + R.carb * d.run;
   }
   p.salty = d.salt === 'some' || d.salt === 'heavy' || d.cramp === 'yes' || (d.na || 0) >= FU.saltyNa;
   return p;
 }
 
+function fuRenderLog(p) {
+  const r = Math.round, box = document.getElementById('fu-log');
+  if (!p.calcs.length) {
+    box.innerHTML = `<div class="fu-empty">${p.bad ? 'Your tests have numbers that look off. Check the minutes and both weights.' : 'Your lowest, average and peak sweat rates show up here once you log a test.'}</div>`;
+    return;
+  }
+  const groups = {};
+  p.calcs.forEach(c => { const k = [c.sport, c.heat, c.zone].join('|'); (groups[k] = groups[k] || []).push(c); });
+  const order = k => (k.startsWith('bike') ? 0 : k.startsWith('run') ? 1 : 2);
+  const rows = Object.keys(groups).sort((a, b) => order(a) - order(b) || a.localeCompare(b)).map(k => {
+    const g = groups[k], rs = g.map(c => c.rate), avg = rs.reduce((a, b) => a + b, 0) / rs.length;
+    const [s, h, z] = k.split('|');
+    const name = [FU_LBL[s] || 'Not set', FU_LBL[h], FU_LBL[z]].filter(x => x).join(' · ');
+    const pct = g.reduce((a, c) => a + c.pct, 0) / g.length;
+    return `<div class="fu-logrow"><div class="fu-logname">${name}<span>${g.length} test${g.length > 1 ? 's' : ''}</span></div>
+      <div class="fu-stats"><div><span>Lowest</span><b>${r(Math.min(...rs)*L_OZ)}</b></div><div class="avg"><span>Average</span><b>${r(avg*L_OZ)}</b></div><div><span>Peak</span><b>${r(Math.max(...rs)*L_OZ)}</b></div><div><span>Wt lost</span><b>${pct.toFixed(1)}%</b></div></div></div>`;
+  }).join('');
+  box.innerHTML = `${rows}
+    <div class="fu-note">Sweat rates in oz per hour. ${p.bad ? `${p.bad} test${p.bad > 1 ? 's' : ''} left out because the numbers look off. ` : ''}More tests in more conditions make your plan more accurate.</div>`;
+}
+
 function fuRender() {
   const d = fuGet(), p = fuPlan(d), r = Math.round;
   const fmt = n => r(n).toLocaleString('en-US');
-  fuShowRates(d.tests || []);
-  const off = p.bad ? ` ${p.bad === 1 ? 'One test was' : p.bad + ' tests were'} left out because the numbers look off. Check that time is in hours (90 min = 1.5) and both weights are right.` : '';
-  document.getElementById('fu-avg').textContent = p.sr !== null
-    ? `Your sweat rate: ${p.sr.toFixed(2)} L an hour (${r(p.sr*L_OZ)} oz), average of ${p.rates} test${p.rates>1?'s':''}.${off}` : off.trim();
+  fuShowTestResults(d.tests || []);
+  fuRenderLog(p);
   const out = document.getElementById('fu-result');
-  if (p.sr === null || !p.kg || !p.na) {
+  if (!p.legs || !p.kg || !p.na) {
     const need = [];
+    if (!p.legs) need.push(p.bad && !p.calcs.length ? 'a sweat test with realistic numbers' : 'one sweat test');
     if (!p.kg) need.push('your body weight');
     if (!p.na) need.push('the salt-marks question');
-    if (p.sr === null) need.push(p.bad ? 'a sweat test with realistic numbers' : 'one sweat test');
     const list = need.length > 1 ? need.slice(0, -1).join(', ') + ' and ' + need[need.length - 1] : need[0];
     out.innerHTML = `<div class="fu-empty">Add ${list} to see your race plan.</div>`;
     return;
   }
-  const leg = (name, carb) => `
+  const B = p.legs.bike, R = p.legs.run;
+  const src = (L, sport) => {
+    const what = [`matching weather and effort`, `matching weather`, `in other conditions`, `(no ${sport} tests yet, so your other tests are used)`][L.tier];
+    return `From ${L.n} ${L.tier === 3 ? 'test' : sport + ' test'}${L.n > 1 ? 's' : ''} ${what}: ${r(L.sr*L_OZ)} oz/h sweat${L.n > 1 ? ` (${r(L.lo*L_OZ)}–${r(L.hi*L_OZ)})` : ''}`;
+  };
+  const leg = (name, L, sport) => `
     <div class="fu-leg"><div class="fu-leg-name">${name}</div>
-      <div class="fu-row"><span>Drink every 15 min</span><b>about ${r(p.per15)} oz</b></div>
-      <div class="fu-row"><span>Drink per hour</span><b>${r(p.lowOz)}–${r(p.highOz)} oz</b></div>
-      <div class="fu-row"><span>Sodium per hour</span><b>${fmt(p.naH)} mg</b></div>
-      <div class="fu-row"><span>Carbs per hour</span><b>${r(carb)} g</b></div>
+      <div class="fu-leg-src">${src(L, sport)}</div>
+      <div class="fu-row"><span>Drink every 15 min</span><b>about ${r(L.per15)} oz</b></div>
+      <div class="fu-row"><span>Drink per hour</span><b>${r(L.lowL*L_OZ)}–${r(L.highL*L_OZ)} oz</b></div>
+      <div class="fu-row"><span>Sodium per hour</span><b>${fmt(L.naH)} mg</b></div>
+      <div class="fu-row"><span>Carbs per hour</span><b>${r(L.carb)} g</b></div>
     </div>`;
-  let flag = '';
+  const notes = [];
+  if (p.bikeBoost) notes.push(`<div class="fu-flag ok">You sweat more on the run (${r(R.sr*L_OZ)} oz/h) than the bike (${r(B.sr*L_OZ)} oz/h), so the bike high end is raised to help you start the run only about 1% down.</div>`);
+  if (p.calcs.some(c => !c.sport)) notes.push(`<div class="fu-flag warn">Tap Bike or Run on each sweat test so each leg uses the right tests.</div>`);
+  else if (B.tier === 3 || R.tier === 3) notes.push(`<div class="fu-flag warn">Do a ${B.tier === 3 ? 'bike' : 'run'} sweat test. Most people sweat more running than riding, so the plan is a rough guess until you do.</div>`);
+  if (Math.max(B.sr, R.sr) > FU.fluidMax) notes.push(`<div class="fu-flag warn">You sweat a lot (${r(Math.max(B.sr, R.sr)*L_OZ)} oz/h). Most stomachs absorb only about ${r(FU.fluidMax*L_OZ)} oz an hour, so you'll finish down some no matter what. Start well hydrated and keep the pace easy in the heat.</div>`);
   if (p.lossPct !== undefined) {
-    if (p.lossPct > 4) flag = `<div class="fu-flag warn">At this plan you'd finish about ${p.lossPct.toFixed(1)}% lighter. Drink toward the high end if your stomach handles it, and talk to your provider.</div>`;
-    else if (p.sr > FU.fluidMax) flag = `<div class="fu-flag warn">You sweat faster than most people can drink (${p.sr.toFixed(2)} L/h). Start the bike well hydrated and keep the pace easy in the heat.</div>`;
-    else flag = `<div class="fu-flag ok">At this plan you'd finish about ${p.lossPct.toFixed(1)}% lighter. About 2–4% is expected in a full-distance race.</div>`;
+    if (p.lossPct > FU.lossMax) notes.push(`<div class="fu-flag warn">At this plan you'd finish about ${p.lossPct.toFixed(1)}% lighter, more than the 2–3% that's fine in a long race. Drink toward the high end if your stomach handles it, and talk to your provider.</div>`);
+    else notes.push(`<div class="fu-flag ok">At this plan you'd finish about ${p.lossPct.toFixed(1)}% lighter. ${p.lossPct > FU.lossOk ? 'Losing 2–3% is fine in a long race.' : 'Under 2% is ideal.'}</div>`);
   }
-  const kg = p.kg;
+  const kg = p.kg, oz = ml => r(ml / 29.5735);
   out.innerHTML = `
     <div class="fu-card">
-      <div class="fu-head">Race week and race morning <button class="trk-btn trk-btn-primary" type="button" onclick="fuPrint()">Print my race card</button></div>
+      <div class="fu-head"><span><span class="fu-num">4</span>Race week and race morning</span><button class="trk-btn trk-btn-primary" type="button" onclick="fuPrint()">Print my race card</button></div>
       <div class="fu-body"><ul class="fu-list" id="fu-before">
         <li><span class="fu-when">3–5 days out</span><span>Optional Race Week Drip at Venture Wellness (1 L IV with B vitamins and amino acids). Normal salt on your food all week.</span></li>
         <li><span class="fu-when">36–48 h out</span><span>Carb load: ${fmt(kg*FU.loadLow)}–${fmt(kg*FU.loadHigh)} g carbs a day. Mostly starches, less fiber and fat.</span></li>
-        <li><span class="fu-when">3–4 h before</span><span>Breakfast with ${fmt(kg*FU.bfLow)}–${fmt(kg*FU.bfHigh)} g carbs, foods you've tested. Drink ${r(kg*FU.preLow/29.5735)}–${r(kg*FU.preHigh/29.5735)} oz.${p.salty ? ` Add ${fmt(FU.preNa/2)}–${fmt(FU.preNa)} mg sodium (broth, salted food, electrolyte drink or capsules).` : ' Salt your breakfast.'}</span></li>
-        <li><span class="fu-when">2 h before</span><span>Only if your urine is dark or you haven't gone: ${r(kg*FU.pre2h/29.5735)} oz more.</span></li>
+        <li><span class="fu-when">3–4 h before</span><span>Breakfast with ${fmt(kg*FU.bfLow)}–${fmt(kg*FU.bfHigh)} g carbs, foods you've tested. Drink ${oz(kg*FU.preLow)}–${oz(kg*FU.preHigh)} oz.${p.salty ? ` Add ${fmt(FU.preNa/2)}–${fmt(FU.preNa)} mg sodium (broth, salted food, electrolyte drink or capsules).` : ' Salt your breakfast.'}</span></li>
+        <li><span class="fu-when">2 h before</span><span>Only if your urine is dark or you haven't gone: ${oz(kg*FU.pre2h)} oz more.</span></li>
         <li><span class="fu-when">15–30 min before</span><span>One gel (25–30 g carbs) with a few sips of water.</span></li>
       </ul></div>
     </div>
     <div class="fu-card">
-      <div class="fu-head">During the race</div>
+      <div class="fu-head"><span><span class="fu-num">5</span>During and after the race</span></div>
       <div class="fu-body">
-        <div class="fu-legs" id="fu-legs">${leg('Bike', p.bikeCarb)}${leg('Run', p.runCarb)}</div>
+        <div class="fu-legs" id="fu-legs">${leg('Bike', B, 'bike')}${leg('Run', R, 'run')}</div>
         <div class="fu-note">Swim: nothing taken in the water. ${p.carbTotal !== undefined ? `Race totals for bike + run: about ${fmt(p.drinkL*L_OZ)} oz fluid, ${fmt(p.naTotal)} mg sodium, ${fmt(p.carbTotal)} g carbs.` : 'Add bike and run times to see race totals.'}</div>
-        ${flag}
+        ${notes.join('')}
+        <ul class="fu-list" id="fu-after" style="margin-top:10px">
+          <li><span class="fu-when">After the finish</span><span>${p.netL ? `Drink about ${fmt(p.netL*FU.recLow*L_OZ)} oz (150% of what you lost), spread over the rest of the day. Sip, don't chug, and eat salty food with it.` : 'Drink about 150% of the weight you lost, spread over the rest of the day, with salty food.'} Weigh yourself if you can: the goal is to be back to your starting weight by the next morning.</span></li>
+        </ul>
       </div>
     </div>
-    <div class="fu-safety"><strong>Don't overdrink.</strong> Never more than ${r(p.highOz)} oz an hour. Sloshing, bloating, puffy hands or gaining weight means stop drinking extra. ${d.cramp === 'yes' ? 'Cramps track most with pace and fatigue: pace the first half of the bike and rehearse this plan on long rides. ' : ''}Confusion, vomiting, a bad headache, chest pain or fainting: go to the medical tent. This plan is a starting point; adjust it with your provider.</div>`;
+    <div class="fu-safety"><strong>Don't overdrink.</strong> Never more than ${r(Math.max(B.highL, R.highL)*L_OZ)} oz an hour, and never more than you sweat. Thirst is a good guide: a little under is safer than over. Sloshing, bloating, puffy hands or gaining weight means stop drinking extra. ${d.cramp === 'yes' ? 'Cramps track most with pace and fatigue: pace the first half of the bike and rehearse this plan on long rides. ' : ''}Confusion, vomiting, a bad headache, chest pain or fainting: go to the medical tent. This plan is a starting point; adjust it with your provider.</div>`;
 }
 
 function fuPrint() {
-  const d = fuGet();
   const w = window.open('', '_blank');
   if (!w) { alert('Allow pop-ups to print your race card.'); return; }
   const name = (typeof patientName === 'string' && patientName) ? patientName : '';
@@ -2527,16 +2688,16 @@ function fuPrint() {
   w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>Race Day Card</title>
     <style>body{font-family:Arial,sans-serif;color:#1a1a18;margin:28px;font-size:13px}h1{font-size:20px;margin:0 0 4px}h2{font-size:14px;margin:18px 0 6px;color:#085041;text-transform:uppercase;letter-spacing:.06em}
     ul{list-style:none;padding:0;margin:0}li{padding:6px 0;border-bottom:1px solid #ddd;display:flex;gap:12px}.fu-when{flex:0 0 120px;font-weight:bold}
-    .fu-legs{display:flex;gap:16px}.fu-leg{flex:1;border:1px solid #ccc;border-radius:8px;padding:10px}.fu-leg-name{font-weight:bold;font-size:15px;margin-bottom:4px}
+    .fu-legs{display:flex;gap:16px}.fu-leg{flex:1;border:1px solid #ccc;border-radius:8px;padding:10px}.fu-leg-name{font-weight:bold;font-size:15px;margin-bottom:2px}.fu-leg-src{font-size:10px;color:#666;margin-bottom:4px}
     .fu-row{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #eee}.fu-row:last-child{border:none}.small{font-size:11px;color:#555;margin-top:14px;line-height:1.6}</style></head><body>
     <h1>Race Day Card${name ? ' · ' + esc(name) : ''}</h1><div class="small" style="margin-top:0">Venture Wellness · venturewellnessrva.com</div>
     <h2>Race week and morning</h2><ul>${document.getElementById('fu-before').innerHTML}</ul>
     <h2>During the race</h2><div class="fu-legs">${document.getElementById('fu-legs').innerHTML}</div>
+    <h2>After</h2><ul>${document.getElementById('fu-after').innerHTML}</ul>
     <div class="small">${document.querySelector('.fu-safety').innerHTML}</div>
     </body></html>`);
   w.document.close(); w.focus(); w.print();
 }
-
 // ── LAUNCH ────────────────────────────────────────────────────────────────────
 function launch() {
   patientName = document.getElementById('ob-name').value.trim();
