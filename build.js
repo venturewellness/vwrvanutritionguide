@@ -22,4 +22,7 @@ html = html.replace('__FIREBASE_API_KEY__', apiKey);
 fs.mkdirSync(outDir, { recursive: true });
 fs.writeFileSync(outPath, html);
 
+// Standalone patient page, copied as is: /tirzepatide-calculator
+fs.copyFileSync(path.join(__dirname, 'tirzepatide-calculator.html'), path.join(outDir, 'tirzepatide-calculator.html'));
+
 console.log('Build complete: injected FIREBASE_API_KEY into dist/index.html');

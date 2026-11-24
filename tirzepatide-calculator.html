@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>Tirzepatide Cost Calculator | Venture Wellness</title>
+<style>body{margin:0}[hidden]{display:none!important}*{box-sizing:border-box}</style>
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@600&display=swap">
+<style>
+/* Layout: one dose control at the top, two result cards side by side (on a plan, without a plan), the dose table below for reference. One fixed light look in the practice colors. */
+:root {
+  --bg: #F6F8F4;
+  --surface: #FFFFFF;
+  --ink: #302D26;
+  --muted: #5B5A52;
+  --teal: #264653;
+  --on-teal: #FFFFFF;
+  --sage: #CDD9C3;
+  --sage-ink: #22352B;
+  --line: #C9D3C4;
+  --display: "Playfair Display", Georgia, "Times New Roman", serif;
+  --body: Inter, "Helvetica Neue", Arial, sans-serif;
+}
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.5; }
+.page {
+  max-width: 760px; margin: 0 auto; padding-block: 28px 44px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: flex; flex-direction: column; gap: 24px;
+}
+h1 { font-family: var(--display); font-weight: 600; color: var(--teal); font-size: 2rem; line-height: 1.15; margin: 0; text-wrap: balance; }
+h2 { font-family: var(--body); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: var(--muted); margin: 0; }
+p { margin: 0; }
+.eyebrow { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: var(--teal); }
+.head { display: flex; flex-direction: column; gap: 8px; }
+.lede { color: var(--muted); max-width: 60ch; }
+
+.dose { background: var(--surface); border: 2px solid var(--line); border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; gap: 12px; }
+.dose label { font-weight: 600; }
+.dose-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.dose input[type="range"] { flex: 1 1 220px; min-width: 0; accent-color: var(--teal); }
+.num { display: flex; align-items: baseline; gap: 6px; }
+.num input { width: 5.2rem; font: 600 1.5rem var(--body); color: var(--teal); padding: 6px 8px; border: 2px solid var(--line); border-radius: 10px; background: var(--surface); font-variant-numeric: tabular-nums; }
+.num input:focus-visible, .dose input[type="range"]:focus-visible { outline: 3px solid var(--sage); outline-offset: 2px; }
+.hint { color: var(--muted); font-size: 0.92rem; }
+.seg { display: inline-flex; align-self: flex-start; border: 2px solid var(--teal); border-radius: 999px; overflow: hidden; }
+.seg button { font: 600 0.95rem var(--body); cursor: pointer; background: var(--surface); color: var(--teal); border: 0; padding: 8px 18px; }
+.seg button[aria-pressed="true"] { background: var(--teal); color: var(--on-teal); }
+.seg button:focus-visible { outline: 3px solid var(--sage); outline-offset: -3px; }
+.conv { background: var(--surface); border: 2px solid var(--line); border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; gap: 12px; }
+.conv-row { display: flex; align-items: center; gap: 10px 14px; flex-wrap: wrap; }
+.conv input { width: 4.6rem; font: 600 1.1rem var(--body); color: var(--teal); padding: 6px 8px; border: 2px solid var(--line); border-radius: 10px; background: var(--surface); font-variant-numeric: tabular-nums; }
+.conv strong { color: var(--teal); }
+.conv button { font: 600 0.95rem var(--body); cursor: pointer; background: var(--teal); color: var(--on-teal); border: 0; border-radius: 999px; padding: 8px 18px; }
+.conv input:focus-visible, .conv button:focus-visible { outline: 3px solid var(--sage); outline-offset: 2px; }
+.tier { background: var(--teal); color: var(--on-teal); border-radius: 999px; padding: 5px 14px; font-weight: 600; align-self: flex-start; }
+
+.results { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.card { border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; gap: 10px; min-width: 0; font-variant-numeric: tabular-nums; }
+.card.plan { background: var(--sage); color: var(--sage-ink); }
+.card.plan h2 { color: var(--sage-ink); }
+.card.none { background: var(--surface); border: 2px solid var(--line); }
+.big { font-family: var(--display); font-size: 2.2rem; font-weight: 600; color: var(--teal); line-height: 1.1; }
+.big small { font-family: var(--body); font-size: 1rem; font-weight: 500; color: inherit; }
+.rows { display: flex; flex-direction: column; gap: 4px; }
+.rows div { display: flex; justify-content: space-between; gap: 12px; }
+.rows span:last-child { font-weight: 600; white-space: nowrap; }
+.order { background: var(--surface); border: 2px solid var(--teal); border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; gap: 10px; }
+.order h2 { color: var(--teal); }
+.pick strong { color: var(--teal); }
+.btn { align-self: flex-start; font: 600 1.05rem var(--body); background: var(--teal); color: var(--on-teal); text-decoration: none; border-radius: 999px; padding: 12px 28px; }
+.btn:focus-visible { outline: 3px solid var(--sage); outline-offset: 2px; }
+.msg { background: var(--surface); border: 2px solid var(--line); border-radius: 14px; padding: 16px 20px; }
+
+.wrap { overflow-x: auto; }
+table { width: 100%; min-width: 640px; border-collapse: collapse; background: var(--surface); border: 2px solid var(--line); border-radius: 12px; overflow: hidden; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 9px 14px; border-bottom: 1px solid var(--line); }
+th { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+tr:last-child td { border-bottom: 0; }
+tr.on td { background: var(--sage); color: var(--sage-ink); font-weight: 600; }
+.fine { color: var(--muted); font-size: 0.92rem; display: flex; flex-direction: column; gap: 6px; }
+
+@media (max-width: 560px) {
+  h1 { font-size: 1.7rem; }
+  .results { grid-template-columns: minmax(0, 1fr); }
+}
+</style>
+
+</head>
+<body>
+<main class="page">
+  <header class="head">
+    <p class="eyebrow">Venture Wellness · Tirzepatide</p>
+    <h1>What your dose costs</h1>
+    <p class="lede">You pay once per fill, not every month. Enter your weekly dose to see the price of one fill, how long it lasts and what that comes to per month.</p>
+  </header>
+
+  <section class="dose">
+    <label for="dose-num">Your weekly dose</label>
+    <div class="dose-row">
+      <input id="dose-range" type="range" min="0.5" max="15" step="0.1" value="2.5" aria-label="Weekly dose in milligrams">
+      <span class="num"><input id="dose-num" type="number" min="0.5" max="15" step="0.1" value="2.5" inputmode="decimal"> mg a week</span>
+    </div>
+    <div class="seg" role="group" aria-label="Supply length">
+      <button type="button" id="mode-1" aria-pressed="true">One fill</button>
+      <button type="button" id="mode-3" aria-pressed="false">3-month supply</button>
+    </div>
+    <span class="tier" id="tier">Low dose</span>
+    <p class="hint">Enter your total for the week. If you split your dose into more than one injection, add them together.</p>
+  </section>
+
+  <section class="conv">
+    <h2>Know your dose in units, not mg?</h2>
+    <p>Your tirzepatide is 22 mg per mL. On a standard insulin syringe (100 units per mL), 10 units is 2.2 mg.</p>
+    <div class="conv-row">
+      <label for="conv-units">Units per injection</label>
+      <input id="conv-units" type="number" min="1" max="100" step="1" value="10" inputmode="numeric">
+      <label for="conv-times">Injections per week</label>
+      <input id="conv-times" type="number" min="1" max="7" step="1" value="1" inputmode="numeric">
+    </div>
+    <div class="conv-row">
+      <p>That is <strong id="conv-mg">2.2 mg</strong> a week.</p>
+      <button id="conv-use" type="button">Use this dose</button>
+    </div>
+  </section>
+
+  <section class="results" id="results" aria-live="polite">
+    <div class="card plan">
+      <h2>On a plan</h2>
+      <p class="big"><span id="plan-month">$90</span> <small>a month, about</small></p>
+      <div class="rows">
+        <div><span class="lab-price">Price of one fill</span><span id="plan-fill">$179</span></div>
+        <div><span class="lab-lasts">One fill lasts about</span><span id="plan-weeks">9 weeks</span></div>
+      </div>
+    </div>
+    <div class="card none">
+      <h2>Without a plan</h2>
+      <p class="big"><span id="none-month">$145</span> <small>a month, about</small></p>
+      <div class="rows">
+        <div><span class="lab-price">Price of one fill</span><span id="none-fill">$299</span></div>
+        <div><span class="lab-lasts">One fill lasts about</span><span id="none-weeks">9 weeks</span></div>
+      </div>
+    </div>
+  </section>
+  <section class="order" id="order">
+    <h2>Ready to order?</h2>
+    <p>At checkout, choose the option that matches your dose:</p>
+    <p class="pick"><strong>On a plan:</strong> <span id="pick-plan"></span></p>
+    <p class="pick"><strong>Without a plan:</strong> <span id="pick-none"></span></p>
+    <a class="btn" id="checkout" href="#" hidden>Check out</a>
+    <p class="hint" id="checkout-soon">Online checkout is coming soon. For now, please use your refill request form.</p>
+    <p class="hint">Your prescription is reviewed by your provider before it is filled. If your dose or price changes, we tell you before we bill you.</p>
+  </section>
+  <p class="msg" id="same" hidden>At your dose, one fill already lasts about 3 months, so the figures above are for one fill.</p>
+  <p class="msg" id="over" hidden>Doses above 15 mg a week are priced individually. Please ask your care team.</p>
+
+  <section>
+    <div class="wrap">
+      <table>
+        <tr><th>Weekly dose</th><th>One fill, on a plan</th><th>One fill, without</th><th>3 months, on a plan</th><th>3 months, without</th></tr>
+        <tr id="row-0"><td>Low: up to 5 mg</td><td>$179</td><td>$299</td><td>$320 to $485</td><td>$540 to $805</td></tr>
+        <tr id="row-1"><td>Medium: over 5, up to 8.5 mg</td><td>$299</td><td>$449</td><td>$405 to $675</td><td>$605 to $1,010</td></tr>
+        <tr id="row-2"><td>High: over 8.5, up to 13 mg</td><td>$419</td><td>$479</td><td>$630 to $1,005</td><td>$720 to $1,150</td></tr>
+        <tr id="row-3"><td>Very high: over 13, up to 15 mg</td><td>$549</td><td>$649</td><td>$990 to $1,110</td><td>$1,170 to $1,315</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <footer class="fine">
+    <p><strong>Lower dose, lower monthly cost.</strong> A lower dose makes one fill last longer.</p>
+    <p><strong>No monthly billing.</strong> You pay only when we fill your prescription.</p>
+    <p><strong>Dose going up?</strong> We tell you the new price before we bill you.</p>
+    <p><strong>3-month supply.</strong> For patients on a steady dose. It is sized to your dose and costs 10% less per vial than single fills. It is not available while your dose is being adjusted.</p>
+    <p>These are estimates. Monthly figures are rounded to the nearest $5, and a fill is used within about 10 weeks.</p>
+  </footer>
+</main>
+
+<script>
+(function () {
+  // Each vial holds 22 mg. A fill is 1, 2, 3 or 4 vials depending on the dose range. A 3-month supply is the
+  // whole vials that cover 12 weeks at the patient's dose, priced at 10% less per vial than her single-fill rate.
+  // Paste the GoHighLevel order form link between the quotes to switch on the Check out button.
+  var CHECKOUT_URL = "";
+  if (CHECKOUT_URL) {
+    var co = document.getElementById("checkout"); co.href = CHECKOUT_URL; co.hidden = false;
+    document.getElementById("checkout-soon").hidden = true;
+  }
+  var tiers = [
+    { name: "Low dose", max: 5, vials: 1, plan: 179, none: 299 },
+    { name: "Medium dose", max: 8.5, vials: 2, plan: 299, none: 449 },
+    { name: "High dose", max: 13, vials: 3, plan: 419, none: 479 },
+    { name: "Very high dose", max: 15, vials: 4, plan: 549, none: 649 }
+  ];
+  var MAX_WEEKS = 10, WEEKS_PER_MONTH = 52 / 12;
+  var range = document.getElementById("dose-range"), num = document.getElementById("dose-num");
+  function money(n) { return "$" + n.toLocaleString("en-US"); }
+  var months3 = false;
+  function round5(n) { return Math.round(n / 5) * 5; }
+  function set(id, text) { document.getElementById(id).textContent = text; }
+  function render(dose) {
+    var over = dose > 15;
+    document.getElementById("order").hidden = over;
+    document.getElementById("results").hidden = over;
+    document.getElementById("over").hidden = !over;
+    if (over) document.getElementById("same").hidden = true;
+    var idx = -1;
+    for (var i = 0; i < tiers.length; i++) { if (dose <= tiers[i].max) { idx = i; break; } }
+    for (var r = 0; r < tiers.length; r++) { document.getElementById("row-" + r).classList.toggle("on", r === idx); }
+    if (over || idx < 0) { set("tier", "Above 15 mg"); return; }
+    var t = tiers[idx];
+    var need = Math.ceil(dose * 12 / 22 - 1e-9);
+    var three = months3 && need > t.vials && dose > 2.2;
+    document.getElementById("same").hidden = !(months3 && !three);
+    var vials = three ? need : t.vials, mg = vials * 22;
+    var weeks = three ? mg / dose : Math.min(mg / dose, MAX_WEEKS);
+    var label = (!three && weeks >= MAX_WEEKS ? "up to " : "") + Math.round(weeks) + " weeks";
+    var plan = three ? round5(0.9 * t.plan / t.vials * vials) : t.plan;
+    var none = three ? round5(0.9 * t.none / t.vials * vials) : t.none;
+    set("tier", t.name + ": " + vials + (vials === 1 ? " vial" : " vials") + " (" + mg + " mg) " + (three ? "for 3 months" : "per fill"));
+    set("plan-fill", money(plan)); set("none-fill", money(none));
+    set("plan-weeks", label); set("none-weeks", label);
+    set("plan-month", money(round5(plan / weeks * WEEKS_PER_MONTH)));
+    set("none-month", money(round5(none / weeks * WEEKS_PER_MONTH)));
+    var showThree = three;
+    var what = t.name.replace(" dose", "") + ", " + (three ? "3-month supply" : "one fill") + ", " + vials + (vials === 1 ? " vial" : " vials") + ": ";
+    set("pick-plan", what + money(plan)); set("pick-none", what + money(none));
+    var lp = document.querySelectorAll(".lab-price"), ll = document.querySelectorAll(".lab-lasts");
+    for (var a = 0; a < lp.length; a++) { lp[a].textContent = showThree ? "Price of 3-month supply" : "Price of one fill"; }
+    for (var b = 0; b < ll.length; b++) { ll[b].textContent = showThree ? "Lasts about" : "One fill lasts about"; }
+  }
+  function setMode(three) {
+    months3 = three;
+    document.getElementById("mode-1").setAttribute("aria-pressed", three ? "false" : "true");
+    document.getElementById("mode-3").setAttribute("aria-pressed", three ? "true" : "false");
+    var d = read(num.value); if (d !== null) render(d);
+  }
+  document.getElementById("mode-1").addEventListener("click", function () { setMode(false); });
+  document.getElementById("mode-3").addEventListener("click", function () { setMode(true); });
+  function read(v) { var d = parseFloat(v); return isNaN(d) || d <= 0 ? null : d; }
+  range.addEventListener("input", function () { num.value = range.value; render(parseFloat(range.value)); });
+  num.addEventListener("input", function () {
+    var d = read(num.value); if (d === null) return;
+    range.value = Math.min(Math.max(d, 0.5), 15); render(d);
+  });
+  var MG_PER_UNIT = 22 / 100; // 22 mg per mL, 100 units per mL
+  var cu = document.getElementById("conv-units"), ct = document.getElementById("conv-times");
+  function convMg() {
+    var u = read(cu.value), n = read(ct.value);
+    return u === null || n === null ? null : Math.round(u * n * MG_PER_UNIT * 10) / 10;
+  }
+  function showConv() { var mg = convMg(); set("conv-mg", mg === null ? "—" : mg + " mg"); }
+  cu.addEventListener("input", showConv); ct.addEventListener("input", showConv);
+  document.getElementById("conv-use").addEventListener("click", function () {
+    var mg = convMg(); if (mg === null) return;
+    num.value = mg; range.value = Math.min(Math.max(mg, 0.5), 15); render(mg);
+  });
+  showConv();
+  render(parseFloat(num.value));
+})();
+</script>
+
+</body>
+</html>
