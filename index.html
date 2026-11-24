@@ -8,7 +8,7 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Serif+Display&display=swap');
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --teal:#1D9E75;--teal-light:#E1F5EE;--teal-mid:#0F6E56;--teal-dark:#085041;
+  --slate:#2B3A55;--mist:#D5DCE8;--teal:#1D9E75;--teal-light:#E1F5EE;--teal-mid:#0F6E56;--teal-dark:#085041;
   --coral:#5A6B85;--coral-light:#E9EDF1;--coral-mid:#2B3A55;
   --green:#639922;--green-light:#EAF3DE;--green-mid:#3B6D11;
   --amber:#BA7517;--amber-light:#FAEEDA;--amber-mid:#854F0B;
@@ -517,6 +517,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <div class="ob-hr"></div>
     <div class="ob-title">Your Venture Wellness guide</div>
     <div class="ob-sub">Enter your first name and select your program to get started. Your progress saves automatically on this device.</div>
+    <a href="#glp-refill" onclick="document.getElementById('glp-refill').scrollIntoView({behavior:'smooth'});return false;" style="display:block;margin:0 0 14px;padding:10px 14px;background:var(--teal-light);border-radius:10px;font-size:12px;font-weight:600;color:var(--teal-dark);text-decoration:none">Need a GLP refill? Check your cost ↓</a>
 
     <div class="ob-field" style="margin-bottom:16px">
       <label class="ob-label">Your first name</label>
@@ -566,54 +567,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       </div>
     </div>
 
-    <!-- Dose converter -->
-    <div style="margin-top:20px;border-radius:14px;overflow:hidden;box-shadow:0 2px 12px rgba(43,58,85,.13)">
-      <div style="background:var(--slate);padding:12px 16px;display:flex;align-items:center;gap:10px">
-        <span style="font-size:20px;line-height:1">⇄</span>
-        <div>
-          <div style="font-size:13px;font-weight:700;color:#fff;letter-spacing:.01em">Tirzepatide Dose Converter</div>
-          <div style="font-size:11px;color:var(--mist);margin-top:1px">Switching concentrations? Find your correct new unit dose.</div>
-        </div>
-      </div>
-      <div style="background:#fff;padding:14px 16px">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
-          <div>
-            <div style="font-size:10px;font-weight:600;color:var(--slate);margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em">Current concentration</div>
-            <select id="lp-cv-from" onchange="lpConvChange()" style="width:100%;padding:8px 10px;border:2px solid var(--mist);border-radius:8px;font-size:12px;color:var(--slate);background:#fff;appearance:none;-webkit-appearance:none;font-weight:500">
-              <option value="">Select →</option>
-              <option value="10">Akina 10 mg/mL</option>
-            <option value="10">Striker 5 mg/0.5 mL (10 mg/mL)</option>
-              <option value="22">Southend 22 mg/mL</option>
-              <option value="25">Akina 25 mg/mL</option>
-              <option value="30">Akina 30 mg/mL</option>
-              <option value="custom">Custom</option>
-            </select>
-            <input type="number" id="lp-cv-from-custom" placeholder="mg/mL" min="0.1" step="0.1" style="display:none;margin-top:5px;width:100%;padding:8px 10px;border:2px solid var(--mist);border-radius:8px;font-size:12px;color:var(--slate);box-sizing:border-box" oninput="lpRunConvert()"/>
-          </div>
-          <div>
-            <div style="font-size:10px;font-weight:600;color:var(--slate);margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em">Current dose (units)</div>
-            <input type="number" id="lp-cv-units" placeholder="e.g. 10" min="1" max="100" style="width:100%;padding:8px 10px;border:2px solid var(--mist);border-radius:8px;font-size:12px;color:var(--slate);box-sizing:border-box;font-weight:500" oninput="lpRunConvert()"/>
-          </div>
-          <div>
-            <div style="font-size:10px;font-weight:600;color:var(--slate);margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em">New concentration</div>
-            <select id="lp-cv-to" onchange="lpConvChange()" style="width:100%;padding:8px 10px;border:2px solid var(--mist);border-radius:8px;font-size:12px;color:var(--slate);background:#fff;appearance:none;-webkit-appearance:none;font-weight:500">
-              <option value="">Select →</option>
-              <option value="10">Akina 10 mg/mL</option>
-            <option value="10">Striker 5 mg/0.5 mL (10 mg/mL)</option>
-              <option value="22">Southend 22 mg/mL</option>
-              <option value="25">Akina 25 mg/mL</option>
-              <option value="30">Akina 30 mg/mL</option>
-              <option value="custom">Custom</option>
-            </select>
-            <input type="number" id="lp-cv-to-custom" placeholder="mg/mL" min="0.1" step="0.1" style="display:none;margin-top:5px;width:100%;padding:8px 10px;border:2px solid var(--mist);border-radius:8px;font-size:12px;color:var(--slate);box-sizing:border-box" oninput="lpRunConvert()"/>
-          </div>
-        </div>
-        <div id="lp-cv-result" style="display:none"></div>
-      </div>
+    <!-- GLP refill tools -->
+    <div id="glp-refill" style="margin-top:28px;scroll-margin-top:16px">
+      <div style="font-size:17px;font-weight:700;color:var(--slate);line-height:1.25">Need a GLP refill?</div>
+      <div style="font-size:12px;color:var(--slate);opacity:.8;margin-top:3px;line-height:1.5">Check what your fill costs before you request it. You don't need to open your guide.</div>
     </div>
 
     <!-- Cost calculator -->
-    <div style="margin-top:20px;border-radius:14px;overflow:hidden;box-shadow:0 2px 12px rgba(43,58,85,.13)">
+    <div style="margin-top:12px;border-radius:14px;overflow:hidden;box-shadow:0 2px 12px rgba(43,58,85,.13)">
       <div style="background:var(--slate);padding:12px 16px;display:flex;align-items:center;gap:10px">
         <span style="font-size:20px;line-height:1">$</span>
         <div>
@@ -677,6 +638,52 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
         (three ? '<div style="font-size:11px;color:var(--slate);margin-top:8px">A 3-month supply is for steady doses only.</div>' : '');
     }
     </script>
+
+    <!-- Dose converter -->
+    <div style="margin-top:20px;border-radius:14px;overflow:hidden;box-shadow:0 2px 12px rgba(43,58,85,.13)">
+      <div style="background:var(--slate);padding:12px 16px;display:flex;align-items:center;gap:10px">
+        <span style="font-size:20px;line-height:1">⇄</span>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:#fff;letter-spacing:.01em">Tirzepatide Dose Converter</div>
+          <div style="font-size:11px;color:var(--mist);margin-top:1px">Switching concentrations? Find your correct new unit dose.</div>
+        </div>
+      </div>
+      <div style="background:#fff;padding:14px 16px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+          <div>
+            <div style="font-size:10px;font-weight:600;color:var(--slate);margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em">Current concentration</div>
+            <select id="lp-cv-from" onchange="lpConvChange()" style="width:100%;padding:8px 10px;border:2px solid var(--mist);border-radius:8px;font-size:12px;color:var(--slate);background:#fff;appearance:none;-webkit-appearance:none;font-weight:500">
+              <option value="">Select →</option>
+              <option value="10">Akina 10 mg/mL</option>
+            <option value="10">Striker 5 mg/0.5 mL (10 mg/mL)</option>
+              <option value="22">Southend 22 mg/mL</option>
+              <option value="25">Akina 25 mg/mL</option>
+              <option value="30">Akina 30 mg/mL</option>
+              <option value="custom">Custom</option>
+            </select>
+            <input type="number" id="lp-cv-from-custom" placeholder="mg/mL" min="0.1" step="0.1" style="display:none;margin-top:5px;width:100%;padding:8px 10px;border:2px solid var(--mist);border-radius:8px;font-size:12px;color:var(--slate);box-sizing:border-box" oninput="lpRunConvert()"/>
+          </div>
+          <div>
+            <div style="font-size:10px;font-weight:600;color:var(--slate);margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em">Current dose (units)</div>
+            <input type="number" id="lp-cv-units" placeholder="e.g. 10" min="1" max="100" style="width:100%;padding:8px 10px;border:2px solid var(--mist);border-radius:8px;font-size:12px;color:var(--slate);box-sizing:border-box;font-weight:500" oninput="lpRunConvert()"/>
+          </div>
+          <div>
+            <div style="font-size:10px;font-weight:600;color:var(--slate);margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em">New concentration</div>
+            <select id="lp-cv-to" onchange="lpConvChange()" style="width:100%;padding:8px 10px;border:2px solid var(--mist);border-radius:8px;font-size:12px;color:var(--slate);background:#fff;appearance:none;-webkit-appearance:none;font-weight:500">
+              <option value="">Select →</option>
+              <option value="10">Akina 10 mg/mL</option>
+            <option value="10">Striker 5 mg/0.5 mL (10 mg/mL)</option>
+              <option value="22">Southend 22 mg/mL</option>
+              <option value="25">Akina 25 mg/mL</option>
+              <option value="30">Akina 30 mg/mL</option>
+              <option value="custom">Custom</option>
+            </select>
+            <input type="number" id="lp-cv-to-custom" placeholder="mg/mL" min="0.1" step="0.1" style="display:none;margin-top:5px;width:100%;padding:8px 10px;border:2px solid var(--mist);border-radius:8px;font-size:12px;color:var(--slate);box-sizing:border-box" oninput="lpRunConvert()"/>
+          </div>
+        </div>
+        <div id="lp-cv-result" style="display:none"></div>
+      </div>
+    </div>
   </div>
 </div>
 
